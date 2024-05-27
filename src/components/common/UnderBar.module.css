@@ -1,0 +1,52 @@
+.under {
+    font-family: 'Giants-Bold';
+    background-color: white;
+    border: 2px solid #ADCDFD;
+    border-bottom: white;
+    border-radius: 15px 15px 0 0;
+    height: 70px;
+    width: 600px;
+    position: fixed;
+    bottom: 0;
+}
+
+a {
+    text-decoration-line: none;
+}
+
+.leftBtn {
+    display: block;
+    text-align: center;
+    width: 110px;
+    float: left;
+    margin: 19px 0 0 78px;
+    font-size: 19px;
+    color: grey;
+}
+
+.homeBtn {
+    margin-left: 80px;
+    font-size: 23px;
+    border: 3px solid #ADCDFD;
+    border-radius: 50%;
+    padding: 13px 19px;
+    background-color: #ADCDFD;
+    color: black;
+}
+
+.rightBtn {
+    display: block;
+    text-align: center;
+    width: 110px;
+    float: right;
+    margin: 19px 78px 0 0;
+    font-size: 19px;
+    color: grey;
+}
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

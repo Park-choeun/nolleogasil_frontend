@@ -1,0 +1,11 @@
+.loadingBox {
+    width: 600px;
+    height: 350px;
+    text-align: center;
+    line-height: 330px;
+}
+
+.loadingImg {
+    width: 270px;
+    height: 180px;
+}

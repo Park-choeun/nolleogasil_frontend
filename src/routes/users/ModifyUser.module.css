@@ -1,0 +1,64 @@
+.container{
+    text-align: center;
+    align-items: center;
+}
+
+.headliner{
+    margin-top: 40px;
+    font-family: 'LOTTERIACHAB';
+    font-size: 30px;
+    letter-spacing: 3px;
+    color: #8BBDFF;
+}
+
+.editInfo {
+    width: 500px;
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btnGroup {
+    display: flex;
+    justify-content: center; /* 가로 방향으로 가운데 정렬 */
+    align-items: center; /* 세로 방향으로 가운데 정렬 */
+}
+
+.btnSpacer {
+    margin-left: 25px; /* 버튼 간격 설정 */
+    margin-right: 25px;
+}
+
+.readOnly{
+    width: 300px;
+    margin-top: 10px;
+}
+
+.edit{
+    width: 300px;
+    margin-top: 10px;
+}
+
+.submit{
+    background-color: #8BBDFF;
+    border-color: #8BBDFF;
+    color: white;
+    width: 70px;
+}
+
+.back{
+    margin-top: 20px;
+    background-color: #8BBDFF;
+    border-color: #8BBDFF;
+    color: white;
+    width: 70px;
+}
+
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,45 @@
+/* MyChatRoomList.css */
+
+.chatBoxContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 10px;
+    background-color: #f0f2f5; /* Light grey background */
+    border-radius: 8px; /* Rounded corners for the container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 20px auto; /* Centering the container */
+    max-width: 800px; /* Maximum width */
+    height: 80vh; /* Adaptive height */
+}
+
+.chatBoxWrapper {
+    width: 100%; /* Full width of the parent container */
+    overflow-y: auto; /* Enables vertical scrolling when content overflows */
+    padding-right: 10px; /* Prevents content from touching the edges */
+}
+
+.chatBox {
+    background-color: #ffffff; /* White background for each chat box */
+    border: 1px solid #dddfe2; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside chat boxes */
+    margin-bottom: 10px; /* Space between chat boxes */
+}
+
+.chatBox h3 {
+    margin-top: 0;
+}
+
+/* Additional styling for links to make them more appealing */
+.chatBox a {
+    display: inline-block;
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: #ffffff; /* White text */
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 10px;
+}

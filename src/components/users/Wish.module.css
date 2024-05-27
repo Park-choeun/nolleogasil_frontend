@@ -1,0 +1,56 @@
+.container {
+    width: 180px;
+    height: 250px;
+    margin: 5px 6.5px;
+    position: relative;
+}
+
+.infoTable {
+    margin: 5px auto;
+    width: 150px;
+}
+
+.cardImg {
+    text-align: center;
+}
+
+.placeImg {
+    width: 110px;
+    height: 110px;
+}
+
+.name {
+    font-size: 18px;
+    color: black;
+}
+
+.category {
+    font-size: 11px;
+    color: darkgrey;
+}
+
+.placeInfo {
+    font-size: 13px;
+    color: darkgrey;
+    vertical-align: top;
+}
+
+.infoIcon {
+    width:14px;
+    height:14px;
+}
+
+.btnBox {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 10px 10px 0;
+}
+
+.wishBtn, .mateBtn {
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    margin:  0 3px;
+}
+

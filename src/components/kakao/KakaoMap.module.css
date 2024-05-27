@@ -1,0 +1,86 @@
+.loadingBox {
+    width: 600px;
+    height: 350px;
+    text-align: center;
+    line-height: 330px;
+}
+
+.loadingImg {
+    width: 270px;
+    height: 180px;
+}
+
+.mapContainer {
+    position: relative;
+}
+
+.searchBox {
+    border: 2px solid #ADCDFD;
+    border-radius: 20px;
+    width: 390px;
+    padding: 3px;
+    text-align: center;
+    margin: 5px auto;
+}
+
+.searchInput {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid grey;
+    width: 300px;
+    height: 30px;
+    margin-right: 5px;
+    font-family: 'KNUTRUTHTTF'
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchBtn {
+    background-color: white;
+    border: none;
+}
+
+.searchImg {
+    width: 28px;
+    height: 28px;
+}
+
+.kakaoMap {
+    font-family: 'Giants-Bold';
+    width: 580px;
+    height: 300px;
+    margin: 2px auto;
+    font-size: 12px;
+}
+
+.currentBtnBox {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.listBox {
+    width: 580px;
+    margin: 7px auto;
+}
+
+.placeList {
+    font-family: 'KNUTRUTHTTF';
+}
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KNUTRUTHTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KNUTRUTHTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,66 @@
+.container {
+    border: 2px solid #ADCDFD;
+    margin: 15px auto;
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+.profile {
+    width: 95%;
+    height: 38px;
+    margin: auto;
+}
+
+.nickname {
+    font-size: 18px;
+    border-right: 2px solid darkgrey;
+}
+
+.profileIcon {
+    width: 21px;
+    height: 21px;
+}
+
+.gender {
+    font-size: 15px;
+}
+
+.mateTemp {
+    width: 20%;
+    text-align:right;
+    padding-top: 3px;
+    font-size: 15px;
+}
+
+.mateTempIcon {
+    width: 25px;
+    height: 25px;
+}
+
+.inputMateTemp {
+    width: 36px;
+    text-align: right;
+    border: none;
+}
+
+.inputMateTemp:focus {
+    outline: none;
+}
+
+.inputValue::placeholder {
+    color: black;
+}
+
+.mateTempBarBox {
+    width: 40%;
+    text-align: left;
+    line-height: 10px;
+    padding-left: 3px;
+}
+
+.mateTempBar {
+    width: 100%;
+    border-radius: 20px;
+    accent-color: #e85d43;
+}

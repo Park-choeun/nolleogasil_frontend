@@ -1,0 +1,20 @@
+.search {
+    border: 2px solid #ADCDFD;
+    border-radius: 20px;
+    width: 390px;
+    padding: 3px;
+    text-align: center;
+    margin: 5px 0px 0px 0px;
+    position: relative;
+    z-index: 4;
+}
+
+.destination{
+    margin: 20px 0 0 0;
+    text-align: center;
+}
+
+.deleteImg{
+    width: 10px;
+    height: 10px;
+}

@@ -1,0 +1,155 @@
+.travelListBox {
+    margin-top: 30px;
+}
+
+.file {
+    display:flex;
+}
+
+.wrap {
+    width: 189px;
+    height: 55px;
+    border-radius: 10px 10px 0 0;
+    border-left : 4px dashed #ADCDFD;
+    border-top: 4px dashed #ADCDFD;
+}
+
+.folder {
+    width: 230px;
+    height: 20px;
+    position:relative;
+    bottom: 4px;
+    left: 198px;
+    border-radius: 0 10px 0 0;
+    border-top : 4px dashed #ADCDFD;
+    border-right: 4px dashed #ADCDFD;
+}
+
+.index{
+  width: 182px;
+  height: 40px;
+  display: flex;
+  padding: 10px 0 0 0;
+  border-radius: 0 10px 0 0;
+  border-right: 4px dashed #ADCDFD;
+  transform:
+    skew(20deg)
+    translate(13px, 0px);
+}
+
+.marker {
+  width: 30px;
+  height: 30px;
+  transform: skew(-20deg);
+}
+.destination {
+    text-align: center;
+    font-size: 18px;
+    padding: 2px 0 0 8px;
+    transform: skew(-20deg);
+    font-family: 'seolleimcool-SemiBold';
+}
+.listBox {
+    border : 4px dashed #ADCDFD;
+    box-shadow : 6px 7px 13px 0px #86A5AD;
+    border-radius : 0px 30px 30px 30px;
+    background-color : #FFFFFF;
+    font-family: 'Orbit-Regular';
+    width : 450px;
+    height : 210px;
+    padding-right: 1px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+.listBox:hover,
+.listBox:focus {
+  box-shadow: 10px 10px 15px 3px #86A5AD;
+  cursor: pointer;
+}
+.above {
+    margin-bottom: 10px;
+}
+.calendar {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    bottom: 3px;
+}
+.dateArea {
+    display: inline-block;
+    padding: 20px 0 10px 20px;
+}
+
+.date {
+   margin-left: 10px;
+}
+
+.buttonArea{
+    float: right;
+    margin-right: 5px;
+}
+.button {
+    margin: 10px;
+    border:none;
+    background-color: #FFFFFF;
+    isolation: isolate;
+}
+.button:hover {
+  cursor: pointer;
+}
+.pic {
+    width: 20px;
+    padding-top: 10px;
+}
+
+.pic:hover {
+    content:url("../../../public/images/common/trash_red.png");
+}
+
+.conditionTile {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(31, 172, 243, .2) 0 3px 5px -1px,rgba(31, 172, 243, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  display: inline-flex;
+  fill: currentcolor;
+  font-family: 'Orbit-Regular';
+  font-size: 14px;
+  font-weight: 500;
+  height: 30px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 11px;
+  margin: 20px 2px 2px 20px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
+
+@font-face {
+    font-family: 'seolleimcool-SemiBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/seolleimcool-SemiBold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Orbit-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/Orbit-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

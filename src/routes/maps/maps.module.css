@@ -1,0 +1,23 @@
+.top {
+    height: 70px;
+}
+
+.subBody {
+    height: 81vh;
+    position: static;
+    overflow-y: scroll; /* 수직 스크롤바를 항상 표시하여 내용이 넘칠 경우 스크롤 가능하게 함 */
+    -ms-overflow-style: none; /* IE 및 Edge에서 스크롤바를 숨김 */
+    scrollbar-width: none; /* 파이어폭스에서 스크롤바를 숨김 */
+}
+
+.subBody::-webkit-scrollbar {
+    width: 0; /* 웹킷 브라우저에서 스크롤바를 숨김 */
+    height: 0;
+}
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

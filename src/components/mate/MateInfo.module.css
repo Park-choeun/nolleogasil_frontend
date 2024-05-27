@@ -1,0 +1,70 @@
+.mateTable {
+    width: 350px;
+    margin-left: 23px;
+    margin-top: 10px;
+}
+
+.name {
+    font-size: 18px;
+    color: black;
+}
+
+.category {
+    font-size: 13px;
+    color: darkgrey;
+}
+
+.distance {
+    font-size: 12px;
+    color: darkgrey;
+}
+
+.mateInfo {
+    font-family: 'KNUTRUTHTTF';
+    font-size: 14px;
+    width: 400px;
+    color: black;
+}
+
+.mateInfo2 {
+    font-family: 'KNUTRUTHTTF';
+    font-size: 14px;
+    padding-left: 5px;
+    width: 400px;
+    color: black;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.calendar {
+    width: 16px;
+    height: 16px;
+}
+
+.genderIcon {
+    width: 17px;
+    height: 17px;
+}
+
+.personIcon {
+    width: 21px;
+    height: 24px;
+}
+
+.profileIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.applicantInfo {
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'KNUTRUTHTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KNUTRUTHTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

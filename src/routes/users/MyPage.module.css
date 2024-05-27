@@ -1,0 +1,55 @@
+.MyPageContainer {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.top {
+    height: 70px;
+}
+
+.subBody {
+    font-family: 'Giants-Bold';
+    height: 81vh;
+    overflow: auto;
+    position: static;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.subBody::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.nav-link {
+  color: #333; /* 탭의 기본 텍스트 색상 */
+  font-weight: bold;
+  border: none; /* 탭의 기본 테두리 제거 */
+}
+
+.nav-link.active {
+  color: #007bff; /* 활성화된 탭의 텍스트 색상 */
+  font-weight: bold;
+}
+
+.tabLink {
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.activeTab {
+  background-color: blue;
+  color: white;
+}
+
+.tab-content {
+  padding: 20px; /* 탭 콘텐츠의 패딩 추가 */
+  border: 1px solid #ddd; /* 탭 콘텐츠의 테두리 추가 */
+  border-radius: 8px;
+}
+
+.tab-pane {
+  margin-top: 20px; /* 탭 콘텐츠 간의 간격 추가 */
+}

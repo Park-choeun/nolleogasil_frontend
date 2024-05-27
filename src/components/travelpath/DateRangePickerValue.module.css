@@ -1,0 +1,13 @@
+.container{
+    border: 1px solid #EAEAEA;
+}
+.divLabel{
+    padding: 10px 0px;
+}
+.label{
+    text-align:center;
+    padding: 0px 55px;
+    margin: 0px 7px;
+    color: #8C8C8C;
+    font-size: 14px;
+}

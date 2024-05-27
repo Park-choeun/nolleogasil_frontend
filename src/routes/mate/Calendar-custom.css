@@ -1,0 +1,68 @@
+.react-calendar {
+    width: 500px;
+    background-color: #eaf7ff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'SUIT-Regular', sans-serif;
+    font-size: 16px;
+}
+.react-calendar__navigation {
+
+    background: #eaf7ff;
+    border-bottom: 4px solid rgba(125, 182, 222, 0.7);
+    height: 90px;
+    border-radius: 20px 20px 0 0;
+    span {
+
+        font-size: 24px;
+        font-weight: 600;
+        color: rgba(0, 93, 171, 0.8);
+    }
+}
+
+.react-calendar__navigation button {
+    min-width: 44px;
+    color: #0a53be;
+}
+
+.react-calendar__navigation button:disabled {
+    background-color: #eaf7ff;
+    border-radius: 20px 20px 0 0;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: #ffffff;
+}
+
+.react-calendar__tile--now {
+    background: rgba(125, 182, 222, 0.7);
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: #ffffa9;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth,
+.react-calendar__decade-view__years__year--neighboringDecade,
+.react-calendar__century-view__decades__decade--neighboringCentury {
+    color: rgba(0, 93, 171, 0.8);
+}
+
+.react-calendar__month-view__weekdays {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: bold;
+    color: rgba(53, 137, 201, 0.8);
+}
+
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

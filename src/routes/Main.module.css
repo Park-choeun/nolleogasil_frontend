@@ -1,0 +1,57 @@
+.top {
+    height: 70px;
+    line-height : 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    margin-left: 20px;
+    font-family: 'LOTTERIACHAB';
+    font-size: 1.7em;
+    color: #1facf3;
+}
+
+.optional {
+    font-size: 0.9em;
+    font-family: 'Giants-Bold';
+    margin-right: 25px;
+}
+
+.linkText {
+    color: grey;
+}
+
+.subBody {
+    height: 81vh;
+    overflow: auto;
+    position: static;
+}
+
+.btnBox {
+    margin: 35px auto 0;
+    width: 450px;
+}
+
+.btns {
+    padding-left: 12px;
+}
+
+a {
+    text-decoration-line: none;
+}
+
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

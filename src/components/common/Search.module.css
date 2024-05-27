@@ -1,0 +1,39 @@
+.search {
+    border: 2px solid #ADCDFD;
+    border-radius: 20px;
+    width: 390px;
+    padding: 3px;
+    text-align: center;
+    margin: 5px auto;
+}
+
+.inputBox {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid grey;
+    width: 300px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.inputBox:focus {
+    outline: none;
+}
+
+.searchBtn {
+    background-color: white;
+    border: none;
+}
+
+.searchImg {
+    width: 28px;
+    height: 28px;
+}
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

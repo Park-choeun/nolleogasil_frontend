@@ -1,0 +1,78 @@
+.container {
+    width: 500px;
+    height: 120px;
+    margin: 15px auto;
+    position: relative;
+}
+
+.btnBox {
+    position: absolute;
+    top: 41px;
+    right: 25px;
+}
+
+.readMoreBtn {
+    width: 80px;
+    height: 35px;
+    border: none;
+    background-color: #ADCDFD;
+    border-radius: 20px;
+    font-size: 15px;
+}
+
+.readMoreBtn:hover {
+    background-color: #92b6fd;
+}
+
+.completeBtn {
+    width: 115px;
+    height: 35px;
+    border: none;
+    background-color: lightgrey;
+    border-radius: 20px;
+    font-size: 15px;
+}
+
+.modal {
+    font-family: 'Giants-Bold';
+}
+
+.title {
+    font-size: 20px;
+}
+
+.memberInfo {
+    font-family: 'KNUTRUTHTTF';
+}
+
+.text {
+    margin-left: 12px;
+    font-size: 16px;
+}
+
+.setMateTempBtn {
+    width: 95px;
+    height: 40px;
+    border: none;
+    background-color: #ADCDFD;
+    border-radius: 20px;
+    font-size: 17px;
+}
+
+.setMateTempBtn:hover {
+    background-color: #92b6fd;
+}
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KNUTRUTHTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KNUTRUTHTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

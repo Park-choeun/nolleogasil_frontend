@@ -1,0 +1,128 @@
+.top {
+    height: 70px;
+}
+
+.subBody {
+    font-family: 'Giants-Bold';
+    height: 81vh;
+    overflow: auto;
+    position: static;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.subBody::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.infoTable {
+    width: 565px;
+    margin: 0 auto;
+}
+
+.subject {
+    font-size: 16px;
+    border-bottom: 1px solid lightgrey;
+    vertical-align: bottom;
+}
+
+.info {
+    font-family: 'KNUTRUTHTTF';
+    font-size: 14px;
+    font-weight: bold;
+    height: 25px;
+}
+
+.infoIcon {
+    margin-left: 5px;
+    width: 17px;
+    height: 17px;
+}
+
+.showMembers {
+    cursor: pointer;
+}
+
+.personIcon {
+    margin-left: 7px;
+    width: 22px;
+    height: 25px;
+}
+
+.genderIcon {
+    margin-left: 5px;
+    width: 19px;
+    height: 19px;
+}
+
+.commentsBox {
+    width: 25px;
+    vertical-align: top;
+}
+
+.commentsIcon {
+    margin: 0 0 3px 4px;
+    width: 20px;
+    height: 22px;
+}
+
+.comments {
+    font-family: 'KNUTRUTHTTF';
+    font-size: 14px;
+    font-weight: bold;
+    height: 25px;
+    padding-left: 3px;
+}
+
+.modal {
+    font-family: 'Giants-Bold';
+}
+
+.title {
+    font-size: 20px;
+}
+
+.memberInfo {
+    font-family: 'KNUTRUTHTTF';
+}
+
+.closeBtn {
+    width: 80px;
+    height: 37px;
+    border: none;
+    background-color: #ADCDFD;
+    border-radius: 20px;
+    font-size: 17px;
+}
+
+.closeBtn:hover {
+    background-color: #92b6fd;
+}
+
+.loadingBox {
+    width: 600px;
+    height: 250px;
+    text-align: center;
+    padding-top: 35px;
+}
+
+.loadingImg {
+    width: 300px;
+    height: 180px;
+}
+
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KNUTRUTHTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/KNUTRUTHTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

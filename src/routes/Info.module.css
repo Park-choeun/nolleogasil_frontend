@@ -1,0 +1,37 @@
+.top {
+    height: 70px;
+    line-height : 70px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.logo {
+    margin-left: 20px;
+    font-family: 'LOTTERIACHAB';
+    font-size: 1.7em;
+    color: #1facf3;
+}
+
+.subBody {
+    height: 81vh;
+    overflow: auto;
+    position: relative;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.subBody::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+a {
+    text-decoration-line: none;
+}
+
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

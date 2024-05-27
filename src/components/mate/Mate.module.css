@@ -1,0 +1,24 @@
+.container {
+    width: 500px;
+    height: 120px;
+    margin: 15px auto;
+    position: relative;
+}
+
+.btnBox {
+    position: absolute;
+    top: 40px;
+    right: 25px;
+}
+
+.applyBtn, .waitBtn {
+    width: 60px;
+    height: 35px;
+    border: none;
+    background-color: #ADCDFD;
+    border-radius: 20px;
+}
+
+.applyBtn:hover {
+    background-color: #92b6fd;
+}

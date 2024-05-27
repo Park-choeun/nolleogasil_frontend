@@ -1,0 +1,52 @@
+.container {
+    border: 2px solid #ADCDFD;
+    margin: 15px auto;
+    width: 450px;
+    height: 50px;
+    position: relative;
+}
+
+.profile {
+    width: 410px;
+    margin: auto;
+}
+
+.nickname {
+    font-size: 18px;
+    width: 200px;
+    border-right: 2px solid darkgrey;
+}
+
+.profileIcon {
+    width: 21px;
+    height: 21px;
+}
+
+.gender {
+    font-size: 15px;
+}
+
+.mateTemp {
+    font-size: 17px;
+    text-align: right;
+    width: 75px;
+}
+
+.deleteBtnBox {
+    text-align: right;
+}
+
+.deleteBtn {
+    width: 55px;
+    height: 32px;
+    border: none;
+    background-color: tomato;
+    border-radius: 20px;
+    margin-right: 3px;
+    font-weight: bold;
+}
+
+.deleteBtn:hover {
+    background-color: #fc3e1f;
+}
+
