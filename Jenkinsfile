@@ -18,8 +18,10 @@ pipeline {
             }
         }
         stage('npm') {
-            nodejs(nodeJSInstallationName: 'nodejs-21.7.2') {
-            sh 'npm install && npm run build'
+            steps {
+                nodejs(nodeJSInstallationName: 'nodejs-21.7.2') {
+                    sh 'npm install && npm run build'
+                }
             }
         }
         stage('Build React') {
