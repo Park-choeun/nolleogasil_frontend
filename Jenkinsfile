@@ -17,6 +17,11 @@ pipeline {
                 ])
             }
         }
+        stage('npm') {
+            nodejs(nodeJSInstallationName: 'nodejs-21.7.2') {
+            sh 'npm install && npm run build'
+            }
+        }
         stage('Build React') {
             steps {
                 withCredentials([
@@ -32,8 +37,6 @@ pipeline {
                         echo "REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY" >> .env
                         echo "REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL" >> .env
                         echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
-                        npm install
-                        npm run build
                         docker build -t nolleogasil_frontend -f Dockerfile.react .
                         '''
                     }
