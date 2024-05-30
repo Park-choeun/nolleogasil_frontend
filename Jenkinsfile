@@ -17,13 +17,13 @@ pipeline {
                 ])
             }
         }
-        stage('npm') {
-            steps {
-                nodejs(nodeJSInstallationName: 'nodejs-21.7.2') {
-                    sh 'npm install && npm run build'
-                }
-            }
-        }
+        // stage('npm') {
+        //     steps {
+        //         nodejs(nodeJSInstallationName: 'nodejs-21.7.2') {
+        //             sh 'npm install && npm run build'
+        //         }
+        //     }
+        // }
         stage('Build React') {
             steps {
                 withCredentials([
