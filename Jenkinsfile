@@ -13,7 +13,7 @@ pipeline {
                     branches: [[name: '*/master']],
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [],
-                    userRemoteConfigs: [[url: 'https://github.com/fourroro/nolleogasil_frontend.git', credentialsId: 'git-token']]
+                    userRemoteConfigs: [[url: 'https://github.com/fourroro/nolleogasil_frontend.git', credentialsId: 'nolleogasil-jenkins-token']]
                 ])
             }
         }
@@ -35,11 +35,11 @@ pipeline {
                     script {
                         // React Docker 이미지 빌드
                         sh '''
-                        echo "REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY" >> .env
-                        echo "REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY" >> .env
-                        echo "REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL" >> .env
-                        echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
-                        docker build -t nolleogasil_frontend -f Dockerfile.react .
+                            echo "REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY" >> .env
+                            echo "REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY" >> .env
+                            echo "REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL" >> .env
+                            echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
+                            docker build -t nolleogasil_frontend -f Dockerfile.react .
                         '''
                     }
                 }
