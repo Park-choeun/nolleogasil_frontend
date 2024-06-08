@@ -8,7 +8,6 @@ import {useNavigate} from "react-router-dom";
 
 function KakaoMap({ category }) {
     const userInfo = localStorage.getItem("userInfo");
-    const apiUrl = process.env.SPRINGBOOT_API_URL;
 
     const [map, setMap] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -148,7 +147,7 @@ function KakaoMap({ category }) {
         //로그인 상태일때만 backend에 접근
         if (userInfo) {
             try {
-                const response = await axios.get(`${apiUrl}/checkingWishStatus`, {
+                const response = await axios.get("/checkingWishStatus", {
                     params: {
                         placeId: placeId
                     }
@@ -207,7 +206,7 @@ function KakaoMap({ category }) {
                 placeDto.append("placeLat", place.y);
                 placeDto.append("placeLng", place.x);
 
-                axios.post(`${apiUrl}/${action}?category=${category}`, placeDto,
+                axios.post(`/${action}?category=${category}`, placeDto,
                     {
                         headers: {
                             "Content-Type": "application/json" // JSON 형식으로 요청 보냄을 서버에 알림
@@ -222,7 +221,7 @@ function KakaoMap({ category }) {
                     console.error(`Error ${action}>>> `, error.stack);
                 });
             } else {  //action === "deleteWish"(wish에서 삭제)
-                axios.post(`${apiUrl}/${action}?wishId=0`, {placeId: place.id})
+                axios.post(`/${action}?wishId=0`, {placeId: place.id})
                     .then(response => {
                         if (response.data === "successful") {
                             wishBtn.src = "/images/map/addWish.png";
