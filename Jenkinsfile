@@ -26,7 +26,7 @@ pipeline {
                         echo "REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY" >> .env
                         echo "REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL" >> .env
                         echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
-                        docker build --no-cache -t nolleogasil_frontend -f Dockerfile.react .
+                        docker build -t nolleogasil_frontend -f Dockerfile.react .
                     '''
                 }
             }
