@@ -17,6 +17,13 @@ pipeline {
                 ])
             }
         }
+        stage('Prepare Nginx Config') {
+            steps {
+                withCredentials([file(credentialsId: 'nginx-config', variable: 'NGINX_CONF')]) {
+                    sh 'cp $NGINX_CONF ./nginx.conf'
+                }
+            }
+        }
         stage('Build React') {
             steps {
                 script {
