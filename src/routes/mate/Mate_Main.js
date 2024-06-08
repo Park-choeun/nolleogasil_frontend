@@ -17,6 +17,7 @@ function Mate_Main() {
     const current = useGeolocation();
     const latitude = current.loaded ? current.coordinates.lat : 33.450701;
     const longitude = current.loaded ? current.coordinates.lng : 126.570667;
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     //지도에서 장소 이름 클릭 시, 넘어오는 placeId
     let placeId = 0;
@@ -27,7 +28,7 @@ function Mate_Main() {
 
     //메이트 목록 조회
     const getMateList = () => {
-        axios.get("/mate/getMateList", {
+        axios.get(`${apiUrl}/mate/getMateList`, {
             params: {
                 placeId: placeId,
                 placeCat: placeCat,
@@ -42,6 +43,7 @@ function Mate_Main() {
             throw error;
         });
     }
+    console.log("mateList>>", mateList);
 
     useEffect(() => {
         getMateList();
