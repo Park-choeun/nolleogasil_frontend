@@ -17,6 +17,13 @@ pipeline {
                 ])
             }
         }
+        stage('Prepare Nginx Config') {
+            steps {
+                withCredentials([file(credentialsId: 'nginx-config', variable: 'NGINX_CONF')]) {
+                    sh 'cp $NGINX_CONF ./nginx.conf'
+                }
+            }
+        }
         stage('Build React') {
             steps {
                 script {
@@ -28,7 +35,7 @@ pipeline {
                         echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
                         echo "SPRINGBOOT_API_URL=$SPRINGBOOT_API_URL" >> .env
                         echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
-                        docker build -t nolleogasil_frontend -f Dockerfile.react .
+                        docker build --no-cache -t nolleogasil_frontend -f Dockerfile.react .
                     '''
                 }
             }
