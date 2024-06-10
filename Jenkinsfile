@@ -26,6 +26,8 @@ pipeline {
                         echo "REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY" >> .env
                         echo "REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL" >> .env
                         echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
+                        echo "SPRINGBOOT_API_URL=$SPRINGBOOT_API_URL" >> .env
+                        echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
                         docker build -t nolleogasil_frontend -f Dockerfile.react .
                     '''
                 }
@@ -51,6 +53,8 @@ pipeline {
                       string(credentialsId: 'react_app_rest_api_key', variable: 'REACT_APP_REST_API_KEY'),
                       string(credentialsId: 'react_app_kakao_auth_url', variable: 'REACT_APP_KAKAO_AUTH_URL'),
                       string(credentialsId: 'react_app_redirect_uri', variable: 'REACT_APP_REDIRECT_URI'),
+                      string(credentialsId: 'springboot_api_url', variable: 'SPRINGBOOT_API_URL'),
+                      string(credentialsId: 'react_app_api_uri', variable: 'REACT_APP_API_URL')
                 ]){
                     script {
                         sh '''
@@ -82,6 +86,8 @@ pipeline {
                             -e REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
                             -e REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
                             -e REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI \
+                            -e SPRINGBOOT_API_URL=$SPRINGBOOT_API_URL \
+                            -e REACT_APP_API_URL=$REACT_APP_API_URL \
                             $DOCKER_CREDENTIALS_USR/nolleogasil_frontend
                         '''
                     }
