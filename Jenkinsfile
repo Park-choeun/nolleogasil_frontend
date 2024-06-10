@@ -54,7 +54,7 @@ pipeline {
                       string(credentialsId: 'react_app_kakao_auth_url', variable: 'REACT_APP_KAKAO_AUTH_URL'),
                       string(credentialsId: 'react_app_redirect_uri', variable: 'REACT_APP_REDIRECT_URI'),
                       string(credentialsId: 'springboot_api_url', variable: 'SPRINGBOOT_API_URL'),
-                      string(credentialsId: 'react_app_api_uri', variable: 'REACT_APP_API_URL')
+                      string(credentialsId: 'react_app_api_url', variable: 'REACT_APP_API_URL')
                 ]){
                     script {
                         sh '''
