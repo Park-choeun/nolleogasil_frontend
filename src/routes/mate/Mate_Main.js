@@ -46,7 +46,6 @@ function Mate_Main() {
     console.log("mateList>>", mateList);
 
     useEffect(() => {
-        console.log(apiUrl);
         getMateList();
     }, [selected, placeCat]);
 
