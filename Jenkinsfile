@@ -88,7 +88,7 @@ pipeline {
                             docker rm react-container || true
                         fi
 
-                        docker run -d -p 80:80 --name react-container \
+                        docker run -d -p 3000:3000 --name react-container \
                             -e REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY \
                             -e REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
                             -e REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
