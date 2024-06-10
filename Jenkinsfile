@@ -60,16 +60,6 @@ pipeline {
                         sh '''
                         docker pull $DOCKER_CREDENTIALS_USR/nolleogasil_frontend
 
-                        # Docker에서 dangling 이미지 ID 목록 조회
-                        dangling_images=$(docker images -f dangling=true -q)
-
-                        # 결과가 비어 있지 않다면, 이미지 삭제
-                        if [ -n "$dangling_images" ]; then
-                            docker rmi -f $dangling_images
-                        else
-                            echo "No dangling images to remove."
-                        fi
-
                         # react-container가 이미 있으면, 중지하고 삭제
                         if [ $(docker ps -q -f name=react-container) ]; then
                             echo "Stopping existing container..."
@@ -79,6 +69,16 @@ pipeline {
                         if [ $(docker ps -aq -f name=react-container) ]; then
                             echo "Removing existing container..."
                             docker rm react-container || true
+                        fi
+
+                        # Docker에서 dangling 이미지 ID 목록 조회
+                        dangling_images=$(docker images -f dangling=true -q)
+
+                        # 결과가 비어 있지 않다면, 이미지 삭제
+                        if [ -n "$dangling_images" ]; then
+                            docker rmi -f $dangling_images
+                        else
+                            echo "No dangling images to remove."
                         fi
 
                         docker run -d -p 80:80 --name react-container \
