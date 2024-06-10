@@ -28,7 +28,7 @@ function Mate_Main() {
 
     //메이트 목록 조회
     const getMateList = () => {
-        axios.get(`/api/mate/getMateList`, {
+        axios.get(`${apiUrl}/api/mate/getMateList`, {
             params: {
                 placeId: placeId,
                 placeCat: placeCat,
