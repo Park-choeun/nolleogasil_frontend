@@ -28,7 +28,7 @@ pipeline {
                         echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
                         echo "REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL" >> .env
                         echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
-                        docker build --no-cache -t nolleogasil_frontend -f Dockerfile.react .
+                        docker build -t nolleogasil_frontend -f Dockerfile.react .
                     '''
                 }
             }
@@ -41,7 +41,7 @@ pipeline {
                     echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin
                     '''
 
-                    // Spring Boot 이미지 푸시
+                    // React 이미지 푸시
                     sh 'docker push $DOCKER_CREDENTIALS_USR/nolleogasil_frontend'
                 }
             }
