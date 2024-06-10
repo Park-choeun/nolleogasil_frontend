@@ -27,6 +27,9 @@ function Main() {
 
     // 닉네임이 5글자 이상인 경우 말 줄임표 처리
     const formattedNickname = nickname.length > 5 ? nickname.substring(0, 5) + "..." : nickname;
+    
+    const apiUrl = process.env.REACT_APP_SPRINGBOOT_API_URL;
+    console.log(apiUrl);
 
     return (
         <div>
