@@ -28,7 +28,7 @@ pipeline {
                         echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
                         echo "REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL" >> .env
                         echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env
-                        docker build -t nolleogasil_frontend -f Dockerfile.react .
+                        docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react .
                     '''
                 }
             }
