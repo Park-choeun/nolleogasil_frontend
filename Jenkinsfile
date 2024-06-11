@@ -53,7 +53,7 @@ pipeline {
                       string(credentialsId: 'react_app_kakao_auth_url', variable: 'REACT_APP_KAKAO_AUTH_URL'),
                       string(credentialsId: 'react_app_redirect_uri', variable: 'REACT_APP_REDIRECT_URI'),
                       string(credentialsId: 'react_app_springboot_api_url', variable: 'REACT_APP_SPRINGBOOT_API_URL'),
-                      string(credentialsId: 'react_app_react_api_url', variable: 'REACT_APP_REACT_API_URL')
+                      string(credentialsId: 'react_app_react_api_url', variable: 'REACT_APP_REACT_API_URL'),
                       file(credentialsId: 'nginx_conf', variable: 'NGINX_CONF')
                 ]){
                     script {
