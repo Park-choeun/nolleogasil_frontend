@@ -20,6 +20,8 @@ function KakaoMap({ category }) {
     let markers = [];
     let currentInfoWindow = null;
 
+    console.log("카카오맵.js 입장");
+
     //----지도 생성----
     const initMap = useCallback(() => {
         //지도를 담을 영역의 DOM 레퍼런스
