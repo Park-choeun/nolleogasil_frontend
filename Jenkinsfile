@@ -91,7 +91,7 @@ pipeline {
                         fi
 
                         docker run -d -p 80:80 --name react-container \
-                            -v $NGINX_CONF:/etc/nginx/conf.d/default.conf \
+                            -v $NGINX_CONF:/etc/nginx/conf/default.conf \
                             -e REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY \
                             -e REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
                             -e REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
