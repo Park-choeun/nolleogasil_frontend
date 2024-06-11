@@ -22,12 +22,6 @@ pipeline {
                 script {
                     // React Docker 이미지 빌드
                     sh '''
-                        echo "REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY" >> .env
-                        echo "REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY" >> .env
-                        echo "REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL" >> .env
-                        echo "REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI" >> .env
-                        echo "REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL" >> .env
-                        echo "REACT_APP_REACT_API_URL=$REACT_APP_REACT_API_URL" >> .env
                         docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react .
                     '''
                 }
