@@ -29,7 +29,7 @@ pipeline {
                     script {
                         // React Docker 이미지 빌드
                         sh '''
-                        docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react \
+                        docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react .\
                             --build-arg REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY \
                             --build-arg REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
                             --build-arg REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
