@@ -10,7 +10,7 @@ function KakaoMap({ category }) {
     const userInfo = localStorage.getItem("userInfo");
 
     const [map, setMap] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [isSearch, setIsSearch] = useState(false);
     const current = useGeolocation();
@@ -44,7 +44,7 @@ function KakaoMap({ category }) {
     useEffect(() => {
         if (current.loaded) {
             initMap();
-            setLoading(false); //로딩 완료 후 상태 변경
+            // setLoading(false); //로딩 완료 후 상태 변경
         }
     }, [current.loaded, initMap, loading]);
 
