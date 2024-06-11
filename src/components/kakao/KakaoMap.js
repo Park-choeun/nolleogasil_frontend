@@ -32,21 +32,27 @@ function KakaoMap({ category }) {
 
         //지도를 생성할 때 필요한 기본 옵션
         const options = {
-            center: new window.kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표
+            // center: new window.kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표
+            center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
             level: 5 //지도의 레벨(확대, 축소 정도)
         };
 
         //지도 생성 및 객체 리턴
         const initializedMap = new window.kakao.maps.Map(container, options);
         setMap(initializedMap);
-    }, [current]);
+    }, []);
+    // }, [current]);
+
+    // useEffect(() => {
+    //     if (current.loaded) {
+    //         initMap();
+    //         setLoading(false); //로딩 완료 후 상태 변경
+    //     }
+    // }, [current.loaded, initMap, loading]);
 
     useEffect(() => {
-        if (current.loaded) {
-            initMap();
-            // setLoading(false); //로딩 완료 후 상태 변경
-        }
-    }, [current.loaded, initMap, loading]);
+        initMap();
+    }, [initMap]);
 
     const placesSearchCB = (data, status, pagination) => {
         if (status === window.kakao.maps.services.Status.OK) {
