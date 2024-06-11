@@ -32,7 +32,7 @@ function Main() {
         <div>
             <div className={styles.top}>
                 <Link to="/nolloegasil/info">
-                    <span className={styles.logo}>놀러가쟈</span>
+                    <span className={styles.logo}>놀러가실?</span>
                 </Link>
 
                 <span className={styles.optional}>
