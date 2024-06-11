@@ -18,17 +18,26 @@ pipeline {
         }
         stage('Build React') {
             steps {
-                script {
-                    // React Docker 이미지 빌드
-                    sh '''
-                    docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react \
-                        --build-arg REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY \
-                        --build-arg REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
-                        --build-arg REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
-                        --build-arg REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI \
-                        --build-arg REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL \
-                        --build-arg REACT_APP_API_URL=$REACT_APP_REACT_API_URL
-                    '''
+                withCredentials([
+                      string(credentialsId: 'react_app_kakao_api_key', variable: 'REACT_APP_KAKAO_API_KEY'),
+                      string(credentialsId: 'react_app_rest_api_key', variable: 'REACT_APP_REST_API_KEY'),
+                      string(credentialsId: 'react_app_kakao_auth_url', variable: 'REACT_APP_KAKAO_AUTH_URL'),
+                      string(credentialsId: 'react_app_redirect_uri', variable: 'REACT_APP_REDIRECT_URI'),
+                      string(credentialsId: 'react_app_springboot_api_url', variable: 'REACT_APP_SPRINGBOOT_API_URL'),
+                      string(credentialsId: 'react_app_react_api_url', variable: 'REACT_APP_REACT_API_URL'),
+                ]) {
+                    script {
+                        // React Docker 이미지 빌드
+                        sh '''
+                        docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react \
+                            --build-arg REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY \
+                            --build-arg REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
+                            --build-arg REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
+                            --build-arg REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI \
+                            --build-arg REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL \
+                            --build-arg REACT_APP_API_URL=$REACT_APP_REACT_API_URL
+                        '''
+                    }
                 }
             }
         }
