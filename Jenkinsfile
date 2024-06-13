@@ -2,6 +2,12 @@ pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS = credentials('docker-credentials')  // Jenkins Credentials ID 사용
+        REACT_APP_KAKAO_API_KEY = credentials('react_app_kakao_api_key')
+        REACT_APP_REST_API_KEY = credentials('react_app_rest_api_key')
+        REACT_APP_KAKAO_AUTH_URL = credentials('react_app_kakao_auth_url')
+        REACT_APP_REDIRECT_URI = credentials('react_app_redirect_uri')
+        REACT_APP_SPRINGBOOT_API_URL = credentials('react_app_springboot_api_url')
+        REACT_APP_REACT_API_URL = credentials('react_app_react_api_url')
     }
 
     stages {
@@ -18,26 +24,17 @@ pipeline {
         }
         stage('Build React') {
             steps {
-                withCredentials([
-                      string(credentialsId: 'react_app_kakao_api_key', variable: 'REACT_APP_KAKAO_API_KEY'),
-                      string(credentialsId: 'react_app_rest_api_key', variable: 'REACT_APP_REST_API_KEY'),
-                      string(credentialsId: 'react_app_kakao_auth_url', variable: 'REACT_APP_KAKAO_AUTH_URL'),
-                      string(credentialsId: 'react_app_redirect_uri', variable: 'REACT_APP_REDIRECT_URI'),
-                      string(credentialsId: 'react_app_springboot_api_url', variable: 'REACT_APP_SPRINGBOOT_API_URL'),
-                      string(credentialsId: 'react_app_react_api_url', variable: 'REACT_APP_REACT_API_URL'),
-                ]) {
-                    script {
-                        // React Docker 이미지 빌드
-                        sh '''
-                        docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react .\
-                            --build-arg REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY \
-                            --build-arg REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
-                            --build-arg REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
-                            --build-arg REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI \
-                            --build-arg REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL \
-                            --build-arg REACT_APP_API_URL=$REACT_APP_REACT_API_URL
-                        '''
-                    }
+                script {
+                    // React Docker 이미지 빌드
+                    sh '''
+                    docker build -t $DOCKER_CREDENTIALS_USR/nolleogasil_frontend -f Dockerfile.react .\
+                        --build-arg REACT_APP_KAKAO_API_KEY=${REACT_APP_KAKAO_API_KEY} \
+                        --build-arg REACT_APP_REST_API_KEY=${REACT_APP_REST_API_KEY} \
+                        --build-arg REACT_APP_KAKAO_AUTH_URL=${REACT_APP_KAKAO_AUTH_URL} \
+                        --build-arg REACT_APP_REDIRECT_URI=${REACT_APP_REDIRECT_URI} \
+                        --build-arg REACT_APP_SPRINGBOOT_API_URL=${REACT_APP_SPRINGBOOT_API_URL} \
+                        --build-arg REACT_APP_API_URL=${REACT_APP_REACT_API_URL}
+                    '''
                 }
             }
         }
@@ -56,50 +53,40 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withCredentials([
-                      string(credentialsId: 'react_app_kakao_api_key', variable: 'REACT_APP_KAKAO_API_KEY'),
-                      string(credentialsId: 'react_app_rest_api_key', variable: 'REACT_APP_REST_API_KEY'),
-                      string(credentialsId: 'react_app_kakao_auth_url', variable: 'REACT_APP_KAKAO_AUTH_URL'),
-                      string(credentialsId: 'react_app_redirect_uri', variable: 'REACT_APP_REDIRECT_URI'),
-                      string(credentialsId: 'react_app_springboot_api_url', variable: 'REACT_APP_SPRINGBOOT_API_URL'),
-                      string(credentialsId: 'react_app_react_api_url', variable: 'REACT_APP_REACT_API_URL'),
-                      file(credentialsId: 'nginx_conf', variable: 'NGINX_CONF')
-                ]){
-                    script {
-                        sh '''
-                        docker pull $DOCKER_CREDENTIALS_USR/nolleogasil_frontend
+                script {
+                    sh '''
+                    docker pull $DOCKER_CREDENTIALS_USR/nolleogasil_frontend
 
-                        # react-container가 이미 있으면, 중지하고 삭제
-                        if [ $(docker ps -q -f name=react-container) ]; then
-                            echo "Stopping existing container..."
-                            docker stop react-container || true
-                        fi
+                    # react-container가 이미 있으면, 중지하고 삭제
+                    if [ $(docker ps -q -f name=react-container) ]; then
+                        echo "Stopping existing container..."
+                        docker stop react-container || true
+                    fi
 
-                        if [ $(docker ps -aq -f name=react-container) ]; then
-                            echo "Removing existing container..."
-                            docker rm react-container || true
-                        fi
+                    if [ $(docker ps -aq -f name=react-container) ]; then
+                        echo "Removing existing container..."
+                        docker rm react-container || true
+                    fi
 
-                        # Docker에서 dangling 이미지 ID 목록 조회
-                        dangling_images=$(docker images -f dangling=true -q)
+                    # Docker에서 dangling 이미지 ID 목록 조회
+                    dangling_images=$(docker images -f dangling=true -q)
 
-                        # 결과가 비어 있지 않다면, 이미지 삭제
-                        if [ -n "$dangling_images" ]; then
-                            docker rmi -f $dangling_images
-                        else
-                            echo "No dangling images to remove."
-                        fi
+                    # 결과가 비어 있지 않다면, 이미지 삭제
+                    if [ -n "$dangling_images" ]; then
+                        docker rmi -f $dangling_images
+                    else
+                        echo "No dangling images to remove."
+                    fi
 
-                        docker run -d -p 80:80 --name react-container \
-                            -e REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY \
-                            -e REACT_APP_REST_API_KEY=$REACT_APP_REST_API_KEY \
-                            -e REACT_APP_KAKAO_AUTH_URL=$REACT_APP_KAKAO_AUTH_URL \
-                            -e REACT_APP_REDIRECT_URI=$REACT_APP_REDIRECT_URI \
-                            -e REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL \
-                            -e REACT_APP_REACT_API_URL=$REACT_APP_REACT_API_URL \
-                            $DOCKER_CREDENTIALS_USR/nolleogasil_frontend
-                        '''
-                    }
+                    docker run -d -p 80:80 --name react-container \
+                        -e REACT_APP_KAKAO_API_KEY=${REACT_APP_KAKAO_API_KEY} \
+                        -e REACT_APP_REST_API_KEY=${REACT_APP_REST_API_KEY} \
+                        -e REACT_APP_KAKAO_AUTH_URL=${REACT_APP_KAKAO_AUTH_URL} \
+                        -e REACT_APP_REDIRECT_URI=${REACT_APP_REDIRECT_URI} \
+                        -e REACT_APP_SPRINGBOOT_API_URL=${REACT_APP_SPRINGBOOT_API_URL} \
+                        -e REACT_APP_REACT_API_URL=${REACT_APP_REACT_API_URL} \
+                        $DOCKER_CREDENTIALS_USR/nolleogasil_frontend
+                    '''
                 }
             }
         }
