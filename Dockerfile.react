@@ -2,10 +2,10 @@
 FROM node:14-alpine as build
 WORKDIR /app
 COPY package.json ./
-RUN apk update && apk upgrade -y && \
-    apk install -y nodejs \
+# Update package list and install nodejs and npm
+RUN apk update && apk upgrade && \
+    apk add --no-cache nodejs \
     npm
-# RUN npm install
 COPY . ./   
 
 # 환경 변수 ARG 설정
@@ -27,19 +27,23 @@ ENV REACT_APP_SPRINGBOOT_API_URL=$REACT_APP_SPRINGBOOT_API_URL
 ENV REACT_APP_REACT_API_URL=$REACT_APP_REACT_API_URL
 
 # React 앱 빌드
-RUN npm run build
+RUN npm install && npm run build
 
 # Stage 2: Serve the React app using Nginx
 FROM nginx:alpine
 
-# React 앱을 빌드한 결과물을 Nginx의 정적 파일 서빙 디렉토리로 복사
-COPY --from=build /app/build /usr/share/nginx/html
-
 # Nginx 설정 파일을 이미지에 복사
 COPY nginx.conf /etc/nginx/conf.d/nginx.conf
 
+# React 앱을 빌드한 결과물을 Nginx의 정적 파일 서빙 디렉토리로 복사
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Nginx가 리스닝할 포트 설정
 EXPOSE 3000
-CMD ["npm", "start"]
+
+# CMD ["npm", "start"]
 # EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
+
+# Nginx를 실행하여 정적 파일 서빙
+CMD ["nginx", "-g", "daemon off;"]
 
