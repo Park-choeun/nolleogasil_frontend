@@ -33,7 +33,7 @@ pipeline {
                         --build-arg REACT_APP_KAKAO_AUTH_URL=${REACT_APP_KAKAO_AUTH_URL} \
                         --build-arg REACT_APP_REDIRECT_URI=${REACT_APP_REDIRECT_URI} \
                         --build-arg REACT_APP_SPRINGBOOT_API_URL=${REACT_APP_SPRINGBOOT_API_URL} \
-                        --build-arg REACT_APP_API_URL=${REACT_APP_REACT_API_URL}
+                        --build-arg REACT_APP_REACT_API_URL=${REACT_APP_REACT_API_URL}
                     '''
                 }
             }
