@@ -12,10 +12,11 @@ function TravelDetail(){
     const [dates, setDates] = useState(null);           //DB에서 가져온 dates를 담을 변수
     const [infos, setInfos] = useState(null);           //DB에서 가져온 infos를 담을 변수
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //선택된 travelPath 정보 가져오는 함수
     useEffect(() => {
-        axios.get('/getDetail')
+        axios.get(`${apiUrl}/api/travelpath/getDetail`)
             .then(response => {
                 setTravelPath(response.data);
                 setDates(response.data.resultDto.dates);
@@ -40,7 +41,7 @@ function TravelDetail(){
                     dates: dates,
                     infos: infos
                 }
-                axios.post("/travelPath/update", data, {
+                axios.post(`${apiUrl}/api/travelpath/update`, data, {
                     headers: {
                         "Content-Type": "application/json",
                     },
