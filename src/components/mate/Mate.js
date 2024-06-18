@@ -10,10 +10,11 @@ function Mate({ mate, place }) {
     const [memberCount, setMemberCount] = useState(0);
     const usersId = Number(localStorage.getItem("usersId"));
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //해당 사용자의 신청상태 불러오기
     const checkApplyStatus = () => {
-        axios.get(`/checkingApplyStatus?mateId=${mate.mateId}`)
+        axios.get(`${apiUrl}/api/apply/checkingApplyStatus?mateId=${mate.mateId}`)
             .then(response => {
                 if (!(response.data === "failed")) {
                     setIsApply(response.data);

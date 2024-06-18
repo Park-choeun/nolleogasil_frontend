@@ -15,10 +15,11 @@ function MateHistory({ mate, place }) {
     const [memberMateTempMap, setMemberMateTempMap] = useState({});
     const [timeOver, setTimeOver] = useState(false); //메이트 기간 마감여부 -> timeOver되면 true로 변경
     const [show, setShow] = useState(false);
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //로그인한 사용자 본인을 제외한 해당 메이트의 멤버목록 조회
     const getMateMemberList = () => {
-        axios.get(`/mateMember/getMateMemberListWithoutMe?mateId=${mate.mateId}`)
+        axios.get(`${apiUrl}/api/mateMember/getMateMemberListWithoutMe?mateId=${mate.mateId}`)
             .then(response => {
                 setMateMemberList(response.data);
             }).catch(error => {
@@ -28,7 +29,7 @@ function MateHistory({ mate, place }) {
 
     //로그인한 사용자의 온도 부여 여부 불러오기(isGiven) -> 0이면 이미 온도를 부여한 것(1번만 부여 가능)
     const getLoginUsersMemberInfo = () => {
-        axios.get(`/mateMember/getMateMemberByUsersIdAndMateId?mateId=${mate.mateId}`)
+        axios.get(`${apiUrl}/api/mateMember/getMateMemberByUsersIdAndMateId?mateId=${mate.mateId}`)
             .then(response => {
                 setLoginUsersMemberInfo(response.data);
             }).catch(error => {

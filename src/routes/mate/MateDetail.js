@@ -25,10 +25,11 @@ function MateDetail() {
     const [loading, setLoading] = useState(true);
     const eatDateTime = formatStrEatDateTime(mate.eatDate, mate.eatTime);
     const comments = replaceComments(mate.comments);
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //현재 참여한 멤버 수 구하기(본인 포함)
     const getMemberCount = () => {
-        axios.get(`/mateMember/countMateMember?mateId=${mate.mateId}`)
+        axios.get(`${apiUrl}/api/mateMember/countMateMember?mateId=${mate.mateId}`)
             .then(response => {
                 setMemberCount(response.data);
             }).catch(error => {
@@ -38,7 +39,7 @@ function MateDetail() {
 
     //게시자 정보 가져오기
     const getMaster = () => {
-        axios.get(`/api/user/getUsersInfo?usersId=${mate.usersId}`)
+        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${mate.usersId}`)
             .then(response => {
                 setMaster(response.data);
             }).catch(error => {
@@ -48,7 +49,7 @@ function MateDetail() {
 
     //현재 멤버목록 가져오기(본인 포함)
     const getMateMember = () => {
-        axios.get(`/mateMember/getMateMemberList?mateId=${mate.mateId}`)
+        axios.get(`${apiUrl}/api/mateMember/getMateMemberList?mateId=${mate.mateId}`)
             .then(response => {
                 setMateMemberList(response.data);
                 setLoading(false);

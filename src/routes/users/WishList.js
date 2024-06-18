@@ -9,6 +9,7 @@ function WishList() {
     const [placeCat, setPlaceCat] = useState(0);
     const [count, setCount] = useState(0);
     const [selected, setSelected] = useState("기본순");
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //찜 해제 버튼 클릭 시, wish에서 제거 후, wishList에서도 제거
     const onDelete = (wishId) => {
@@ -20,7 +21,7 @@ function WishList() {
 
     //사용자의 wishList 조회
     const getWishList = () => {
-        axios.get("/getWishList", {
+        axios.get(`${apiUrl}/api/wish/getWishList`, {
             params: {
                 placeCat: placeCat,
                 sortBy: selected
@@ -34,7 +35,7 @@ function WishList() {
 
     //wish에 담긴 개수 조회
     const getCountWish = () => {
-        axios.get("/countWish", {
+        axios.get(`${apiUrl}/api/wish/countWish`, {
             params: {
                 placeCat: placeCat
             }
