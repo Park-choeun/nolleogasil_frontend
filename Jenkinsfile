@@ -6,6 +6,7 @@ pipeline {
         REACT_APP_REST_API_KEY = credentials('react_app_rest_api_key')
         REACT_APP_KAKAO_AUTH_URL = credentials('react_app_kakao_auth_url')
         REACT_APP_REDIRECT_URI = credentials('react_app_redirect_uri')
+        REACT_APP_BACKEND_URL = credentials('react_app_backend_url')
     }
 
     stages {
@@ -30,6 +31,7 @@ pipeline {
                         --build-arg REACT_APP_REST_API_KEY=${REACT_APP_REST_API_KEY} \
                         --build-arg REACT_APP_KAKAO_AUTH_URL=${REACT_APP_KAKAO_AUTH_URL} \
                         --build-arg REACT_APP_REDIRECT_URI=${REACT_APP_REDIRECT_URI} \
+                        --build-arg REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL} \
                     '''
                 }
             }
@@ -79,6 +81,7 @@ pipeline {
                         -e REACT_APP_REST_API_KEY=${REACT_APP_REST_API_KEY} \
                         -e REACT_APP_KAKAO_AUTH_URL=${REACT_APP_KAKAO_AUTH_URL} \
                         -e REACT_APP_REDIRECT_URI=${REACT_APP_REDIRECT_URI} \
+                        -e REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL} \
                         $DOCKER_CREDENTIALS_USR/nolleogasil_frontend
                     '''
                 }
