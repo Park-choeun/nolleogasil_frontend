@@ -3,11 +3,12 @@ import {useNavigate} from "react-router-dom";
 
 const Logout = () => {
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     useEffect(() => {
         async function logoutUser() {
             try{
-                const response = await fetch('/api/user/logout', {
+                const response = await fetch(`${apiUrl}/api/user/logout`, {
                     method: 'POST',
                     credentials: 'include' //필요에 따라 쿠키 전송 가능
                 });

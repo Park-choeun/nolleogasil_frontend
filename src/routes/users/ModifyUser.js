@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function ModifyUser(){
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
     const navigate = useNavigate();
     const {usersId} = useParams();
     const [userInfo, setUserInfo] = useState({
@@ -31,7 +32,7 @@ function ModifyUser(){
     const getUserInfo = async () => {
         //비로그인 상태면 로그인 페이지로 이동하도록 변경...
         try {
-            const response = await axios.get(`/api/user/update/${usersId}`);
+            const response = await axios.get(`${apiUrl}/api/user/update/${usersId}`);
 
             if (response.data) {
                 const userData = response.data;
@@ -49,7 +50,7 @@ function ModifyUser(){
             //기존 닉네임 localStorage에서 삭제
             localStorage.removeItem('nickname');
 
-            await axios.post(`/api/user/update/${usersId}`, { nickname });
+            await axios.post(`${apiUrl}/api/user/update/${usersId}`, { nickname });
             //수정한 닉네임 localStorage에 설정
             localStorage.setItem('nickname', nickname);
             alert("회원 정보가 수정되었습니다.");

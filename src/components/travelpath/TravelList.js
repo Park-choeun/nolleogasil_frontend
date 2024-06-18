@@ -8,9 +8,10 @@ function TravelList() {
     const [travelDetail, setTravelDetail] = useState([]);
     const [count, setCount] = useState(null);
     const [selected, setSelected] = useState("최신순");
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     const getTravelPathList = () => {
-        axios.get('/getTravelPathList', {
+        axios.get(`${apiUrl}/api/travelpath/getTravelPathList`, {
                params: {
                    sortBy: selected,
                }
@@ -26,7 +27,7 @@ function TravelList() {
     }
 
     const getCountTravelPath = () => {
-         axios.get('/getCount')
+         axios.get(`${apiUrl}/api/travelpath/getCount`)
           .then(response => {
               setCount(response.data);
           })

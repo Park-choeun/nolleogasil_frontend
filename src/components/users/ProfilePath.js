@@ -12,6 +12,7 @@ const ProfilePath = () => {
         phone: '',
         gender: '',
     });
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     useEffect(() => {
         getProfile();
@@ -44,7 +45,7 @@ const ProfilePath = () => {
 
     const sendProfileToBackend = async (profileData) => {
         try {
-            const response = await fetch('/api/user/profile', {
+            const response = await fetch(`${apiUrl}/api/user/profile`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ const ProfilePath = () => {
 
     const getUserInfo = async (userEmail) => {
         try {
-            const res = await fetch(`/api/user/info?email=${userEmail}`);
+            const res = await fetch(`${apiUrl}/api/user/info?email=${userEmail}`);
             const data = await res.json();
 
             //localStorage에 사용자 관련 정보 저장
