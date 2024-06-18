@@ -16,10 +16,11 @@ function MyChatRoomList() {
     const [selected, setSelected] = useState('myRooms');
     const [sorted,setSorted] = useState('기본순');
     const [isLoading,setIsLoading] = useState(true);
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     const fetchData = (roomType) => {
 
-        const endpoint = roomType === 'myRooms' ? "/chatRoom/myRooms" : "/chatRoom/joinedRooms";
+        const endpoint = roomType === 'myRooms' ? `${apiUrl}/api/chatRoom/myRooms` : `${apiUrl}/api/chatRoom/joinedRooms`;
 
             axios.get(endpoint,{
                 params: {

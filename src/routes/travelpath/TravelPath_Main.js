@@ -21,6 +21,7 @@ function TravelPath_Main(){
     const [pet, setPet] = useState(false);                                      //반려동물
     const [categoryCheck, setCategoryChecked] = useState({party:false, place:false, concept:false, food:false,}); //카테고리 check 여부
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //선택된 목적지를 설정
     const destinationChange = (content) => {
@@ -126,7 +127,7 @@ function TravelPath_Main(){
         pet: pet,
     };
     const sendFormData = () => {
-        axios.post("/form", data, {
+        axios.post(`${apiUrl}/api/travelpath/form`, data, {
             headers: {
                 "Content-Type": "application/json",
             },

@@ -35,7 +35,7 @@ function ChatRoom () {
     const [renderMessages, setRenderMessages] = useState(true); // 렌더링 여부 상태 추가
     const [composition, setComposition] = useState(false); // 입력 완성 여부를 추적하기 위한 상태
     const [isOpen,setIsOpen] = useState(false);
-
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
     console.log(chatroomId);
 
     const connect = () => {
@@ -95,7 +95,7 @@ function ChatRoom () {
 
     const checkMateMember = () => {
         console.log(enter.current);
-        return axios.get(`/mateMember/${chatroomId}`, {
+        return axios.get(`${apiUrl}/api/mateMember/${chatroomId}`, {
             params: {
                 usersId: usersId,
             }

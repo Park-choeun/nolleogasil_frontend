@@ -13,6 +13,7 @@ function Result(){
     const [dates, setDates] = useState([]);                     //날짜 리스트
     const [infos, setInfos] = useState([]);                     //응답 리스트
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //폼 입력에서 선택한 데이터 가져오는 함수
     useEffect(() => {
@@ -20,7 +21,7 @@ function Result(){
         if(getData){
             setGetResponse(JSON.parse(getData));
         }else{
-            axios.get('/toResult', {
+            axios.get(`${apiUrl}/api/travelpath/toResult`, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -53,7 +54,7 @@ function Result(){
         아래 형식으로 데이터를 주고, 더 이상의 말은 덧붙이지 마세요.\n
         yyyy/mm/dd\n아침 식사:\n관광지:\n점심 식사:\n관광지:\n저녁 식사:`;
 
-        axios.post("/bot/chat", null, {
+        axios.post(`${apiUrl}/api/bot/chat`, null, {
             params: {
                 prompt: promptMessage
             }
@@ -119,7 +120,7 @@ function Result(){
                         infos: Array.from(infos)
                 },
             }
-            axios.post("/travelPath/insert", data, {
+            axios.post(`${apiUrl}/api/travelpath/insert`, data, {
                 headers: {
                     "Content-Type": "application/json",
                 },
