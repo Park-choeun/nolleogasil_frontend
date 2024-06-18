@@ -8,6 +8,7 @@ import axios from "axios";
 function ReceiveApply() {
     const [receivedApplyList, setReceivedApplyList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //삭제버튼 클릭 시, 해당 apply 삭제 후, applyList에서도 제거
     const onDelete = (applyId) => {
@@ -16,7 +17,7 @@ function ReceiveApply() {
 
     //받은 신청 목록 조회
     useEffect(() => {
-        axios.get("/getReceivedApply")
+        axios.get(`${apiUrl}/api/apply/getReceivedApply`)
             .then(response => {
                 setReceivedApplyList(response.data);
                 setLoading(false);

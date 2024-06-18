@@ -11,10 +11,11 @@ function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList 
         mateTemp: 0.0
     });
     const [newMateTemp, setNewMateTemp] = useState(0.0);
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //해당 멤버의 사용자 정보 불러오기
     useEffect(() => {
-        axios.get(`/api/user/getUsersInfo?usersId=${memberUsersId}`)
+        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${memberUsersId}`)
             .then(response => {
                 setMember(response.data);
                 setNewMateTemp(response.data.mateTemp);

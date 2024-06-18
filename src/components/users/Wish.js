@@ -9,6 +9,7 @@ function Wish({ wishId, place, onDelete }) {
     const [deleted, setDeleted] = useState(false);
     const category = changeCategory(place.placeCat);
     let navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //메이트 버튼 클릭 시
     const handleClickMate = (place) => {
@@ -18,7 +19,7 @@ function Wish({ wishId, place, onDelete }) {
 
     //위시에서 제거
     const handleDeleteWish = (wishId) => {
-        axios.post(`/deleteWish?wishId=${wishId}`, { placeId: place.placeId })
+        axios.post(`${apiUrl}/api/wish/deleteWish?wishId=${wishId}`, { placeId: place.placeId })
             .then(response => {
                 if (response.data === "failed") {
                     alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");

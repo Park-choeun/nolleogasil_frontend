@@ -9,10 +9,11 @@ function MateHistoryList() {
     const [mateHistoryList, setMateHistoryList] = useState([]);
     const [myMateList, setMyMateList] = useState([]);
     const [selected, setSelected] = useState("전체보기");
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //내가 멤버로 참여된 mate 공고 글 조회
     const getMateHistory = () => {
-        axios.get("/mateMember/getMateHistory")
+        axios.get(`${apiUrl}/api/mateMember/getMateHistory`)
             .then(response => {
                 setMateHistoryList(response.data);
             }).catch(error => {
@@ -22,7 +23,7 @@ function MateHistoryList() {
 
     //내가 개설한 mate 공고 글 조회
     const getMyMateList = () => {
-        axios.get("/mate/getMateListByUsersId")
+        axios.get(`${apiUrl}/api/mate/getMateListByUsersId`)
             .then(response => {
                 setMyMateList(response.data);
                 // setMateHistoryList(response.data);

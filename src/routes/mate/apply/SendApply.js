@@ -8,6 +8,7 @@ import Apply from "../../../components/mate/apply/Apply";
 function SendApply() {
     const [sendApplyList, setSendApplyList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //삭제버튼 클릭 시, 해당 apply 삭제 후, applyList에서도 제거
     const onDelete = (applyId) => {
@@ -16,7 +17,7 @@ function SendApply() {
 
     //보낸 신청 목록 조회
     useEffect(() => {
-        axios.get("/getSendApply")
+        axios.get(`${apiUrl}/api/apply/getSendApply`)
             .then(response => {
                 setSendApplyList(response.data);
                 setLoading(false);

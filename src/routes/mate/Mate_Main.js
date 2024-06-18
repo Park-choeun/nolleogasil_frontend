@@ -17,7 +17,7 @@ function Mate_Main() {
     const current = useGeolocation();
     const latitude = current.loaded ? current.coordinates.lat : 33.450701;
     const longitude = current.loaded ? current.coordinates.lng : 126.570667;
-    const apiUrl = process.env.REACT_APP_BACKEND_URL;
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     //지도에서 장소 이름 클릭 시, 넘어오는 placeId
     let placeId = 0;
