@@ -11,7 +11,7 @@ function KakaoMap({ category }) {
     const userInfo = localStorage.getItem("userInfo");
 
     const [map, setMap] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [isSearch, setIsSearch] = useState(false);
     const current = useGeolocation();
@@ -51,7 +51,6 @@ function KakaoMap({ category }) {
 
     useEffect(() => {
         initMap();
-        setLoading(false);
     }, [initMap]);
 
     const placesSearchCB = (data, status, pagination) => {
