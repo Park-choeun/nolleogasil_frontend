@@ -8,6 +8,7 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
 
     const [deleted, setDeleted] = useState(false);
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     const displayData = (dataArray) => {
             if (dataArray.length === 1) {
@@ -22,7 +23,7 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
     //listbox 클릭시 /showDetail로 요청
     const showContent = (travelpathId) => {
 
-        axios.post("/showDetail", travelpathId,{
+        axios.post(`${apiUrl}/api/travelpath/showDetail`, travelpathId,{
            headers: {
                "Content-Type": "application/json",
            },
@@ -42,7 +43,7 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
     const deleteTravelPath = (event, travelpathId, destination) => {
         event.stopPropagation();
         if(window.confirm(`[${destination}] 여행정보를 삭제하시겠습니까?`)){
-             axios.delete(`/travelPath/delete/${travelpathId}`)
+             axios.delete(`${apiUrl}/api/travelPath/delete/${travelpathId}`)
                 .then(response => {
                     setDeleted(true);
                     onDelete(travelpathId);

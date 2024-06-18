@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function DeleteUser() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
   const handleDeleteUser = async () => {
     // 사용자에게 확인을 받음
@@ -17,7 +18,7 @@ function DeleteUser() {
     try {
       const usersId = localStorage.getItem('usersId');
 
-      const response = await fetch(`/api/user/delete/${usersId}`, {
+      const response = await fetch(`${apiUrl}/api/user/delete/${usersId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

@@ -7,6 +7,7 @@ const SessionChecker = ({ children }) => {
     const [sessionValid, setSessionValid] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     useEffect(() => {
         const checkLoginStatus = async () => {
@@ -23,7 +24,7 @@ const SessionChecker = ({ children }) => {
 
         const checkSession = async () => {
             try {
-                const response = await axios.get('/api/session/check');
+                const response = await axios.get(`${apiUrl}/api/session/check`);
                 // 세션 유효성에 따라 상태 업데이트
                 if (response.status === 200) {
                     setSessionValid(true);

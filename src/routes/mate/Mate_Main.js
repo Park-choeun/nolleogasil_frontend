@@ -39,12 +39,10 @@ function Mate_Main() {
         }).then(response => {
             setMateList(response.data);
             setLoading(false);
-            console.log("springboot와 연결됨!");
         }).catch(error => {
             throw error;
         });
     }
-    console.log("mateList>>", mateList);
 
     useEffect(() => {
         getMateList();
