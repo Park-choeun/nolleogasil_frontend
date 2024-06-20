@@ -61,7 +61,7 @@ function MateHistory({ mate, place }) {
     const handleSetMateTemp = (memberMateTempMap) => {
         const result = window.confirm("설정한 값으로 멤버들의 온도를 부여하시겠습니까?\n(값이 비어있다면 기본값으로 부여됩니다.)");
         if (result) {
-            axios.post(`/mateMember/setMemberMateTemp?mateId=${mate.mateId}`, memberMateTempMap)
+            axios.post(`${apiUrl}/api/mateMember/setMemberMateTemp?mateId=${mate.mateId}`, memberMateTempMap)
                 .then(response => {
                     if (response.data === "successful") {
                         alert("성공적으로 온도를 부여했습니다.");
