@@ -26,16 +26,18 @@ const User = () => {
                 "https://kauth.kakao.com/oauth/token",
                 payload
             );
+
+            const loginToken = `Bearer ${response.data.access_token}`;
     
             //kakao javascript sdk 초기화
             window.Kakao.init(REST_API_KEY);
 
             //access token 세팅
-            window.Kakao.Auth.setAccessToken(response.data.access_token);
+            window.Kakao.Auth.setAccessToken(loginToken);
 
-            if(response.data.access_token){ //access token을 성공적으로 가져왔다면
+            if(loginToken){ //access token을 성공적으로 가져왔다면
                 //localStorage에 access token 저장
-                localStorage.setItem('login-token', response.data.access_token);
+                localStorage.setItem('login-token', loginToken);
             }
             //사용자 정보 받아오기
             navigate("/profilePath");
