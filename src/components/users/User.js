@@ -26,7 +26,7 @@ const User = () => {
                 "https://kauth.kakao.com/oauth/token",
                 payload
             );
-
+    
             //kakao javascript sdk 초기화
             window.Kakao.init(REST_API_KEY);
 
@@ -39,6 +39,8 @@ const User = () => {
             }
             //사용자 정보 받아오기
             navigate("/profilePath");
+
+            console.log(localStorage.getItem('login-token'));
         }catch(err){
             console.log(err);
         }
