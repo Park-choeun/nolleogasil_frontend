@@ -15,7 +15,7 @@ const accessToken = localStorage.getItem('login-token');
 const usersId = localStorage.getItem('usersId');
 
 function MateModal() {
-
+    const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
     const location = useLocation();
     const placeInfo = location.state.place;
 
@@ -124,7 +124,7 @@ function MateModal() {
        formData.append("placeDto", placeInfo);
 
 
-       axios.post(`/mate/mateForm?category=${category}`, {
+       axios.post(`${apiUrl}/api/mate/mateForm?category=${category}`, {
            mateFormDto: requestData,
            placeDto: placeInfo,
        }, {
