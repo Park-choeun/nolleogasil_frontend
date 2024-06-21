@@ -4,7 +4,7 @@
 
 .subBody {
     font-family: 'Giants-Bold';
-    height: calc(var(--vh, 1vh) * 81);
+    height: 81vh;
     overflow: auto;
     position: relative;
     overflow-y: scroll;
