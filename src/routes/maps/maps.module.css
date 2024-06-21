@@ -3,7 +3,7 @@
 }
 
 .subBody {
-    height: 81vh;
+    height: calc(var(--vh, 1vh) * 81);
     position: static;
     overflow-y: scroll; /* 수직 스크롤바를 항상 표시하여 내용이 넘칠 경우 스크롤 가능하게 함 */
     -ms-overflow-style: none; /* IE 및 Edge에서 스크롤바를 숨김 */

@@ -24,7 +24,7 @@
 }
 
 .subBody {
-    height: 81vh;
+    height: calc(var(--vh, 1vh) * 81);
     overflow: auto;
     position: static;
 }

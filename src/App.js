@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import { useEffect } from "react";
 
 import Test from "./routes/Test";
 import Main from "./routes/Main";
@@ -37,6 +38,15 @@ import SessionChecker from "./components/users/SessionChecker";
 
 
 function App() {
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+
+  useEffect(() => {
+    setScreenSize();
+  });
+
   return(
       <Router>
           <Routes>
