@@ -24,12 +24,13 @@ const SessionChecker = ({ children }) => {
 
         const checkSession = async () => {
             try {
-                //요청과 함께 세션 쿠키를 보내줌
-                const response = await axios.get(`${apiUrl}/api/session/check`, { withCredentials: true });
+                const response = await axios.get(`${apiUrl}/api/session/check`);
                 // 세션 유효성에 따라 상태 업데이트
                 if (response.status === 200) {
+                    console.log('session valid true');
                     setSessionValid(true);
                 } else {
+                    console.log('session valid false');
                     setSessionValid(false);
                     navigate("/users/login"); // 로그인 페이지로 이동
                 }
