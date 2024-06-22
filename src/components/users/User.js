@@ -25,11 +25,6 @@ const User = () => {
             const response = await axios.post(
                 "https://kauth.kakao.com/oauth/token",
                 payload,
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }
             );
     
             //kakao javascript sdk 초기화
