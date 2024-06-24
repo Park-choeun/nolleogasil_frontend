@@ -86,7 +86,7 @@ function App() {
               <Route path="/profilePath" element={<ProfilePath />} />
               <Route path="/users/logout" element={<Logout />}/>
               <Route path="/users/update/:usersId" element={<SessionChecker><ModifyUser /></SessionChecker>}/>
-              <Route path="/myPage/:usersId" element={<MyPage />}/>
+              <Route path="/myPage/:usersId" element={<SessionChecker><MyPage /></SessionChecker>}/>
 
           </Routes>
       </Router>
