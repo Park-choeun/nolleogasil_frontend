@@ -70,12 +70,12 @@ function App() {
               <Route path="/eatMate/mateDetail" element={<MateDetail />} />
 
               {/*여행경로 화면*/}
-              <Route path="/travelPath/result" element={<SessionChecker><Result /></SessionChecker>} />
-              <Route path="/travelPathList" element={<SessionChecker><TravelPath_List /></SessionChecker> } />
-              <Route path="/travelDetail" element={<SessionChecker><TravelDetail /></SessionChecker>} />
+              <Route path="/travelPath/result" element={<Result />} />
+              <Route path="/travelPathList" element={<TravelPath_List />} />
+              <Route path="/travelDetail" element={<TravelDetail />} />
 
               {/*맛집에 해당하는 챗방 목록.. */}
-              <Route path="/chat/chatList" element={<SessionChecker><MyChatRoomList_Main /></SessionChecker>} />
+              <Route path="/chat/chatList" element={<MyChatRoomList_Main />} />
               <Route path="/result" element={<Result />} />
               {/*맛집에 해당하는 챗방 목록.. */}
               <Route path="/chat/:chatroomId" element={<ChatRoom />} />
@@ -86,7 +86,7 @@ function App() {
               <Route path="/profilePath" element={<ProfilePath />} />
               <Route path="/users/logout" element={<Logout />}/>
               <Route path="/users/update/:usersId" element={<SessionChecker><ModifyUser /></SessionChecker>}/>
-              <Route path="/myPage/:usersId" element={<SessionChecker><MyPage /></SessionChecker>}/>
+              <Route path="/myPage/:usersId" element={<MyPage />}/>
 
           </Routes>
       </Router>

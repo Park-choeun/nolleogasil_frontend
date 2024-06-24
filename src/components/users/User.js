@@ -40,7 +40,7 @@ const User = () => {
             //사용자 정보 받아오기
             navigate("/profilePath");
 
-            console.log(localStorage.getItem('login-token'));
+            console.log(response.data.access_token);
         }catch(err){
             console.log(err);
         }
