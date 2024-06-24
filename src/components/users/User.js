@@ -24,7 +24,7 @@ const User = () => {
             //get access token
             const response = await axios.post(
                 "https://kauth.kakao.com/oauth/token",
-                payload,
+                payload
             );
     
             //kakao javascript sdk 초기화

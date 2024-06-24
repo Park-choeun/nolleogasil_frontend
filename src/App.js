@@ -61,7 +61,7 @@ function App() {
               <Route path="/map/lodging" element={<Lodging />} />
               <Route path="/map/attraction" element={<Attraction />} />
               <Route path="/eatMate" element={<Mate_Main />} />
-              <Route path="/travelPath" element={<SessionChecker><TravelPath_Main /></SessionChecker>} />
+              <Route path="/travelPath" element={<TravelPath_Main />} />
 
               {/*메이트 화면*/}
               <Route path="/eatMate/mateForm" element={<MateModal />} />
