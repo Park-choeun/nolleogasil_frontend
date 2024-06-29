@@ -21,6 +21,7 @@ function WishList() {
 
     //사용자의 wishList 조회
     const getWishList = () => {
+        axios.defaults.withCredentials = true; //session 유지를 위해 필요한 옵션
         axios.get(`${apiUrl}/api/wish/getWishList`, {
             params: {
                 placeCat: placeCat,
