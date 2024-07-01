@@ -11,7 +11,7 @@ function KakaoMap({ category }) {
     const userInfo = localStorage.getItem("userInfo");
 
     const [map, setMap] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [isSearch, setIsSearch] = useState(false);
     const current = useGeolocation();
@@ -39,19 +39,19 @@ function KakaoMap({ category }) {
         //지도 생성 및 객체 리턴
         const initializedMap = new window.kakao.maps.Map(container, options);
         setMap(initializedMap);
-    }, []);
-    // }, [current]);
-
-    // useEffect(() => {
-    //     if (current.loaded) {
-    //         initMap();
-    //         setLoading(false); //로딩 완료 후 상태 변경
-    //     }
-    // }, [current.loaded, initMap, loading]);
+    // }, []);
+    }, [current]);
 
     useEffect(() => {
-        initMap();
-    }, [initMap]);
+        if (current.loaded) {
+            initMap();
+            setLoading(false); //로딩 완료 후 상태 변경
+        }
+    }, [current.loaded, initMap, loading]);
+
+    // useEffect(() => {
+    //     initMap();
+    // }, [initMap]);
 
     const placesSearchCB = (data, status, pagination) => {
         if (status === window.kakao.maps.services.Status.OK) {
