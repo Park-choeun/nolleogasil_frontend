@@ -32,14 +32,12 @@ function KakaoMap({ category }) {
         //지도를 생성할 때 필요한 기본 옵션
         const options = {
             center: new window.kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표
-            // center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
             level: 5 //지도의 레벨(확대, 축소 정도)
         };
 
         //지도 생성 및 객체 리턴
         const initializedMap = new window.kakao.maps.Map(container, options);
         setMap(initializedMap);
-    // }, []);
     }, [current]);
 
     useEffect(() => {
@@ -48,10 +46,6 @@ function KakaoMap({ category }) {
             setLoading(false); //로딩 완료 후 상태 변경
         }
     }, [current.loaded, initMap, loading]);
-
-    // useEffect(() => {
-    //     initMap();
-    // }, [initMap]);
 
     const placesSearchCB = (data, status, pagination) => {
         if (status === window.kakao.maps.services.Status.OK) {
@@ -150,25 +144,25 @@ function KakaoMap({ category }) {
     };
 
     //wish status 확인(wish에 추가되었는지 여부에 따라 이미지 다르게 출력)
-    // const checkingWishStatus = async (placeId) => {
-    //     //로그인 상태일때만 backend에 접근
-    //     if (userInfo) {
-    //         try {
-    //             const response = await axios.get(`${apiUrl}/api/wish/checkingWishStatus`, {
-    //                 params: {
-    //                     placeId: placeId
-    //                 }
-    //             });
+    const checkingWishStatus = async (placeId) => {
+        //로그인 상태일때만 backend에 접근
+        if (userInfo) {
+            try {
+                const response = await axios.get(`${apiUrl}/api/wish/checkingWishStatus`, {
+                    params: {
+                        placeId: placeId
+                    }
+                });
 
-    //             //위시에 있으면 true, 없으면 false
-    //             return response.data;
-    //         } catch (error) {
-    //             console.error("Error checking wish>>> ", error);
-    //         }
-    //     } else {
-    //         return false;
-    //     }
-    // }
+                //위시에 있으면 true, 없으면 false
+                return response.data;
+            } catch (error) {
+                console.error("Error checking wish>>> ", error);
+            }
+        } else {
+            return false;
+        }
+    }
 
     //mate버튼 클릭 이벤트 핸들러
     let navigate = useNavigate();
@@ -196,56 +190,56 @@ function KakaoMap({ category }) {
     }
 
     //wish버튼 클릭 이벤트 핸들러
-    // const wishBtnClickHandler = (wishBtn, place) => {
-    //     if (userInfo) {
-    //         const isAddWish = wishBtn.src.includes("addWish.png");
-    //         const action = isAddWish ? "insertWish" : "deleteWish";
+    const wishBtnClickHandler = (wishBtn, place) => {
+        if (userInfo) {
+            const isAddWish = wishBtn.src.includes("addWish.png");
+            const action = isAddWish ? "insertWish" : "deleteWish";
 
-    //         //wish에 추가
-    //         if (action === "insertWish") {
-    //             const placeDto = new FormData();
-    //             placeDto.append("placeId", place.id);
-    //             placeDto.append("placeName", place.place_name);
-    //             placeDto.append("placeAddress", place.address_name);
-    //             placeDto.append("placeRoadAddress", place.road_address_name);
-    //             placeDto.append("placePhone", place.phone);
-    //             placeDto.append("placeUrl", place.place_url);
-    //             placeDto.append("placeLat", place.y);
-    //             placeDto.append("placeLng", place.x);
+            //wish에 추가
+            if (action === "insertWish") {
+                const placeDto = new FormData();
+                placeDto.append("placeId", place.id);
+                placeDto.append("placeName", place.place_name);
+                placeDto.append("placeAddress", place.address_name);
+                placeDto.append("placeRoadAddress", place.road_address_name);
+                placeDto.append("placePhone", place.phone);
+                placeDto.append("placeUrl", place.place_url);
+                placeDto.append("placeLat", place.y);
+                placeDto.append("placeLng", place.x);
 
-    //             axios.post(`${apiUrl}/api/wish/${action}?category=${category}`, placeDto,
-    //                 {
-    //                     headers: {
-    //                         "Content-Type": "application/json" // JSON 형식으로 요청 보냄을 서버에 알림
-    //                     }
-    //                 }).then(response => {
-    //                 if (response.data === "successful") {
-    //                     wishBtn.src = "/images/map/removeWish.png";
-    //                 } else {
-    //                     alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
-    //                 }
-    //             }).catch(error => {
-    //                 console.error(`Error ${action}>>> `, error.stack);
-    //             });
-    //         } else {  //action === "deleteWish"(wish에서 삭제)
-    //             axios.post(`${apiUrl}/api/wish/${action}?wishId=0`, {placeId: place.id})
-    //                 .then(response => {
-    //                     if (response.data === "successful") {
-    //                         wishBtn.src = "/images/map/addWish.png";
-    //                     } else {
-    //                         alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
-    //                     }
-    //                 }).catch(error => {
-    //                 console.error(`Error ${action}>>> `, error.stack);
-    //             });
-    //         }
-    //     } else {
-    //         const result = window.confirm("로그인 후, 사용가능한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?");
-    //         if (result) {
-    //             navigate("/users/login");
-    //         }
-    //     }
-    // }
+                axios.post(`${apiUrl}/api/wish/${action}?category=${category}`, placeDto,
+                    {
+                        headers: {
+                            "Content-Type": "application/json" // JSON 형식으로 요청 보냄을 서버에 알림
+                        }
+                    }).then(response => {
+                    if (response.data === "successful") {
+                        wishBtn.src = "/images/map/removeWish.png";
+                    } else {
+                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                }).catch(error => {
+                    console.error(`Error ${action}>>> `, error.stack);
+                });
+            } else {  //action === "deleteWish"(wish에서 삭제)
+                axios.post(`${apiUrl}/api/wish/${action}?wishId=0`, {placeId: place.id})
+                    .then(response => {
+                        if (response.data === "successful") {
+                            wishBtn.src = "/images/map/addWish.png";
+                        } else {
+                            alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                        }
+                    }).catch(error => {
+                    console.error(`Error ${action}>>> `, error.stack);
+                });
+            }
+        } else {
+            const result = window.confirm("로그인 후, 사용가능한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?");
+            if (result) {
+                navigate("/users/login");
+            }
+        }
+    }
 
     //placeName 클릭 이벤트 핸들러 -> 해당 장소의 mate공고글 보러가기
     const placeNameClickHandler = (placeId) => {
@@ -254,7 +248,7 @@ function KakaoMap({ category }) {
 
     //검색결과 항목을 element로 반환(출력)
     const getListItem = async (place, idx) => {
-        // const wishStatus = await checkingWishStatus(place.id);
+        const wishStatus = await checkingWishStatus(place.id);
         const el = document.createElement("div");
         let itemStr = `
             <div class="placeInfo">
@@ -285,14 +279,12 @@ function KakaoMap({ category }) {
             itemStr += `<img src="/images/map/createMate.png" alt="메이트글 작성" class="mateBtn" />`;
         }
 
-        itemStr += `<img src="/images/map/addWish.png" alt="찜하기" class="wishBtn" />`;
-
         //위시에 있으면 true, 없으면 false
-        // if (wishStatus) {
-        //     itemStr += `<img src="/images/map/deleteWish.png" alt="찜 해제" class="wishBtn" />`;
-        // } else {
-        //     itemStr += `<img src="/images/map/addWish.png" alt="찜하기" class="wishBtn" />`;
-        // }
+        if (wishStatus) {
+            itemStr += `<img src="/images/map/deleteWish.png" alt="찜 해제" class="wishBtn" />`;
+        } else {
+            itemStr += `<img src="/images/map/addWish.png" alt="찜하기" class="wishBtn" />`;
+        }
 
         itemStr += `  
                             </td>
@@ -354,22 +346,22 @@ function KakaoMap({ category }) {
         el.className = "item";
 
         //placeName 클릭 이벤트 핸들러 -> 해당 mate공고글 보러가기
-        // const placeName = el.querySelector(".placeName1");
-        // if (placeName) {
-        //     placeName.addEventListener('click', () => placeNameClickHandler(place.id));
-        // }
+        const placeName = el.querySelector(".placeName1");
+        if (placeName) {
+            placeName.addEventListener('click', () => placeNameClickHandler(place.id));
+        }
 
-        // //mateBtn 클릭 이벤트 핸들러
-        // const mateBtn = el.querySelector(".mateBtn");
-        // if (mateBtn) {
-        //     mateBtn.addEventListener('click', () => mateBtnClickHandler(place));
-        // }
+        //mateBtn 클릭 이벤트 핸들러
+        const mateBtn = el.querySelector(".mateBtn");
+        if (mateBtn) {
+            mateBtn.addEventListener('click', () => mateBtnClickHandler(place));
+        }
 
-        // //wishBtn 클릭 이벤트 핸들러
-        // const wishBtn = el.querySelector(".wishBtn");
-        // if (wishBtn) {
-        //     wishBtn.addEventListener('click', () => wishBtnClickHandler(wishBtn, place));
-        // }
+        //wishBtn 클릭 이벤트 핸들러
+        const wishBtn = el.querySelector(".wishBtn");
+        if (wishBtn) {
+            wishBtn.addEventListener('click', () => wishBtnClickHandler(wishBtn, place));
+        }
 
         return el;
     };
