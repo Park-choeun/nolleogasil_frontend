@@ -23,10 +23,10 @@ const Logout = () => {
                     navigate("/");
                     alert('로그아웃되었습니다!');
                 }else{
-                    console.error('Logout failed: ', response.statusText);
+                    console.error('failed logout: ', response.statusText);
                 }
             }catch(error){
-                console.error('Logout failed: ', error);
+                console.error('error logout: ', error);
             }
         }
         logoutUser();
