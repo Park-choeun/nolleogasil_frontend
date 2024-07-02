@@ -31,8 +31,8 @@ function KakaoMap({ category }) {
 
         //지도를 생성할 때 필요한 기본 옵션
         const options = {
-            // center: new window.kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표
-            center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
+            center: new window.kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표
+            // center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
             level: 5 //지도의 레벨(확대, 축소 정도)
         };
 
