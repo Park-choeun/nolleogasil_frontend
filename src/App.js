@@ -82,7 +82,7 @@ function App() {
 
               {/*사용자 정보 관련 화면*/}
               <Route path="/users/login" element={<Login />} />
-              <Route path="/api/user/callback" element={<User />} />
+              <Route path="/user/callback" element={<User />} />
               <Route path="/profilePath" element={<ProfilePath />} />
               <Route path="/users/logout" element={<Logout />}/>
               <Route path="/users/update/:usersId" element={<SessionChecker><ModifyUser /></SessionChecker>}/>
