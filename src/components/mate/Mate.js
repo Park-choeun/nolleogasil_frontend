@@ -14,7 +14,7 @@ function Mate({ mate, place }) {
 
     //해당 사용자의 신청상태 불러오기
     const checkApplyStatus = () => {
-        axios.get(`${apiUrl}/api/apply/checkingApplyStatus?mateId=${mate.mateId}`)
+        axios.get(`${apiUrl}/api/apply/checkingApplyStatus?mateId=${mate.mateId}`, {withCredentials: true})
             .then(response => {
                 if (!(response.data === "failed")) {
                     setIsApply(response.data);
@@ -37,7 +37,7 @@ function Mate({ mate, place }) {
             if (usersId === mate.usersId) {
                 alert("본인이 게시한 맛집메이트 공고 글입니다.");
             } else {
-                axios.post(`${apiUrl}/api/apply/insertApply?mateId=${mateId}`)
+                axios.post(`${apiUrl}/api/apply/insertApply?mateId=${mateId}`, {withCredentials: true})
                     .then(response => {
                         if (response.data === "failed") {
                             alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");

@@ -19,7 +19,7 @@ function Wish({ wishId, place, onDelete }) {
 
     //위시에서 제거
     const handleDeleteWish = (wishId) => {
-        axios.post(`${apiUrl}/api/wish/deleteWish?wishId=${wishId}`, { placeId: place.placeId })
+        axios.post(`${apiUrl}/api/wish/deleteWish?wishId=${wishId}`, { placeId: place.placeId }, {withCredentials: true})
             .then(response => {
                 if (response.data === "failed") {
                     alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
