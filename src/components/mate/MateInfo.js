@@ -17,7 +17,7 @@ function MateInfo({ mate, place, setMemberCountValue, isReceive, applicantId }) 
 
     //현재 메이트 모집 인원수 조회
     const getMemberCount = () => {
-        axios.get(`${apiUrl}/api/mateMember/countMateMember?mateId=${mate.mateId}`)
+        axios.get(`${apiUrl}/api/mateMember/countMateMember?mateId=${mate.mateId}`, {withCredentials: true})
             .then(response => {
                 setMemberCount(response.data);
                 if (setMemberCountValue) {
@@ -31,7 +31,7 @@ function MateInfo({ mate, place, setMemberCountValue, isReceive, applicantId }) 
 
     //신청자 정보 조회
     const getApplicantInfo = () => {
-        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${applicantId}`)
+        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${applicantId}`, {withCredentials: true})
             .then(response => {
                 setApplicant(response.data);
             }).catch(error => {

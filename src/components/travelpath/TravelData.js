@@ -23,10 +23,11 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
     //listbox 클릭시 /showDetail로 요청
     const showContent = (travelpathId) => {
 
-        axios.post(`${apiUrl}/api/travelpath/showDetail`, travelpathId,{
+        axios.post(`${apiUrl}/api/travelpath/showDetail`, travelpathId, {
            headers: {
                "Content-Type": "application/json",
            },
+           withCredentials: true
        })
         .then(response => {
             const redirectUrl = response.data;
@@ -43,7 +44,7 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
     const deleteTravelPath = (event, travelpathId, destination) => {
         event.stopPropagation();
         if(window.confirm(`[${destination}] 여행정보를 삭제하시겠습니까?`)){
-             axios.delete(`${apiUrl}/api/travelPath/delete/${travelpathId}`)
+             axios.delete(`${apiUrl}/api/travelpath/delete/${travelpathId}`, {withCredentials: true})
                 .then(response => {
                     setDeleted(true);
                     onDelete(travelpathId);

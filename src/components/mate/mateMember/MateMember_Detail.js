@@ -15,7 +15,7 @@ function MateMember_Detail({ masterUsersId, memberId, memberUsersId, handleClose
 
     //해당 멤버의 사용자 정보 불러오기
     useEffect(() => {
-        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${memberUsersId}`)
+        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${memberUsersId}`, {withCredentials: true})
             .then(response => {
                 setMember(response.data);
             }).catch(error => {
@@ -27,7 +27,7 @@ function MateMember_Detail({ masterUsersId, memberId, memberUsersId, handleClose
     const deleteMateMember = (memberId) => {
         const result = window.confirm(`${member.nickname}님을 정말로 내보내시겠습니까?`);
         if (result) {
-            axios.post(`${apiUrl}/api/mateMember/deleteMateMember?matememberId=${memberId}`)
+            axios.post(`${apiUrl}/api/mateMember/deleteMateMember?matememberId=${memberId}`, {withCredentials: true})
                 .then(response => {
                     if (response.data === "successful") {
                         alert("해당 멤버 삭제가 완료되었습니다.");

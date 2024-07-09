@@ -151,7 +151,8 @@ function KakaoMap({ category }) {
                 const response = await axios.get(`${apiUrl}/api/wish/checkingWishStatus`, {
                     params: {
                         placeId: placeId
-                    }
+                    },
+                    withCredentials: true
                 });
 
                 //위시에 있으면 true, 없으면 false
@@ -211,7 +212,8 @@ function KakaoMap({ category }) {
                     {
                         headers: {
                             "Content-Type": "application/json" // JSON 형식으로 요청 보냄을 서버에 알림
-                        }
+                        },
+                        withCredentials: true
                     }).then(response => {
                     if (response.data === "successful") {
                         wishBtn.src = "/images/map/removeWish.png";
@@ -222,7 +224,7 @@ function KakaoMap({ category }) {
                     console.error(`Error ${action}>>> `, error.stack);
                 });
             } else {  //action === "deleteWish"(wish에서 삭제)
-                axios.post(`${apiUrl}/api/wish/${action}?wishId=0`, {placeId: place.id})
+                axios.post(`${apiUrl}/api/wish/${action}?wishId=0`, {placeId: place.id}, {withCredentials: true})
                     .then(response => {
                         if (response.data === "successful") {
                             wishBtn.src = "/images/map/addWish.png";

@@ -51,6 +51,7 @@ const ProfilePath = () => {
                     'Content-Type': 'application/json',
                     Authorization: localStorage.getItem("login-token"),
                 },
+                withCredentials: true,
                 body: JSON.stringify(profileData),
             });
 
@@ -73,7 +74,9 @@ const ProfilePath = () => {
 
     const getUserInfo = async (userEmail) => {
         try {
-            const res = await fetch(`${apiUrl}/api/user/info?email=${userEmail}`);
+            const res = await fetch(`${apiUrl}/api/user/info?email=${userEmail}`, {
+                withCredentials: true
+            });
             const data = await res.json();
 
             //localStorage에 사용자 관련 정보 저장
