@@ -128,6 +128,7 @@ function TravelPath_Main(){
     };
     const sendFormData = () => {
         axios.post(`${apiUrl}/api/travelpath/form`, data, {
+            withCredentials: true,
             headers: {
                 "Content-Type": "application/json",
             },
