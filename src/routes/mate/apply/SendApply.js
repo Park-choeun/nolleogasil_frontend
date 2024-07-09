@@ -17,7 +17,7 @@ function SendApply() {
 
     //보낸 신청 목록 조회
     useEffect(() => {
-        axios.get(`${apiUrl}/api/apply/getSendApply`)
+        axios.get(`${apiUrl}/api/apply/getSendApply`, { withCredentials: true })
             .then(response => {
                 setSendApplyList(response.data);
                 setLoading(false);

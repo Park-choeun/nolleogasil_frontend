@@ -10,7 +10,7 @@ const Logout = () => {
             try{
                 const response = await fetch(`${apiUrl}/api/user/logout`, {
                     method: 'POST',
-                    credentials: 'include' //필요에 따라 쿠키 전송 가능
+                    withCredentials: true
                 });
 
                 if(response.ok){ //로그아웃 성공 시

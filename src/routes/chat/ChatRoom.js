@@ -41,7 +41,7 @@ function ChatRoom () {
     const connect = () => {
         // 소켓 연결
         const stompClient = Stomp.over(() =>
-            new SockJS("http://localhost:8080/ws")
+            new SockJS(`${apiUrl}/ws`)
         );
 
         client.current = stompClient;
@@ -98,7 +98,8 @@ function ChatRoom () {
         return axios.get(`${apiUrl}/api/mateMember/${chatroomId}`, {
             params: {
                 usersId: usersId,
-            }
+            },
+            withCredentials: true
         })
             .then((response) => {
                 console.log(response.data);
@@ -149,13 +150,10 @@ function ChatRoom () {
         );
 
         setMessages((prev) => [...prev, newMsg]);
-
-
     }
 
 
     const disconnected =()=>{
-
         if (client.current.connected) {
             client.current?.send(
                 "/pub/chat.send.leave",
@@ -166,13 +164,10 @@ function ChatRoom () {
         }
 
         client.current.deactivate();
-
     };
 
 
     const send = ({chatroomId}) => {
-
-
         console.log("메세지보내는 중...");
         console.log(enter.current);
         console.log(client.current.connected);
@@ -221,7 +216,7 @@ function ChatRoom () {
 
     const fetchMessages  = (chatroomId) => {
         axios
-            .get(`/chat/messages/${chatroomId}`)
+            .get(`/chat/messages/${chatroomId}`, { withCredentials: true })
             .then((response) => {
                 console.log("메시지 목록", response.data);
                 setMessages(response.data);
@@ -250,7 +245,7 @@ function ChatRoom () {
     }
 
     const getChatRoom = (chatroomId) => {
-        axios.get(`/chatRoom/${chatroomId}`)
+        axios.get(`/chatRoom/${chatroomId}`, { withCredentials: true })
             .then(res => {
                 setChatRoom(res.data);
                 setIsLoading(false);  // 로딩 상태 비활성화
