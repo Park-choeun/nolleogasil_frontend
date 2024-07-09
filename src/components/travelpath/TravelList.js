@@ -14,7 +14,8 @@ function TravelList() {
         axios.get(`${apiUrl}/api/travelpath/getTravelPathList`, {
                params: {
                    sortBy: selected,
-               }
+               },
+               withCredentials: true
            })
           .then(response => {
               if(response.data !== "") {
@@ -27,7 +28,7 @@ function TravelList() {
     }
 
     const getCountTravelPath = () => {
-         axios.get(`${apiUrl}/api/travelpath/getCount`)
+         axios.get(`${apiUrl}/api/travelpath/getCount`, {withCredentials: true})
           .then(response => {
               setCount(response.data);
           })

@@ -39,7 +39,7 @@ function Apply({ apply, applyTmp, onDelete }) {
 
     //해당 mate정보 가져오기
     const getMate = () => {
-        axios.get(`${apiUrl}/api/mate/getMate?mateId=${apply.mateId}`)
+        axios.get(`${apiUrl}/api/mate/getMate?mateId=${apply.mateId}`,{withCredentials: true})
             .then(response => {
                 setMate(response.data);
                 setPlace(response.data.place);
@@ -75,7 +75,7 @@ function Apply({ apply, applyTmp, onDelete }) {
         const result = window.confirm(`해당 신청을 정말 ${text}하시겠습니까?`);
 
         if (result) {
-            axios.post(`${apiUrl}/api/apply/deleteApply`, { applyId: applyId })
+            axios.post(`${apiUrl}/api/apply/deleteApply`, { applyId: applyId } ,{withCredentials: true})
                 .then(response => {
                     if (response.data === "failed") {
                         alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
@@ -97,7 +97,7 @@ function Apply({ apply, applyTmp, onDelete }) {
     const handleUpdateIsApply = (applyId, status) => {
         const result = window.confirm(`해당 신청을 ${status}하시겠습니까?`);
         if (result) {
-            axios.post(`${apiUrl}/api/apply/updateIsApply`, { applyId: applyId, isApply: status })
+            axios.post(`${apiUrl}/api/apply/updateIsApply`, { applyId: applyId, isApply: status }, {withCredentials: true})
                 .then(response => {
                     if (response.data === "failed") {
                         alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
