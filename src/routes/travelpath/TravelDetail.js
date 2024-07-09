@@ -16,7 +16,7 @@ function TravelDetail(){
 
     //선택된 travelPath 정보 가져오는 함수
     useEffect(() => {
-        axios.get(`${apiUrl}/api/travelpath/getDetail`)
+        axios.get(`${apiUrl}/api/travelpath/getDetail`, { withCredentials: true })
             .then(response => {
                 setTravelPath(response.data);
                 setDates(response.data.resultDto.dates);
@@ -42,6 +42,7 @@ function TravelDetail(){
                     infos: infos
                 }
                 axios.post(`${apiUrl}/api/travelpath/update`, data, {
+                    withCredentials: true,
                     headers: {
                         "Content-Type": "application/json",
                     },

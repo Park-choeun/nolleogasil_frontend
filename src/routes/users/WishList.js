@@ -26,7 +26,8 @@ function WishList() {
             params: {
                 placeCat: placeCat,
                 sortBy: selected
-            }
+            },
+            withCredentials: true
         }).then(response => {
             setWishList(response.data);
         }).catch(error => {
@@ -39,7 +40,8 @@ function WishList() {
         axios.get(`${apiUrl}/api/wish/countWish`, {
             params: {
                 placeCat: placeCat
-            }
+            },
+            withCredentials: true
         }).then(response => {
             setCount(response.data);
         }).catch(error => {

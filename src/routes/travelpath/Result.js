@@ -22,6 +22,7 @@ function Result(){
             setGetResponse(JSON.parse(getData));
         }else{
             axios.get(`${apiUrl}/api/travelpath/toResult`, {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -121,6 +122,7 @@ function Result(){
                 },
             }
             axios.post(`${apiUrl}/api/travelpath/insert`, data, {
+                withCredentials: true,
                 headers: {
                     "Content-Type": "application/json",
                 },

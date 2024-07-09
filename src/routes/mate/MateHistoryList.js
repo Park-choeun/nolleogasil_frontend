@@ -13,7 +13,7 @@ function MateHistoryList() {
 
     //내가 멤버로 참여된 mate 공고 글 조회
     const getMateHistory = () => {
-        axios.get(`${apiUrl}/api/mateMember/getMateHistory`)
+        axios.get(`${apiUrl}/api/mateMember/getMateHistory`, { withCredentials: true })
             .then(response => {
                 setMateHistoryList(response.data);
             }).catch(error => {
@@ -23,7 +23,7 @@ function MateHistoryList() {
 
     //내가 개설한 mate 공고 글 조회
     const getMyMateList = () => {
-        axios.get(`${apiUrl}/api/mate/getMateListByUsersId`)
+        axios.get(`${apiUrl}/api/mate/getMateListByUsersId`, { withCredentials: true })
             .then(response => {
                 setMyMateList(response.data);
                 // setMateHistoryList(response.data);

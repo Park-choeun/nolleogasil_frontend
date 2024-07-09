@@ -128,6 +128,7 @@ function MateModal() {
            mateFormDto: requestData,
            placeDto: placeInfo,
        }, {
+            withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'// JSON 형식으로 요청 보냄을 서버에 알림
             },

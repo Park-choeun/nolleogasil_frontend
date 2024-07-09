@@ -17,7 +17,7 @@ function ReceiveApply() {
 
     //받은 신청 목록 조회
     useEffect(() => {
-        axios.get(`${apiUrl}/api/apply/getReceivedApply`)
+        axios.get(`${apiUrl}/api/apply/getReceivedApply`, { withCredentials: true })
             .then(response => {
                 setReceivedApplyList(response.data);
                 setLoading(false);

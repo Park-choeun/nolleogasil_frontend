@@ -22,29 +22,25 @@ function MyChatRoomList() {
 
         const endpoint = roomType === 'myRooms' ? `${apiUrl}/api/chatRoom/myRooms` : `${apiUrl}/api/chatRoom/joinedRooms`;
 
-            axios.get(endpoint,{
-                params: {
-                    sortedBy: sorted,
-                }, 
-                withCredentials: true
-            }).then(res => {
-                setChatRoomList(res.data);
-                setIsLoading(false);
-            }).catch(error => {
-                console.log("Failed to fetch chat Room.", error);
-            })
+        axios.get(endpoint,{
+            params: {
+                sortedBy: sorted,
+            }, 
+            withCredentials: true
+        }).then(res => {
+            setChatRoomList(res.data);
+            setIsLoading(false);
+        }).catch(error => {
+            console.log("Failed to fetch chat Room.", error);
+        })
 
-        }
-
-
+    }
 
     useEffect(() => {
 
         fetchData(selected);
 
     },[selected,sorted]);
-
-
 
 
     // 버튼 클릭 핸들러 함수
@@ -74,8 +70,6 @@ function MyChatRoomList() {
                 break;
         }
     };
-
-
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', height: '81vh', justifyContent: 'center'}}>
