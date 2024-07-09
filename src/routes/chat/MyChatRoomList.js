@@ -25,7 +25,8 @@ function MyChatRoomList() {
             axios.get(endpoint,{
                 params: {
                     sortedBy: sorted,
-                }
+                }, 
+                withCredentials: true
             }).then(res => {
                 setChatRoomList(res.data);
                 setIsLoading(false);
