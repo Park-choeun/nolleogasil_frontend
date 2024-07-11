@@ -24,7 +24,7 @@ const SessionChecker = ({ children }) => {
 
         const checkSession = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/api/session/check`, {withCredentials: true});
+                const response = await axios.get(`${apiUrl}/api/session/check`, { withCredentials: true });
                 // 세션 유효성에 따라 상태 업데이트
                 if (response.status === 200) {
                     console.log('session valid true');
