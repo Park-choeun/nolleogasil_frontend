@@ -10,18 +10,19 @@ function Main() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [nickname, setNickname] = useState('');
 
+    const checkLoginStatus = async () => {
+        const storedAccessToken = localStorage.getItem('login-token');
+
+        if(storedAccessToken){ //로그인 상태일 경우
+            setIsLoggedIn(true);
+            setNickname(localStorage.getItem('nickname'));
+        }else{ //비로그인 상태일 경우
+            setIsLoggedIn(false);
+        }
+    };
+
     //페이지 로드 시 로그인 상태 확인
     useEffect(() => {
-        const checkLoginStatus = async () => {
-            const storedAccessToken = localStorage.getItem('login-token');
-
-            if(storedAccessToken){ //로그인 상태일 경우
-                setIsLoggedIn(true);
-                setNickname(localStorage.getItem('nickname'));
-            }else{ //비로그인 상태일 경우
-                setIsLoggedIn(false);
-            }
-        };
         checkLoginStatus();
     }, []);
 
