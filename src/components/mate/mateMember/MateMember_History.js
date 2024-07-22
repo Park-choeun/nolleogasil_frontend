@@ -26,11 +26,17 @@ function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList 
     }, []);
 
     const onChangeMateTemp = (input) => {
-        setNewMateTemp(parseFloat(input));
+        const value = parseFloat(input);
+        if (value > 100.0) {
+            setNewMateTemp(100);
+        } else {
+            setNewMateTemp(value);
+        }
+        
         if (input === "") {
             updateMemberMateTempList(memberId, member.mateTemp);
         } else {
-            updateMemberMateTempList(memberId, parseFloat(input));
+            updateMemberMateTempList(memberId, value);
         }
     }
 
