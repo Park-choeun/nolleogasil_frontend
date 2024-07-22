@@ -24,6 +24,10 @@ function Main() {
     //페이지 로드 시 로그인 상태 확인
     useEffect(() => {
         checkLoginStatus();
+        const myPageActiveTab = localStorage.getItem('activeTab');
+        if(myPageActiveTab){
+            localStorage.removeItem('activeTab');
+        }
     }, []);
 
     // 닉네임이 5글자 이상인 경우 말 줄임표 처리
