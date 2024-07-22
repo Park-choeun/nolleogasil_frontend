@@ -12,8 +12,17 @@ function MyPage() {
     const [activeTab, setActiveTab] = useState('userInfo');
     const navigate = useNavigate();
 
+    // 컴포넌트가 마운트될 때 로컬 스토리지에서 저장된 탭 상태를 가져옴
+    useEffect(() => {
+        const savedTab = localStorage.getItem('activeTab');
+        if (savedTab) {
+            setActiveTab(savedTab);
+        }
+    }, []);
+
     const handleTabChange = (tab) => {
         setActiveTab(tab);
+        localStorage.setItem('activeTab', tab); // 탭이 변경될 때 로컬 스토리지에 저장
     };
   
     return (
