@@ -219,7 +219,7 @@ function ChatRoom () {
 
 
     const fetchMessages  = (chatroomId) => {
-        axios.get(`${apiUrl}/chat/messages/${chatroomId}`,{
+        axios.get(`${apiUrl}/api/chat/messages/${chatroomId}`,{
                 withCredentials: true
             })
             .then((response) => {
@@ -250,7 +250,7 @@ function ChatRoom () {
     }
 
     const getChatRoom = (chatroomId) => {
-        axios.get(`${apiUrl}/chatRoom/${chatroomId}`,{
+        axios.get(`${apiUrl}/api/chatRoom/${chatroomId}`,{
                 withCredentials: true
             })
             .then(res => {
