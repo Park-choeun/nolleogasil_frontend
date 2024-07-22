@@ -216,7 +216,7 @@ function ChatRoom () {
 
     const fetchMessages  = (chatroomId) => {
         axios
-            .get(`/chat/messages/${chatroomId}`, { withCredentials: true })
+            .get(`${apiUrl}/api/chat/messages/${chatroomId}`, { withCredentials: true })
             .then((response) => {
                 console.log("메시지 목록", response.data);
                 setMessages(response.data);
@@ -245,7 +245,7 @@ function ChatRoom () {
     }
 
     const getChatRoom = (chatroomId) => {
-        axios.get(`/chatRoom/${chatroomId}`, { withCredentials: true })
+        axios.get(`${apiUrl}/api/chatRoom/${chatroomId}`, { withCredentials: true })
             .then(res => {
                 setChatRoom(res.data);
                 setIsLoading(false);  // 로딩 상태 비활성화
