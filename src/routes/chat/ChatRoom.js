@@ -57,14 +57,12 @@ function ChatRoom () {
         console.log(enter.current);
 
         client.current.subscribe(`/chat.exchange/room.${chatroomId}`, function (message){
-
             // 구독중인 채널에서 메세지가 왔을 때
             if(message.body) {
                 const receivedMessage = JSON.parse(message.body);
                 console.log(receivedMessage);
 
                 setMessages(prevMessages => [...prevMessages, receivedMessage]);
-
 
             }
         });
@@ -87,9 +85,9 @@ function ChatRoom () {
 
     };
 
-    const onError = () => {
-        console.log("Please refresh this page to try again!");
-
+    const onError = (error) => {
+        console.error("WebSocket connection error:", error);
+        alert("WebSocket connection error. Please refresh the page to try again.");
     };
 
 
@@ -98,9 +96,9 @@ function ChatRoom () {
         return axios.get(`${apiUrl}/api/mateMember/${chatroomId}`, {
             params: {
                 usersId: usersId,
-            },
+            }, 
             withCredentials: true
-        })
+            })
             .then((response) => {
                 console.log(response.data);
                 if (response.data === "firstEnter") {
@@ -150,10 +148,13 @@ function ChatRoom () {
         );
 
         setMessages((prev) => [...prev, newMsg]);
+
+
     }
 
 
     const disconnected =()=>{
+
         if (client.current.connected) {
             client.current?.send(
                 "/pub/chat.send.leave",
@@ -164,10 +165,13 @@ function ChatRoom () {
         }
 
         client.current.deactivate();
+
     };
 
 
     const send = ({chatroomId}) => {
+
+
         console.log("메세지보내는 중...");
         console.log(enter.current);
         console.log(client.current.connected);
@@ -215,8 +219,9 @@ function ChatRoom () {
 
 
     const fetchMessages  = (chatroomId) => {
-        axios
-            .get(`${apiUrl}/api/chat/messages/${chatroomId}`, { withCredentials: true })
+        axios.get(`${apiUrl}/chat/messages/${chatroomId}`,{
+                withCredentials: true
+            })
             .then((response) => {
                 console.log("메시지 목록", response.data);
                 setMessages(response.data);
@@ -245,7 +250,9 @@ function ChatRoom () {
     }
 
     const getChatRoom = (chatroomId) => {
-        axios.get(`${apiUrl}/api/chatRoom/${chatroomId}`, { withCredentials: true })
+        axios.get(`${apiUrl}/chatRoom/${chatroomId}`,{
+                withCredentials: true
+            })
             .then(res => {
                 setChatRoom(res.data);
                 setIsLoading(false);  // 로딩 상태 비활성화
@@ -267,18 +274,17 @@ function ChatRoom () {
         }
     };
 
-    useEffect(() => {
-        getChatRoom(chatroomId);
-    }, [chatroomId]);
+
 
     useEffect(() => {
         // 최초 렌더링 시 , 웹소켓에 연결
         // 우리는 사용자가 방에 입장하자마자 연결 시켜주어야 하기 때문에,,
+        getChatRoom(chatroomId);
         connect();
         fetchMessages(chatroomId);
         console.log(messages);
         return () => disconnected();
-    }, []);
+    }, [chatroomId]);
 
 
     useEffect(() => {
