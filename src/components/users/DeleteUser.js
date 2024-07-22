@@ -23,7 +23,7 @@ function DeleteUser() {
         headers: {
           'Content-Type': 'application/json'
         },
-        withCredentials: true
+        credentials: 'include',
       });
 
       if (response.ok) { //회원 탈퇴 성공 시
