@@ -51,7 +51,7 @@ const ProfilePath = () => {
                     'Content-Type': 'application/json',
                     Authorization: localStorage.getItem("login-token"),
                 },
-                withCredentials: true,
+                credentials: 'include',
                 body: JSON.stringify(profileData),
             });
 
@@ -75,7 +75,7 @@ const ProfilePath = () => {
     const getUserInfo = async (userEmail) => {
         try {
             const res = await fetch(`${apiUrl}/api/user/info?email=${userEmail}`, {
-                withCredentials: true
+                credentials: 'include'
             });
             const data = await res.json();
 
