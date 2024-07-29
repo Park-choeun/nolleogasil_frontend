@@ -36,6 +36,7 @@ function ChatRoom () {
     const [composition, setComposition] = useState(false); // 입력 완성 여부를 추적하기 위한 상태
     const [isOpen,setIsOpen] = useState(false);
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
+    const reconnectTimeout = useRef(null);
     console.log(chatroomId);
 
     const connect = () => {
@@ -66,6 +67,9 @@ function ChatRoom () {
             }
         });
 
+        stompClient.heartbeat.outgoing = 20000; // 20초마다 클라이언트에서 서버로 ping
+        stompClient.heartbeat.incoming = 20000; // 20초마다 서버에서 클라이언트로 pong
+
         client.current.activate();
         console.log(client.current.connected);
 
@@ -87,6 +91,12 @@ function ChatRoom () {
     const onError = (error) => {
         console.error("WebSocket connection error:", error);
         alert("WebSocket connection error. Please refresh the page to try again.");
+        if (reconnectTimeout.current) {
+            clearTimeout(reconnectTimeout.current);
+        }
+        reconnectTimeout.current = setTimeout(() => {
+            connect();
+        }, 5000); // 5초 후 재연결 시도
     };
 
 
@@ -147,8 +157,6 @@ function ChatRoom () {
         );
 
         setMessages((prev) => [...prev, newMsg]);
-
-
     }
 
 
@@ -169,7 +177,6 @@ function ChatRoom () {
 
 
     const send = ({chatroomId}) => {
-
 
         console.log("메세지보내는 중...");
         console.log(enter.current);
@@ -211,6 +218,7 @@ function ChatRoom () {
             );
             setMessages(prevMessages => [...prevMessages, newMsg]);
             setNewMessage("");
+
         } else {
             connect();
         }
@@ -294,6 +302,7 @@ function ChatRoom () {
         const updatedGroupedMessages = groupingMessageByDate(messages);
         // 그룹화된 메시지 상태 업데이트
         setGroupedMessages(updatedGroupedMessages);
+
     }, [messages]); // 메시지 목록이 변경될 때마다 재실행
 
 
