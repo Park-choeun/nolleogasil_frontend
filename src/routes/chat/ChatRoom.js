@@ -67,8 +67,8 @@ function ChatRoom () {
             }
         });
 
-        stompClient.heartbeat.outgoing = 20000; // 20초마다 클라이언트에서 서버로 ping
-        stompClient.heartbeat.incoming = 20000; // 20초마다 서버에서 클라이언트로 pong
+        client.current.heartbeat.outgoing = 20000; // 20초마다 클라이언트에서 서버로 ping
+        client.current.heartbeat.incoming = 20000; // 20초마다 서버에서 클라이언트로 pong
 
         client.current.activate();
         console.log(client.current.connected);
