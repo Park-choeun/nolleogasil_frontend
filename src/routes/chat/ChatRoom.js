@@ -46,8 +46,7 @@ function ChatRoom () {
 
         client.current = stompClient;
 
-        client.current.connect({
-        },function () {onConnected()},onError());
+        client.current.connect({}, onConnected, onError);
 
     };
 
@@ -56,7 +55,7 @@ function ChatRoom () {
         console.log("구독중");
         console.log(enter.current);
 
-        client.current.subscribe(`/chat.exchange/room.${chatroomId}`, function (message){
+        client.current.subscribe(`/sub/chat.exchange/room.${chatroomId}`, function (message){
             // 구독중인 채널에서 메세지가 왔을 때
             if(message.body) {
                 const receivedMessage = JSON.parse(message.body);
