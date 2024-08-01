@@ -2,12 +2,10 @@ import React, {useEffect, useRef, useState} from "react";
 import {Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import axios from "axios";
-import {useLocation, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import styles from "./ChatRoom.module.css"
 import Top from "../../components/common/Top";
 import UnderBar from "../../components/common/UnderBar";
-import MenuBar from "../../components/chat/MenuBar.tsx";
-
 
 const accessToken = localStorage.getItem('login-token');
 
@@ -56,7 +54,7 @@ function ChatRoom () {
         console.log("구독중");
         console.log(enter.current);
 
-        client.current.subscribe(`/topic/chat.exchange/room.` + chatroomId, function (message){
+        client.current.subscribe(`/sub/chat.exchange/room.` + chatroomId, function (message){
             // 구독중인 채널에서 메세지가 왔을 때
             if(message.body) {
                 const receivedMessage = JSON.parse(message.body);
@@ -102,9 +100,9 @@ function ChatRoom () {
 
     const checkMateMember = () => {
         console.log(enter.current);
-        return axios.get(`${apiUrl}/api/mateMember/${chatroomId}`, {
+        return axios.get(`${apiUrl}/api/mateMember/checkedMember`, {
             params: {
-                usersId: usersId,
+                chatroomId: chatroomId,
             }, 
             withCredentials: true
             })
