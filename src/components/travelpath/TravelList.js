@@ -11,7 +11,7 @@ function TravelList() {
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
     const getTravelPathList = () => {
-        axios.get(`${apiUrl}/api/travelpath/getTravelPathList`, {
+        axios.get(`${apiUrl}/api/travelpath/travelpathList`, {
                params: {
                    sortBy: selected,
                },
@@ -28,7 +28,7 @@ function TravelList() {
     }
 
     const getCountTravelPath = () => {
-         axios.get(`${apiUrl}/api/travelpath/getCount`, {withCredentials: true})
+         axios.get(`${apiUrl}/api/travelpath/count`, {withCredentials: true})
           .then(response => {
               setCount(response.data);
           })
