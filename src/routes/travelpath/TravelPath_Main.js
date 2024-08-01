@@ -23,6 +23,33 @@ function TravelPath_Main(){
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
+    //세션 체크(로그인 세션이 유효한지)
+    const sessionCheck = async () => {
+        try{
+            //로그인 토큰이 있는지 먼저 확인
+            const storedAccessToken = localStorage.getItem("login-token");
+
+            //로그인 토큰이 있다면, 로그인 상태로 인지
+            if (storedAccessToken) {
+                //세션이 만료되어도 localStorage에 로그인 토큰이 남아있기 때문에 세션체크로 더블 체크
+                 const response = await axios.get("/api/session/check");
+                 return response.status === 200; //200일때는 true를, 아닐 때는 false를 반환
+            } else {
+                //비로그인 상태일 경우 (로그인 토큰이 없는 경우)
+                return false;
+            }
+        } catch(error){
+           if (error.response && error.response.status === 401) {
+               // 세션 만료인 경우
+               return false;
+           } else {
+               // 다른 오류일 경우
+               console.error('Error checking session: ', error);
+               throw error;
+           }
+        }
+    };
+
     //선택된 목적지를 설정
     const destinationChange = (content) => {
         setDestination(content);
@@ -61,14 +88,28 @@ function TravelPath_Main(){
     };
 
     //카테고리 check여부에 따라 다른 동작 수행
-     const handleButtonClick = (event) => {
+     const handleButtonClick = async (event) => {
         event.preventDefault();
-        if (!areCategoriesChecked()) {
-            window.alert("각 질문마다 최소 한 개 이상의 항목을 선택해주세요.");
-        } else if(destination == "") {
-            window.alert("목적지를 설정해주세요.");
-        } else {
-            sendFormData();
+        try{
+            const isSessionValid = await sessionCheck();
+
+            if(!isSessionValid){
+                const userConfirmed = window.confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
+                if(userConfirmed){
+                    //로그인 페이지로 이동
+                    navigate("/users/login");
+                }
+            } else{
+                if (!areCategoriesChecked()) {
+                    window.alert("각 질문마다 최소 한 개 이상의 항목을 선택해주세요.");
+                } else if(destination == "") {
+                    window.alert("목적지를 설정해주세요.");
+                } else {
+                    sendFormData();
+                }
+            }
+        } catch(error){
+            console.error('Checking process is failed: ', error);
         }
     };
 
@@ -134,8 +175,9 @@ function TravelPath_Main(){
             },
         })
         .then(response => {
-            const redirectUrl = response.data;
-            navigate(redirectUrl);
+            const conditionDto = response.data;
+            localStorage.setItem('conditionDto', JSON.stringify(conditionDto));
+            navigate("/travelPath/result");
         })
         .catch(error => {
             window.alert("오류가 발생했습니다. 다시 시도해주세요.");
@@ -149,7 +191,8 @@ function TravelPath_Main(){
             </div>
             <form>
                 <div className={styles.travelForm}>
-                    <span className={styles.questionMain}>{nickname}님, 어떠한 여행을 준비하고 계신가요?</span>
+                {nickname == null? (<span className={styles.questionMain}>어떠한 여행을 준비하고 계신가요?</span>)
+                    : (<span className={styles.questionMain}>{nickname}님, 어떠한 여행을 준비하고 계신가요?</span>)}
                         <div className={styles.division}>
                             <p className={styles.questions}>이번 여행은 어디로 가시나요?</p>
                             <div className={styles.section}>

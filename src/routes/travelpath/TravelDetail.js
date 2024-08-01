@@ -9,6 +9,7 @@ import axios from 'axios';
 
 function TravelDetail(){
     const [travelPath, setTravelPath] = useState(null);  //하나의 travelPath
+    const [recommendationId, setRecommendationId] = useState(null); //DB에서 가져온 recommendationId를 담을 변수
     const [dates, setDates] = useState(null);           //DB에서 가져온 dates를 담을 변수
     const [infos, setInfos] = useState(null);           //DB에서 가져온 infos를 담을 변수
     const navigate = useNavigate();
@@ -16,15 +17,12 @@ function TravelDetail(){
 
     //선택된 travelPath 정보 가져오는 함수
     useEffect(() => {
-        axios.get(`${apiUrl}/api/travelpath/getDetail`, { withCredentials: true })
-            .then(response => {
-                setTravelPath(response.data);
-                setDates(response.data.resultDto.dates);
-                setInfos(response.data.resultDto.infos);
-            })
-            .catch(error => {
-                window.alert("오류가 발생했습니다. 다시 시도해주세요.");
-            });
+        const travelDetailDto = JSON.parse(localStorage.getItem('travelDetailDto'));
+        const id = localStorage.getItem('recommendationId');
+        setTravelPath(travelDetailDto);
+        setRecommendationId(id);
+        setDates(travelDetailDto.resultDto.dates);
+        setInfos(travelDetailDto.resultDto.infos);
     }, []);
 
     //내용 수정 시 반영하는 함수
@@ -41,7 +39,7 @@ function TravelDetail(){
                     dates: dates,
                     infos: infos
                 }
-                axios.post(`${apiUrl}/api/travelpath/update`, data, {
+                axios.put(`${apiUrl}/api/travelpath/${recommendationId}`, data, {
                     withCredentials: true,
                     headers: {
                         "Content-Type": "application/json",
@@ -52,7 +50,6 @@ function TravelDetail(){
                 })
                 .catch(error => {
                     window.alert("오류가 발생했습니다. 다시 시도해주세요.");
-                    console.log(error.message);
                 });
             }
         }

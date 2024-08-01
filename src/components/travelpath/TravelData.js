@@ -10,6 +10,7 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
+    //데이터 콤마(,)로 나열
     const displayData = (dataArray) => {
             if (dataArray.length === 1) {
                 return dataArray[0];
@@ -20,19 +21,20 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
             }
         };
 
-    //listbox 클릭시 /showDetail로 요청
+    //listbox 클릭시 /travelDataDetail로 요청
     const showContent = (travelpathId) => {
 
-        axios.post(`${apiUrl}/api/travelpath/showDetail`, travelpathId, {
+        axios.post(`${apiUrl}/api/travelpath/travelDataDetail`, travelpathId, {
            headers: {
                "Content-Type": "application/json",
            },
            withCredentials: true
        })
         .then(response => {
-            const redirectUrl = response.data;
-            navigate(redirectUrl);
-
+            console.log(response.data);
+            localStorage.setItem('travelDetailDto', JSON.stringify(response.data.travelDetailDto));
+            localStorage.setItem('recommendationId', response.data.recommendationId);
+            navigate("/TravelDetail");
         })
         .catch(error => {
             window.alert("오류가 발생했습니다. 다시 시도해주세요.");
@@ -44,7 +46,7 @@ function TravelData({ travelpathId, destination, startDate, endDate, party, plac
     const deleteTravelPath = (event, travelpathId, destination) => {
         event.stopPropagation();
         if(window.confirm(`[${destination}] 여행정보를 삭제하시겠습니까?`)){
-             axios.delete(`${apiUrl}/api/travelpath/delete/${travelpathId}`, {withCredentials: true})
+             axios.delete(`${apiUrl}/api/travelpath/${travelpathId}`, {withCredentials: true})
                 .then(response => {
                     setDeleted(true);
                     onDelete(travelpathId);

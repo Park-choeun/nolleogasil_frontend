@@ -17,24 +17,7 @@ function Result(){
 
     //폼 입력에서 선택한 데이터 가져오는 함수
     useEffect(() => {
-        const getData = localStorage.getItem('getData');
-        if(getData){
-            setGetResponse(JSON.parse(getData));
-        }else{
-            axios.get(`${apiUrl}/api/travelpath/toResult`, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(res => {
-                setGetResponse(res.data);
-                localStorage.setItem('getData', JSON.stringify(res.data));
-            })
-            .catch(error => {
-                window.alert("오류가 발생했습니다. 다시 시도해주세요.");
-            });
-        }
+        setGetResponse(JSON.parse(localStorage.getItem('conditionDto')));
     }, []);
 
     //chatGPT API 사용을 위해 post 요청하는 함수
@@ -61,7 +44,6 @@ function Result(){
             }
         })
         .then(postRes => {
-            console.log('post 요청 응답: ', postRes.data);
             setPostResponse(postRes.data);
             setDates(postRes.data.dates);
             setInfos(postRes.data.infos);
@@ -99,7 +81,7 @@ function Result(){
     // 다른 페이지로 이동할 때 localStorage에서 데이터 삭제
     useEffect(() => {
         return () => {
-            localStorage.removeItem('getData');
+            localStorage.removeItem('conditionDto');
             localStorage.removeItem('postData');
             localStorage.removeItem('infos');
         };
@@ -121,7 +103,7 @@ function Result(){
                         infos: Array.from(infos)
                 },
             }
-            axios.post(`${apiUrl}/api/travelpath/insert`, data, {
+            axios.post(`${apiUrl}/api/travelpath/create`, data, {
                 withCredentials: true,
                 headers: {
                     "Content-Type": "application/json",
