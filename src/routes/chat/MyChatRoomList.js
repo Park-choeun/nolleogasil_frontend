@@ -49,12 +49,6 @@ function MyChatRoomList() {
         // 여기에 내가 개설한 채팅방을 표시하는 로직 추가
         setSelected(roomType);
         setIsLoading(true);
-        if(roomType === 'myRooms') {
-            console.log("내가 개설한 채팅방");
-
-        }else if(roomType === 'joinedRooms') {
-            console.log("내가 참여한 채팅방");
-        }
     };
 
     const handleDropdownSelect = (key) => {

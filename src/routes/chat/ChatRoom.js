@@ -56,7 +56,7 @@ function ChatRoom () {
         console.log("구독중");
         console.log(enter.current);
 
-        client.current.subscribe(`/sub/chat.exchange/room.${chatroomId}`, function (message){
+        client.current.subscribe(`/topic/chat.exchange/room.` + chatroomId, function (message){
             // 구독중인 채널에서 메세지가 왔을 때
             if(message.body) {
                 const receivedMessage = JSON.parse(message.body);
@@ -353,9 +353,6 @@ function ChatRoom () {
                         {chatRoom.eatPlace.placeName}
                     </div>
                     <img className={styles.menubarImg} src={'/images/chat/menubar.png'} onClick={toggleSide}/>
-                    <MenuBar isOpen={isOpen} setIsOpen={setIsOpen}>
-                    </MenuBar>
-                    {/* <p className={styles.headerSubtitle}>{chatRoom.roomName}</p>*/}
                 </div>
                 {/* 생략: 채팅방 제목 등의 렌더링 코드 */}
                 <div style={{
