@@ -37,7 +37,7 @@ function MateInfo({ mate, place, setMemberCountValue, isReceive, applicantId }) 
 
     //신청자 정보 조회
     const getApplicantInfo = () => {
-        axios.get(`${apiUrl}/api/api/user/${applicantId}/info`, { withCredentials: true })
+        axios.get(`${apiUrl}/api/user/${applicantId}/info`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setApplicant(response.data);
