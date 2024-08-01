@@ -15,24 +15,17 @@ function ChatRoom () {
 
     const usersId = Number(localStorage.getItem("usersId"));
     const userNickname = localStorage.getItem("nickname");
-    console.log(usersId);
-
     // 입력한 채팅값
     const [newMessage, setNewMessage] = useState("");
-    const [enterMessages, setEnterMessages] = useState([]);
-    const [leaveMessages, setLeaveMessages] = useState([]);
     //채팅 목록들
     const [messages,setMessages] = useState([]);
-    const [fetchMessage, setFetchMessage] = useState([]);
     const [groupedMessages, setGroupedMessages] = useState({});
     const client = useRef({});
     let enter = useRef(false);
     const { chatroomId } = useParams();
     const [chatRoom,setChatRoom] = useState(null);
     const [isLoading, setIsLoading] = useState(true);  // 로딩 상태
-    const [renderMessages, setRenderMessages] = useState(true); // 렌더링 여부 상태 추가
     const [composition, setComposition] = useState(false); // 입력 완성 여부를 추적하기 위한 상태
-    const [isOpen,setIsOpen] = useState(false);
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
     const reconnectTimeout = useRef(null);
     console.log(chatroomId);
@@ -54,14 +47,15 @@ function ChatRoom () {
         console.log("구독중");
         console.log(enter.current);
 
-        client.current.subscribe(`/sub/chat.exchange/room.` + chatroomId, function (message){
+        client.current.subscribe(`/topic/room.${chatroomId}`, function (message){
             // 구독중인 채널에서 메세지가 왔을 때
             if(message.body) {
                 const receivedMessage = JSON.parse(message.body);
                 console.log(receivedMessage);
 
-                setMessages(prevMessages => [...prevMessages, receivedMessage]);
-
+                setMessages(prevMessages => {
+                    return [...prevMessages, receivedMessage];
+                });
             }
         });
 
@@ -71,7 +65,7 @@ function ChatRoom () {
         client.current.activate();
         console.log(client.current.connected);
 
-        checkMateMember()
+        checkMateMember(chatroomId)
             .then((isFirstEnter) => {
                 console.log(isFirstEnter);
 
@@ -151,7 +145,6 @@ function ChatRoom () {
                 messageType: messageType,
                 message: message,
             })
-
         );
 
         setMessages((prev) => [...prev, newMsg]);
@@ -177,9 +170,6 @@ function ChatRoom () {
     const send = ({chatroomId}) => {
 
         console.log("메세지보내는 중...");
-        console.log(enter.current);
-        console.log(client.current.connected);
-
         // 유저의 정보 가져오기.
         const offset = 1000 * 60 * 60 * 9
         const koreaNow = new Date((new Date()).getTime() + offset);
@@ -191,7 +181,7 @@ function ChatRoom () {
 
         const newMsg = {
             chatroomId: chatroomId,
-            message: newMessage,
+            newMessage: newMessage,
             nickname: userNickname,
             usersId: usersId,
             messageType: messageType, // 가정: 메시지 타입 설정
@@ -207,14 +197,13 @@ function ChatRoom () {
                 },
                 JSON.stringify({
                     chatroomId: chatroomId,
-                    newMessage: newMessage,
+                    message: newMessage,
                     usersId: usersId,
                     messageType: messageType,
                     nickname: userNickname,
                     sendDate: sendDate,
                 })
             );
-            setMessages(prevMessages => [...prevMessages, newMsg]);
             setNewMessage("");
 
         } else {
@@ -233,10 +222,8 @@ function ChatRoom () {
             })
             .catch((error) => console.error("Failed to fetch chat messages.", error));
     }
-
-    const groupingMessageByDate = (messages) => {
-
-        console.log("Grouping messages", messages);
+    
+    const groupingMessageByDate =  async (messages) => {
 
         const messageGroups = {};
         messages.forEach((message) => {
@@ -249,9 +236,12 @@ function ChatRoom () {
             // 해당 날짜의 메시지 배열에 현재 메시지 추가
             messageGroups[date].push(message);
         });
+
+        // 각 날짜 그룹의 메시지들을 시간 순으로 정렬
+        for (const date in messageGroups) {
+            messageGroups[date].sort((a, b) => new Date(a.sendDate) - new Date(b.sendDate));
+        }
         return messageGroups;
-
-
     }
 
     const getChatRoom = (chatroomId) => {
@@ -268,7 +258,6 @@ function ChatRoom () {
                 console.error("Failed to fetch chat Room.", error)
                 setIsLoading(false);  // 에러 발생시 로딩 상태 비활성화
             })
-
     }
 
     const handleComposition = (e) => {
@@ -296,14 +285,19 @@ function ChatRoom () {
 
         console.log(messages);
 
-        // 메시지 목록을 그룹화
-        const updatedGroupedMessages = groupingMessageByDate(messages);
-        // 그룹화된 메시지 상태 업데이트
-        setGroupedMessages(updatedGroupedMessages);
+        const groupMessages = async () => {
+            // 메시지 목록을 그룹화
+            const updatedGroupedMessages = await groupingMessageByDate(messages);
+            // 그룹화된 메시지 상태 업데이트
+            setGroupedMessages(updatedGroupedMessages);
+        }
+        // 비동기 함수 호출
+        groupMessages()
 
     }, [messages]); // 메시지 목록이 변경될 때마다 재실행
 
-
+    useEffect(() => {
+    }, [groupedMessages]);
 
 
     const isCurrentUser = (sender)=>  {
@@ -339,7 +333,6 @@ function ChatRoom () {
     }
 
     return (
-
 
         <div>
             <div>
