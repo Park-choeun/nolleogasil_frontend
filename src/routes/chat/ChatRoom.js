@@ -2,12 +2,10 @@ import React, {useEffect, useRef, useState} from "react";
 import {Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import axios from "axios";
-import {useLocation, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import styles from "./ChatRoom.module.css"
 import Top from "../../components/common/Top";
 import UnderBar from "../../components/common/UnderBar";
-import MenuBar from "../../components/chat/MenuBar.tsx";
-
 
 const accessToken = localStorage.getItem('login-token');
 
@@ -36,6 +34,7 @@ function ChatRoom () {
     const [composition, setComposition] = useState(false); // 입력 완성 여부를 추적하기 위한 상태
     const [isOpen,setIsOpen] = useState(false);
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
+    const reconnectTimeout = useRef(null);
     console.log(chatroomId);
 
     const connect = () => {
@@ -46,8 +45,7 @@ function ChatRoom () {
 
         client.current = stompClient;
 
-        client.current.connect({
-        },function () {onConnected()},onError());
+        client.current.connect({}, onConnected, onError);
 
     };
 
@@ -56,7 +54,7 @@ function ChatRoom () {
         console.log("구독중");
         console.log(enter.current);
 
-        client.current.subscribe(`/chat.exchange/room.${chatroomId}`, function (message){
+        client.current.subscribe(`/sub/chat.exchange/room.` + chatroomId, function (message){
             // 구독중인 채널에서 메세지가 왔을 때
             if(message.body) {
                 const receivedMessage = JSON.parse(message.body);
@@ -66,6 +64,9 @@ function ChatRoom () {
 
             }
         });
+
+        client.current.heartbeat.outgoing = 20000; // 20초마다 클라이언트에서 서버로 ping
+        client.current.heartbeat.incoming = 20000; // 20초마다 서버에서 클라이언트로 pong
 
         client.current.activate();
         console.log(client.current.connected);
@@ -88,14 +89,20 @@ function ChatRoom () {
     const onError = (error) => {
         console.error("WebSocket connection error:", error);
         alert("WebSocket connection error. Please refresh the page to try again.");
+        if (reconnectTimeout.current) {
+            clearTimeout(reconnectTimeout.current);
+        }
+        reconnectTimeout.current = setTimeout(() => {
+            connect();
+        }, 5000); // 5초 후 재연결 시도
     };
 
 
     const checkMateMember = () => {
         console.log(enter.current);
-        return axios.get(`${apiUrl}/api/mateMember/${chatroomId}`, {
+        return axios.get(`${apiUrl}/api/mateMember/checkedMember`, {
             params: {
-                usersId: usersId,
+                chatroomId: chatroomId,
             }, 
             withCredentials: true
             })
@@ -148,8 +155,6 @@ function ChatRoom () {
         );
 
         setMessages((prev) => [...prev, newMsg]);
-
-
     }
 
 
@@ -170,7 +175,6 @@ function ChatRoom () {
 
 
     const send = ({chatroomId}) => {
-
 
         console.log("메세지보내는 중...");
         console.log(enter.current);
@@ -212,6 +216,7 @@ function ChatRoom () {
             );
             setMessages(prevMessages => [...prevMessages, newMsg]);
             setNewMessage("");
+
         } else {
             connect();
         }
@@ -219,7 +224,7 @@ function ChatRoom () {
 
 
     const fetchMessages  = (chatroomId) => {
-        axios.get(`${apiUrl}/chat/messages/${chatroomId}`,{
+        axios.get(`${apiUrl}/api/chat/messages/${chatroomId}`,{
                 withCredentials: true
             })
             .then((response) => {
@@ -250,7 +255,7 @@ function ChatRoom () {
     }
 
     const getChatRoom = (chatroomId) => {
-        axios.get(`${apiUrl}/chatRoom/${chatroomId}`,{
+        axios.get(`${apiUrl}/api/chatRoom/${chatroomId}`,{
                 withCredentials: true
             })
             .then(res => {
@@ -295,6 +300,7 @@ function ChatRoom () {
         const updatedGroupedMessages = groupingMessageByDate(messages);
         // 그룹화된 메시지 상태 업데이트
         setGroupedMessages(updatedGroupedMessages);
+
     }, [messages]); // 메시지 목록이 변경될 때마다 재실행
 
 
@@ -345,9 +351,6 @@ function ChatRoom () {
                         {chatRoom.eatPlace.placeName}
                     </div>
                     <img className={styles.menubarImg} src={'/images/chat/menubar.png'} onClick={toggleSide}/>
-                    <MenuBar isOpen={isOpen} setIsOpen={setIsOpen}>
-                    </MenuBar>
-                    {/* <p className={styles.headerSubtitle}>{chatRoom.roomName}</p>*/}
                 </div>
                 {/* 생략: 채팅방 제목 등의 렌더링 코드 */}
                 <div style={{
