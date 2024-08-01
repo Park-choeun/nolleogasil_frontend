@@ -336,7 +336,7 @@ function ChatRoom () {
                     <div className={styles.headerTitle}>
                         {chatRoom.eatPlace.placeName}
                     </div>
-                    <img className={styles.menubarImg} src={'/images/chat/menubar.png'} onClick={toggleSide}/>
+                    <img className={styles.menubarImg} src={'/images/chat/menubar.png'} />
                 </div>
                 {/* 생략: 채팅방 제목 등의 렌더링 코드 */}
                 <div style={{
