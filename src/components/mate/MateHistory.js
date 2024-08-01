@@ -19,7 +19,7 @@ function MateHistory({ mate, place }) {
 
     //해당 mate의 member 목록 조회(로그인한 사용자 본인은 제외)
     const getMateMemberList = () => {
-        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/excluding-me`)
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/excluding-me`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMateMemberList(response.data);
@@ -35,7 +35,7 @@ function MateHistory({ mate, place }) {
 
     //로그인한 사용자의 온도 부여 여부 불러오기(isGiven) -> 0이면 이미 온도를 부여한 것(1번만 부여 가능하도록)
     const getLoginUsersMemberInfo = () => {
-        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/my-info`)
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/my-info`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setLoginUsersMemberInfo(response.data);
@@ -72,7 +72,7 @@ function MateHistory({ mate, place }) {
     const handleSetMateTemp = (memberMateTempMap) => {
         const result = window.confirm("설정한 값으로 멤버들의 온도를 부여하시겠습니까?");
         if (result) {
-            axios.patch(`${apiUrl}/api/mateMember/${mate.mateId}/temp`, memberMateTempMap)
+            axios.patch(`${apiUrl}/api/mateMember/${mate.mateId}/temp`, memberMateTempMap , { withCredentials: true })
                 .then(response => {
                     if (response.status === 204) {
                         alert("성공적으로 온도를 부여했습니다.");

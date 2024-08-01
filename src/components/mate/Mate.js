@@ -21,7 +21,7 @@ function Mate({ mate, place }) {
         if (storedAccessToken) {
             try {
                 //세션이 만료되어도 localStorage에 로그인 토큰이 남아있기 때문에 세션체크로 더블 체크
-                const response = await axios.get(`${apiUrl}/api/session/check`);
+                const response = await axios.get(`${apiUrl}/api/session/check`, { withCredentials: true });
                 return response.status === 200;
             } catch (error) {
                 console.log('Error checking session: ', error);
@@ -39,7 +39,7 @@ function Mate({ mate, place }) {
 
         //로그인 세션이 존재할 때만 로그인한 사용자의 신청 상태 조회
         if (sessionValid) {
-            axios.get(`${apiUrl}/api/apply/${mate.mateId}/status`)
+            axios.get(`${apiUrl}/api/apply/${mate.mateId}/status`, { withCredentials: true })
                 .then(response => {
                     if (response.status === 200) {
                         setIsApply(response.data);
@@ -67,7 +67,7 @@ function Mate({ mate, place }) {
             if (usersId === mate.usersId) {
                 alert("본인이 게시한 맛집메이트 공고 글입니다.");
             } else {
-                axios.post(`${apiUrl}/api/apply/${mateId}`)
+                axios.post(`${apiUrl}/api/apply/${mateId}`, { withCredentials: true })
                     .then(response => {
                         if (response.status === 201) {
                             setIsApply("대기");

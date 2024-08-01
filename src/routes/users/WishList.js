@@ -24,7 +24,8 @@ function WishList() {
         axios.get(`${apiUrl}/api/wish/${placeCat}`, {
             params: {
                 sortBy: selected
-            }
+            },
+            withCredentials: true
         }).then(response => {
             if (response.status === 200) {
                 setWishList(response.data);
@@ -40,7 +41,7 @@ function WishList() {
 
     //wish에 담긴 개수 조회
     const getCountWish = () => {
-        axios.get(`${apiUrl}/api/wish/${placeCat}/count`)
+        axios.get(`${apiUrl}/api/wish/${placeCat}/count`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setCount(response.data);

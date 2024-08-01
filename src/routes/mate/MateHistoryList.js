@@ -13,7 +13,7 @@ function MateHistoryList() {
 
     //로그인한 사용자의 맛집메이트 이력 조회(로그인한 사용자가 멤버로 참여된 mate 공고 글 조회)
     const getMateHistoryList = () => {
-        axios.get(`${apiUrl}/api/mateMember/history`)
+        axios.get(`${apiUrl}/api/mateMember/history`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMateHistoryList(response.data);
@@ -29,7 +29,7 @@ function MateHistoryList() {
 
     //로그인한 사용자가 개설한 mate 공고 글 조회
     const getMyCreatedMateList = () => {
-        axios.get(`${apiUrl}/api/mate/my-create`)
+        axios.get(`${apiUrl}/api/mate/my-create`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMyMateList(response.data);
