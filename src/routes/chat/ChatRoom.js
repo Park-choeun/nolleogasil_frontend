@@ -301,12 +301,10 @@ function ChatRoom () {
 
 
     const isCurrentUser = (sender)=>  {
-
         if(Number(sender) == usersId) {
             return true;
         }
         else return false;
-
     }
 
     const handleKeyDown = (e) => {
@@ -320,11 +318,6 @@ function ChatRoom () {
     const handleInputChange = (e) => {
         setNewMessage(e.target.value);
     };
-
-    const toggleSide = ()=> {
-        setIsOpen(true);
-    };
-
 
     if (isLoading) {
         return (<div className={styles.loadingBox}>
