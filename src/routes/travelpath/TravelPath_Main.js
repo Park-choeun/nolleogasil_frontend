@@ -32,7 +32,7 @@ function TravelPath_Main(){
             //로그인 토큰이 있다면, 로그인 상태로 인지
             if (storedAccessToken) {
                 //세션이 만료되어도 localStorage에 로그인 토큰이 남아있기 때문에 세션체크로 더블 체크
-                 const response = await axios.get("/api/session/check");
+                 const response = await axios.get(`${apiUrl}/api/session/check`, { withCredentials: true });
                  return response.status === 200; //200일때는 true를, 아닐 때는 false를 반환
             } else {
                 //비로그인 상태일 경우 (로그인 토큰이 없는 경우)
