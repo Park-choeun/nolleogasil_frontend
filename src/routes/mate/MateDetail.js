@@ -45,7 +45,7 @@ function MateDetail() {
 
     //게시자 정보 가져오기
     const getMasterInfo = () => {
-        axios.get(`${apiUrl}/api/api/user/${mate.usersId}/info`, { withCredentials: true })
+        axios.get(`${apiUrl}/api/user/${mate.usersId}/info`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMaster(response.data);

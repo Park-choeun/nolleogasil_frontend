@@ -25,7 +25,7 @@ function MateMember_Detail({ masterUsersId, memberId, memberUsersId, handleClose
         if (storedAccessToken) {
             try {
                 //세션이 만료되어도 localStorage에 로그인 토큰이 남아있기 때문에 세션체크로 더블 체크
-                const response = axios.get(`${apiUrl}/api/api/session/check`, { withCredentials: true });
+                const response = axios.get(`${apiUrl}/api/session/check`, { withCredentials: true });
                 setSessionUsersId(loginUsersId);
             } catch (error) {
                 console.log('Error checking session: ', error);
