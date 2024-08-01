@@ -16,14 +16,26 @@ function ReceiveApply() {
     }
 
     //받은 신청 목록 조회
-    useEffect(() => {
-        axios.get(`${apiUrl}/api/apply/getReceivedApply`, { withCredentials: true })
+    const getReceiveApplyList = () => {
+        axios.get(`${apiUrl}/api/apply/receive`)
             .then(response => {
-                setReceivedApplyList(response.data);
-                setLoading(false);
+                if (response.status === 200) {
+                    setReceivedApplyList(response.data);
+                    setLoading(false);
+                }
             }).catch(error => {
-            throw error;
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                    alert("일시적인 오류가 발생했습니다. 다시 접속해주세요.");
+                } else {
+                    console.error("Error getReceiveApplyList>> ", error.message);
+                    alert("서버 오류가 발생했습니다. 다시 접속해주세요.");
+                }
         });
+    };
+
+    useEffect(() => {
+        getReceiveApplyList();
     }, []);
 
     return (

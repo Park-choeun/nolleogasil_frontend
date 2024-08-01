@@ -39,13 +39,19 @@ function Apply({ apply, applyTmp, onDelete }) {
 
     //해당 mate정보 가져오기
     const getMate = () => {
-        axios.get(`${apiUrl}/api/mate/getMate?mateId=${apply.mateId}`,{withCredentials: true})
+        axios.get(`${apiUrl}/api/mate/${apply.mateId}`)
             .then(response => {
-                setMate(response.data);
-                setPlace(response.data.place);
+                if (response.status === 200) {
+                    setMate(response.data);
+                    setPlace(response.data.place);
+                }
             }).catch(error => {
-            console.log("Error getMate>>> ", error.stack);
-        })
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMate>> ", error.message);
+                }
+            });
     };
 
     //마감기한이 지났는지 확인 후, timeOver 값 변경
@@ -69,51 +75,54 @@ function Apply({ apply, applyTmp, onDelete }) {
         }
     }, [mate]);
 
-    //apply 삭제 메소드, 신청 취소 메소드
+    //apply 삭제 or 신청 취소
     const handleDeleteApply = (applyId, isDelete) => {
         const text = isDelete ? "삭제" : "취소";
         const result = window.confirm(`해당 신청을 정말 ${text}하시겠습니까?`);
 
         if (result) {
-            axios.post(`${apiUrl}/api/apply/deleteApply`, { applyId: applyId } ,{withCredentials: true})
+            axios.delete(`${apiUrl}/api/apply/${applyId}`)
                 .then(response => {
-                    if (response.data === "failed") {
-                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
-                    } else {
+                    if (response.status === 204) {
                         setDeleted(true);
                         onDelete(applyId);
                     }
                 }).catch(error => {
-                if (isDelete) {
-                    console.error("Error deleteApply>>> ", error.stack);
-                } else {
-                    console.error("Error cancelApply>>> ", error.stack);
-                }
-            });
+                    if (error.response) {
+                        console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                    } else {
+                        console.error(`Error handleDeleteApply(${isDelete ? "deleteApply" : "cancelApply"})>> `, error.message);
+                        alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                });
         }
-    }
+    };
 
-    //isApply변경 메소드(수락 or 거절)
+    //isApply변경(수락 or 거절)
     const handleUpdateIsApply = (applyId, status) => {
         const result = window.confirm(`해당 신청을 ${status}하시겠습니까?`);
         if (result) {
-            axios.post(`${apiUrl}/api/apply/updateIsApply`, { applyId: applyId, isApply: status }, {withCredentials: true})
+            axios.patch(`${apiUrl}/api/apply/${applyId}`, { isApply: status })
                 .then(response => {
-                    if (response.data === "failed") {
-                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
-                    } else {
-                        if (response.data === "수락") {
-                            //수락 클릭 시, 해당 메이트의 현재 인원수가 변하도록 자동 새로고침시켜줌
+                    if (response.status === 200) {
+                        if (status === "수락") {
                             window.location.reload();
                         } else {
-                            setIsApply(response.data);
+                            setIsApply(status);
                         }
                     }
                 }).catch(error => {
-                console.error("Error updateIsApply>>> ", error.stack);
-            });
+                    if (error.response) {
+                        console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                    } else {
+                        console.error("Error handleUpdateIsApply>> ", error.message);
+                        alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                });
         }
-    }
+    };
 
     //deleted가 true일 때는 빈 요소를 반환해 Apply 카드를 제거
     if (deleted) {

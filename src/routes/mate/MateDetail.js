@@ -27,46 +27,63 @@ function MateDetail() {
     const comments = replaceComments(mate.comments);
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-    //현재 참여한 멤버 수 구하기(본인 포함)
+    //현재 해당 mate에 참여한 member 수 조회
     const getMemberCount = () => {
-        axios.get(`${apiUrl}/api/mateMember/countMateMember?mateId=${mate.mateId}`, { withCredentials: true })
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/count`)
             .then(response => {
-                setMemberCount(response.data);
+                if (response.status === 200) {
+                    setMemberCount(response.data);
+                }
             }).catch(error => {
-            console.log("Error countMateMember>>> ", error.stack);
-        })
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMemberCount>> ", error.message);
+                }
+        });
     };
 
     //게시자 정보 가져오기
-    const getMaster = () => {
-        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${mate.usersId}`, { withCredentials: true })
+    const getMasterInfo = () => {
+        axios.get(`${apiUrl}/api/api/user/${mate.usersId}/info`)
             .then(response => {
-                setMaster(response.data);
+                if (response.status === 200) {
+                    setMaster(response.data);
+                }
             }).catch(error => {
-            console.log("Error getMasterInfo>>> ", error.stack);
-        })
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMasterInfo>> ", error.message);
+                }
+        });
     };
 
     //현재 멤버목록 가져오기(본인 포함)
     const getMateMember = () => {
-        axios.get(`${apiUrl}/api/mateMember/getMateMemberList?mateId=${mate.mateId}`, { withCredentials: true })
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}`)
             .then(response => {
-                setMateMemberList(response.data);
-                setLoading(false);
+                if (response.status === 200) {
+                    setMateMemberList(response.data);
+                    setLoading(false);
+                }
             }).catch(error => {
-            throw error;
-        })
-    }
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMateMember>> ", error.message);
+                }
+        });
+    };
 
     useEffect(() => {
         getMemberCount();
-        getMaster();
+        getMasterInfo();
         getMateMember();
     }, [show]);
 
-    //모달 열고, 닫기
-    const memberCountClickHandler = () => setShow(true);
-    const handleClose = () => setShow(false);
+    const memberCountClickHandler = () => setShow(true);  //모달 열기
+    const handleClose = () => setShow(false);  //모달 닫기
 
     return (
         <div>
@@ -113,7 +130,6 @@ function MateDetail() {
                         <tr>
                             <td className={styles.commentsBox}><img src="/images/mate/comments.png" alt="코멘트" className={styles.commentsIcon}/></td>
                             <td className={styles.comments}>
-                                {/*dangerouslySetInnerHTML={{ __html: comments }}>*/}
                                 {mate.comments}
                             </td>
                         </tr>

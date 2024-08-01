@@ -15,30 +15,41 @@ function MateInfo({ mate, place, setMemberCountValue, isReceive, applicantId }) 
     });
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-    //현재 메이트 모집 인원수 조회
+    //현재 해당 mate에 참여한 member 수 조회
     const getMemberCount = () => {
-        axios.get(`${apiUrl}/api/mateMember/countMateMember?mateId=${mate.mateId}`, {withCredentials: true})
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/count`)
             .then(response => {
-                setMemberCount(response.data);
-                if (setMemberCountValue) {
-                    setMemberCountValue(response.data);     //호출한 component에 인원수 전달
+                if (response.status === 200) {
+                    setMemberCount(response.data);
+                    if (setMemberCountValue) {
+                        //호출한 component에 인원수 전달
+                        setMemberCountValue(response.data);
+                    }
                 }
             }).catch(error => {
-            console.log("Error countMateMember>>> ", error.stack);
-            throw error;
-        })
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMemberCount>> ", error.message);
+                }
+        });
     };
 
     //신청자 정보 조회
     const getApplicantInfo = () => {
-        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${applicantId}`, {withCredentials: true})
+        axios.get(`${apiUrl}/api/api/user/${applicantId}/info`)
             .then(response => {
-                setApplicant(response.data);
+                if (response.status === 200) {
+                    setApplicant(response.data);
+                }
             }).catch(error => {
-            console.log("Error getApplicantInfo>>> ", error.stack);
-            throw error;
-        })
-    }
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getApplicantInfo>> ", error.message);
+                }
+        });
+    };
 
     useEffect(() => {
         getMemberCount();

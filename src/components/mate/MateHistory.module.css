@@ -43,11 +43,27 @@
 
 .memberInfo {
     font-family: 'KNUTRUTHTTF';
+    font-size: 18px;
 }
 
 .text {
     margin-left: 12px;
     font-size: 16px;
+}
+
+.text2 {
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.closeBtn {
+    width: 70px;
+    height: 40px;
+    border: none;
+    background-color: #ADCDFD;
+    border-radius: 20px;
+    font-size: 17px;
 }
 
 .setMateTempBtn {
@@ -59,7 +75,7 @@
     font-size: 17px;
 }
 
-.setMateTempBtn:hover {
+.setMateTempBtn:hover, .closeBtn:hover {
     background-color: #92b6fd;
 }
 

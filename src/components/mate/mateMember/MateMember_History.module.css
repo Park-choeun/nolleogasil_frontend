@@ -36,20 +36,13 @@
 .mateTempIcon {
     width: 25px;
     height: 25px;
+    float: left;
+    margin-left: 2px;
 }
 
-.inputMateTemp {
-    width: 36px;
-    text-align: right;
-    border: none;
-}
-
-.inputMateTemp:focus {
-    outline: none;
-}
-
-.inputValue::placeholder {
-    color: black;
+.newMateTemp {
+    float: right;
+    font-size: 15px;
 }
 
 .mateTempBarBox {
