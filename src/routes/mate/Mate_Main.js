@@ -26,24 +26,31 @@ function Mate_Main() {
         placeId = Number(urlParams.get("placeId"));
     }
 
-    //메이트 목록 조회
+    //mate 목록 조회
     const getMateList = () => {
-        axios.get(`${apiUrl}/api/mate/mateList`, {
+        axios.get(`${apiUrl}/api/mate`, {
             params: {
                 placeId: placeId,
                 placeCat: placeCat,
                 currentLat: latitude,
                 currentLng: longitude,
                 sorted: selected
-            },
-            withCredentials: true
+            }
         }).then(response => {
-            setMateList(response.data);
-            setLoading(false);
+            if (response.status === 200) {
+                setMateList(response.data);
+                setLoading(false);
+            }
         }).catch(error => {
-            throw error;
+            if (error.response) {
+                console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                alert("일시적인 오류가 발생했습니다. 다시 접속해주세요.");
+            } else {
+                console.error("Error getMateList>> ", error.message);
+                alert("서버 오류가 발생했습니다. 다시 접속해주세요.");
+            }
         });
-    }
+    };
 
     useEffect(() => {
         getMateList();
@@ -79,7 +86,7 @@ function Mate_Main() {
             </div>
 
             <div className={styles.subBody}>
-                {/*메인화면에서 접근했다면, placeId: 0*/}
+                {/*메인화면에서 접근했다면, placeId: 0 // 전체 장소에 대한 맛집메이트 조회*/}
                 {placeId === 0 ? (
                     <div>
                         <div className={styles.category}>

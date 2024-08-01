@@ -19,16 +19,20 @@ function Wish({ wishId, place, onDelete }) {
 
     //위시에서 제거
     const handleDeleteWish = (wishId) => {
-        axios.post(`${apiUrl}/api/wish/deleteWish?wishId=${wishId}`, { placeId: place.placeId }, {withCredentials: true})
+        axios.delete(`${apiUrl}/api/wish/${wishId}`)
             .then(response => {
-                if (response.data === "failed") {
-                    alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
-                } else {
+                if (response.status === 204) {
                     setDeleted(true);
                     onDelete(wishId);
                 }
             }).catch(error => {
-                console.error("Error deleteWish>>> ", error);
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                    alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                } else {
+                    console.error("Error deleteWish>> ", error.message);
+                    alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                }
             });
     };
 

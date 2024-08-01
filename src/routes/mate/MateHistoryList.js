@@ -11,32 +11,45 @@ function MateHistoryList() {
     const [selected, setSelected] = useState("전체보기");
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-    //내가 멤버로 참여된 mate 공고 글 조회
-    const getMateHistory = () => {
-        axios.get(`${apiUrl}/api/mateMember/getMateHistory`, { withCredentials: true })
+    //로그인한 사용자의 맛집메이트 이력 조회(로그인한 사용자가 멤버로 참여된 mate 공고 글 조회)
+    const getMateHistoryList = () => {
+        axios.get(`${apiUrl}/api/mateMember/history`)
             .then(response => {
-                setMateHistoryList(response.data);
+                if (response.status === 200) {
+                    setMateHistoryList(response.data);
+                }
             }).catch(error => {
-            console.error("Error getMateHistory>>> ", error);
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMateHistoryList>> ", error.message);
+                }
         });
-    }
+    };
 
-    //내가 개설한 mate 공고 글 조회
-    const getMyMateList = () => {
-        axios.get(`${apiUrl}/api/mate/getMateListByUsersId`, { withCredentials: true })
+    //로그인한 사용자가 개설한 mate 공고 글 조회
+    const getMyCreatedMateList = () => {
+        axios.get(`${apiUrl}/api/mate/my-create`)
             .then(response => {
-                setMyMateList(response.data);
-                // setMateHistoryList(response.data);
+                if (response.status === 200) {
+                    setMyMateList(response.data);
+                }
             }).catch(error => {
-            console.error("Error getMateListByUsersId>>> ", error);
+            if (error.response) {
+                console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                alert("일시적인 오류가 발생했습니다. 다시 접속해주세요.");
+            } else {
+                console.error("Error getMyCreatedMateList>> ", error.message);
+                alert("서버 오류가 발생했습니다. 다시 접속해주세요.");
+            }
         });
-    }
+    };
 
     useEffect(() => {
         if (selected === "전체보기") {
-            getMateHistory();
+            getMateHistoryList();
         } else { //내가 개설한 공고
-            getMyMateList();
+            getMyCreatedMateList();
         }
     }, [selected]);
 
@@ -54,7 +67,7 @@ function MateHistoryList() {
 
     return (
         <div>
-            <div className={styles.container}>
+            <div className={styles.dropDownBox}>
                 <Dropdown onSelect={handleDropdownSelect}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic"
                                      style={{ fontSize: '14px', padding: '5px 10px', border: '3px solid #ADCDFD', backgroundColor: 'white', color: 'black' }}>
@@ -66,36 +79,6 @@ function MateHistoryList() {
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
-
-            {/*{mateHistoryList.length === 0 ? (*/}
-            {/*    <div className={styles.alertBox}>*/}
-            {/*        <img src="/images/common/alert.png" alt="알림" className={styles.alertImg} /><p/>*/}
-            {/*        <span className={styles.alertMessage}>맛집메이트 이력이 없습니다.<br/>맛집메이트에 참여해보세요!</span>*/}
-            {/*        <p/>*/}
-            {/*        <Link to="/eatMate">*/}
-            {/*            <button className={styles.goMateBtn}>맛집메이트 둘러보기</button>*/}
-            {/*        </Link>*/}
-            {/*    </div>*/}
-            {/*) : (*/}
-            {/*    selected === "전체보기" ? (*/}
-            {/*        mateHistoryList.map((mateHistory) =>*/}
-            {/*            <MateHistory*/}
-            {/*                key={mateHistory.matememberId}*/}
-            {/*                mate={mateHistory.mate}*/}
-            {/*                place={mateHistory.mate.place}*/}
-            {/*            />*/}
-            {/*        )*/}
-            {/*    ) : (*/}
-            {/*        //내가 개설한 공고*/}
-            {/*        mateHistoryList.map((mate) =>*/}
-            {/*            <MateHistory*/}
-            {/*                key={mate.mateId}*/}
-            {/*                mate={mate}*/}
-            {/*                place={mate.place}*/}
-            {/*            />*/}
-            {/*        )*/}
-            {/*    )*/}
-            {/*)}*/}
 
             {selected === "전체보기" ? (
                 mateHistoryList.length === 0 ? (

@@ -75,7 +75,7 @@ function App() {
               <Route path="/travelDetail" element={<TravelDetail />} />
 
               {/*맛집에 해당하는 챗방 목록.. */}
-              <Route path="/chat/chatList" element={<MyChatRoomList_Main />} />
+              <Route path="/chat/chatList" element={<SessionChecker><MyChatRoomList_Main /></SessionChecker>} />
               <Route path="/result" element={<Result />} />
               {/*맛집에 해당하는 챗방 목록.. */}
               <Route path="/chat/:chatroomId" element={<ChatRoom />} />

@@ -19,36 +19,40 @@ function WishList() {
         setCount(prevCount => prevCount - 1);
     };
 
-    //사용자의 wishList 조회
+    //로그인한 사용자의 '내 장소'(wishList) 조회
     const getWishList = () => {
-        axios.defaults.withCredentials = true; //session 유지를 위해 필요한 옵션
-        axios.get(`${apiUrl}/api/wish/getWishList`, {
+        axios.get(`${apiUrl}/api/wish/${placeCat}`, {
             params: {
-                placeCat: placeCat,
                 sortBy: selected
-            },
-            withCredentials: true
+            }
         }).then(response => {
-            setWishList(response.data);
+            if (response.status === 200) {
+                setWishList(response.data);
+            }
         }).catch(error => {
-            console.error("Error getWishList>>> ", error);
+            if (error.response) {
+                console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+            } else {
+                console.error("Error getWishList>> ", error.message);
+            }
         });
     };
 
     //wish에 담긴 개수 조회
     const getCountWish = () => {
-        axios.get(`${apiUrl}/api/wish/countWish`, {
-            params: {
-                placeCat: placeCat
-            },
-            withCredentials: true
-        }).then(response => {
-            setCount(response.data);
-        }).catch(error => {
-            console.error("Error countWish>>> ", error);
-        })
-    }
-
+        axios.get(`${apiUrl}/api/wish/${placeCat}/count`)
+            .then(response => {
+                if (response.status === 200) {
+                    setCount(response.data);
+                }
+            }).catch(error => {
+            if (error.response) {
+                console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+            } else {
+                console.error("Error getWishList>> ", error.message);
+            }
+        });
+    };
     useEffect(() => {
         getCountWish();
         getWishList();

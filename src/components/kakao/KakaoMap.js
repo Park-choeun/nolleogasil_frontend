@@ -8,7 +8,6 @@ import {useNavigate} from "react-router-dom";
 
 function KakaoMap({ category }) {
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
-    const userInfo = localStorage.getItem("userInfo");
 
     const [map, setMap] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -143,33 +142,60 @@ function KakaoMap({ category }) {
         return placeMarker;
     };
 
-    //wish status 확인(wish에 추가되었는지 여부에 따라 이미지 다르게 출력)
-    const checkingWishStatus = async (placeId) => {
-        //로그인 상태일때만 backend에 접근
-        if (userInfo) {
-            try {
-                const response = await axios.get(`${apiUrl}/api/wish/checkingWishStatus`, {
-                    params: {
-                        placeId: placeId
-                    },
-                    withCredentials: true
-                });
+    //세션 체크(로그인 세션이 유효한지)
+    const sessionCheck = async () => {
+        //로그인 토큰이 있는지 먼저 확인
+        const storedAccessToken = localStorage.getItem("login-token");
 
-                //위시에 있으면 true, 없으면 false
-                return response.data;
+        //로그인 토큰이 있다면, 로그인 상태로 인지
+        if (storedAccessToken) {
+            try {
+                //세션이 만료되어도 localStorage에 로그인 토큰이 남아있기 때문에 세션체크로 더블 체크
+                const response = await axios.get(`${apiUrl}/api/session/check`);
+                return response.status === 200;
             } catch (error) {
-                console.error("Error checking wish>>> ", error);
+                console.log('Error checking session: ', error);
+                return false;
             }
         } else {
+            //비로그인 상태일 경우 (로그인 토큰이 없는 경우)
             return false;
         }
-    }
+    };
 
-    //mate버튼 클릭 이벤트 핸들러
+    //wish status 확인(wish에 추가되었는지 여부에 따라 이미지 다르게 출력)
+    const checkingWishStatus = async (placeId) => {
+        const sessionValid = await sessionCheck();
+
+        //로그인 세션이 존재할 때만 조회
+        if (sessionValid) {
+            try {
+                const response = await axios.get(`${apiUrl}/api/wish/${placeId}/status`);
+
+                //위시에 있으면 true, 없으면 false
+                if (response.status === 200) {
+                    return response.data;
+                }
+            } catch (error) {
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error checkingWishStatus>> ", error.message);
+                }
+            }
+        } else {
+            //비로그인 상태일 경우
+            return false;
+        }
+    };
+
     let navigate = useNavigate();
-    const mateBtnClickHandler = (placeData) => {
-        //로그인 상태일때만 허용
-        if (userInfo) {
+    //mate버튼 클릭 이벤트 핸들러
+    const mateBtnClickHandler = async (placeData) => {
+        const sessionValid = await sessionCheck();
+
+        //로그인 세션이 존재할 때만 허용
+        if (sessionValid) {
             const place = {
                 placeId: placeData.id,
                 placeName: placeData.place_name,
@@ -183,65 +209,81 @@ function KakaoMap({ category }) {
 
             navigate(`/eatMate/mateForm?category=${category}`, {state: {place}});
         } else {
-            const result = window.confirm("로그인 후, 사용가능한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?");
+            const result = window.confirm("로그인 후, 이용가능한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?");
             if (result) {
                 navigate("/users/login");
             }
         }
-    }
+    };
 
-    //wish버튼 클릭 이벤트 핸들러
-    const wishBtnClickHandler = (wishBtn, place) => {
-        if (userInfo) {
+    //wish 버튼 클릭 이벤트 핸들러
+    const wishBtnClickHandler = async (wishBtn, place) => {
+        const sessionValid = await sessionCheck();
+
+        //로그인 세션이 존재할 때만 허용
+        if (sessionValid) {
             const isAddWish = wishBtn.src.includes("addWish.png");
             const action = isAddWish ? "insertWish" : "deleteWish";
 
             //wish에 추가
             if (action === "insertWish") {
-                const placeDto = new FormData();
-                placeDto.append("placeId", place.id);
-                placeDto.append("placeName", place.place_name);
-                placeDto.append("placeAddress", place.address_name);
-                placeDto.append("placeRoadAddress", place.road_address_name);
-                placeDto.append("placePhone", place.phone);
-                placeDto.append("placeUrl", place.place_url);
-                placeDto.append("placeLat", place.y);
-                placeDto.append("placeLng", place.x);
+                const placeDto = {
+                    placeId: place.id,
+                    placeName: place.place_name,
+                    placeAddress: place.address_name,
+                    placeRoadAddress: place.road_address_name,
+                    placePhone: place.phone,
+                    placeUrl: place.place_url,
+                    placeLat: place.y,
+                    placeLng: place.x
+                };
 
-                axios.post(`${apiUrl}/api/wish/${action}?category=${category}`, placeDto,
+                axios.post(`${apiUrl}/api/wish?category=${category}`, placeDto,
                     {
                         headers: {
-                            "Content-Type": "application/json" // JSON 형식으로 요청 보냄을 서버에 알림
-                        },
-                        withCredentials: true
+                            "Content-Type": "application/json" //JSON 형식으로 요청 보냄을 서버에 알림
+                        }
                     }).then(response => {
-                    if (response.data === "successful") {
+                    if (response.status === 201) {
                         wishBtn.src = "/images/map/removeWish.png";
-                    } else {
-                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
                     }
                 }).catch(error => {
-                    console.error(`Error ${action}>>> `, error.stack);
+                    if (error.response) {
+                        console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                    } else {
+                        console.error("Error insertWish>> ", error.message);
+                        alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
                 });
-            } else {  //action === "deleteWish"(wish에서 삭제)
-                axios.post(`${apiUrl}/api/wish/${action}?wishId=0`, {placeId: place.id}, {withCredentials: true})
-                    .then(response => {
-                        if (response.data === "successful") {
-                            wishBtn.src = "/images/map/addWish.png";
-                        } else {
-                            alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
-                        }
-                    }).catch(error => {
-                    console.error(`Error ${action}>>> `, error.stack);
+            } else {
+                //action === "deleteWish"(wish에서 삭제)
+                axios.delete(`${apiUrl}/api/wish/0`, {
+                    params: {
+                        placeId: place.id
+                    }
+                }).then(response => {
+                    if (response.status === 204) {
+                        wishBtn.src = "/images/map/addWish.png";
+                    }
+                }).catch(error => {
+                    if (error.response) {
+                        console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                    } else {
+                        console.error("Error deleteWish>> ", error.message);
+                        alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
                 });
             }
         } else {
-            const result = window.confirm("로그인 후, 사용가능한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?");
+            //비로그인 상태일 경우
+            const result = window.confirm("로그인 후, 이용가능한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?");
             if (result) {
                 navigate("/users/login");
             }
         }
-    }
+    };
 
     //placeName 클릭 이벤트 핸들러 -> 해당 장소의 mate공고글 보러가기
     const placeNameClickHandler = (placeId) => {

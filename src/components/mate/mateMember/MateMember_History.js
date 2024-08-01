@@ -13,32 +13,36 @@ function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList 
     const [newMateTemp, setNewMateTemp] = useState(0.0);
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-    //해당 멤버의 사용자 정보 불러오기
-    useEffect(() => {
-        axios.get(`${apiUrl}/api/user/getUsersInfo?usersId=${memberUsersId}`, {withCredentials: true})
+   //해당 멤버의 사용자 정보 불러오기
+    const getMemberUsersInfo = () => {
+        axios.get(`${apiUrl}/api/user/${memberUsersId}/info`)
             .then(response => {
-                setMember(response.data);
-                setNewMateTemp(response.data.mateTemp);
-                updateMemberMateTempList(memberId, response.data.mateTemp);
+                if (response.status === 200) {
+                    setMember(response.data);
+                    setNewMateTemp(response.data.mateTemp);
+                    updateMemberMateTempList(memberId, response.data.mateTemp);
+                }
             }).catch(error => {
-                throw error;
-        })
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMemberUsersInfo>> ", error.message);
+                }
+        });
+    };
+
+    useEffect(() => {
+        getMemberUsersInfo();
     }, []);
 
     const onChangeMateTemp = (input) => {
-        const value = parseFloat(input);
-        if (value > 100.0) {
-            setNewMateTemp(100);
-        } else {
-            setNewMateTemp(value);
-        }
-        
+        setNewMateTemp(parseFloat(input));
         if (input === "") {
             updateMemberMateTempList(memberId, member.mateTemp);
         } else {
-            updateMemberMateTempList(memberId, value);
+            updateMemberMateTempList(memberId, parseFloat(input));
         }
-    }
+    };
 
     return (
         <Card className={styles.container}>
@@ -52,10 +56,8 @@ function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList 
                             <span className={styles.gender}>({member.gender})</span>
                         </td>
                         <td className={styles.mateTemp}>
-                            <img src="/images/mate/temperature.png" alt="온도주기"
-                                 className={styles.mateTempIcon} />
-                            <input value={newMateTemp.toFixed(1)} className={styles.inputMateTemp}
-                                   onChange={(e) => onChangeMateTemp(e.target.value)} />ºC
+                            <img src="/images/mate/temperature.png" alt="온도" className={styles.mateTempIcon} />
+                            <span className={styles.newMateTemp}>{newMateTemp.toFixed(1)}ºC</span>
                         </td>
                         <td className={styles.mateTempBarBox}>
                             <input type="range" min={0} max={100} step={0.1} value={newMateTemp.toFixed(1)} className={styles.mateTempBar}

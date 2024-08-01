@@ -17,25 +17,37 @@ function MateHistory({ mate, place }) {
     const [show, setShow] = useState(false);
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-    //로그인한 사용자 본인을 제외한 해당 메이트의 멤버목록 조회
+    //해당 mate의 member 목록 조회(로그인한 사용자 본인은 제외)
     const getMateMemberList = () => {
-        axios.get(`${apiUrl}/api/mateMember/getMateMemberListWithoutMe?mateId=${mate.mateId}`, {withCredentials: true})
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/excluding-me`)
             .then(response => {
-                setMateMemberList(response.data);
+                if (response.status === 200) {
+                    setMateMemberList(response.data);
+                }
             }).catch(error => {
-            console.error("Error getMateMemberListWithoutMe>>> ", error);
-        })
-    }
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getMateMemberList_excluding_me>> ", error.message);
+                }
+        });
+    };
 
-    //로그인한 사용자의 온도 부여 여부 불러오기(isGiven) -> 0이면 이미 온도를 부여한 것(1번만 부여 가능)
+    //로그인한 사용자의 온도 부여 여부 불러오기(isGiven) -> 0이면 이미 온도를 부여한 것(1번만 부여 가능하도록)
     const getLoginUsersMemberInfo = () => {
-        axios.get(`${apiUrl}/api/mateMember/getMateMemberByUsersIdAndMateId?mateId=${mate.mateId}`, {withCredentials: true})
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/my-info`)
             .then(response => {
-                setLoginUsersMemberInfo(response.data);
+                if (response.status === 200) {
+                    setLoginUsersMemberInfo(response.data);
+                }
             }).catch(error => {
-            console.error("Error getMateMemberByUsersIdAndMateId>>> ", error);
-        })
-    }
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                } else {
+                    console.error("Error getLoginUsersMemberInfo>> ", error.message);
+                }
+        });
+    };
 
     //메이트 기간이 지났는지 확인
     const checkingMateDateTime = () => {
@@ -53,28 +65,31 @@ function MateHistory({ mate, place }) {
         checkingMateDateTime();
     }, [mate.mateId]);
 
-    //모달 열고, 닫기
-    const readMoreBtnClickHandler = () => setShow(true);
-    const handleClose = () => setShow(false);
+    const readMoreBtnClickHandler = () => setShow(true);  //모달 열기
+    const handleClose = () => setShow(false);  //모달 닫기
 
     //온도주기 버튼 클릭 시
     const handleSetMateTemp = (memberMateTempMap) => {
-        const result = window.confirm("설정한 값으로 멤버들의 온도를 부여하시겠습니까?\n(값이 비어있다면 기본값으로 부여됩니다.)");
+        const result = window.confirm("설정한 값으로 멤버들의 온도를 부여하시겠습니까?");
         if (result) {
-            axios.post(`${apiUrl}/api/mateMember/setMemberMateTemp?mateId=${mate.mateId}`, memberMateTempMap, {withCredentials: true})
+            axios.patch(`${apiUrl}/api/mateMember/${mate.mateId}/temp`, memberMateTempMap)
                 .then(response => {
-                    if (response.data === "successful") {
+                    if (response.status === 204) {
                         alert("성공적으로 온도를 부여했습니다.");
                         setShow(false);
-                        getLoginUsersMemberInfo(); //isGiven다시 불러오기
-                    } else {
-                        alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                        getLoginUsersMemberInfo(); // isGiven 다시 불러오기
                     }
                 }).catch(error => {
-                throw error;
-            })
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                    alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
+                } else {
+                    console.error("Error handleSetMateTemp>> ", error.message);
+                    alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                }
+            });
         }
-    }
+    };
 
     //MateMember_History에서 변경되는 온도 값을 가져와 memberMateTempMap의 값 setting
     const updateMemberMateTempList = (memberId, newMateTemp) => {
@@ -107,23 +122,39 @@ function MateHistory({ mate, place }) {
                 ) : ("")}
             </Card>
 
+            {/*다른 member들에게 온도주기 모달 창*/}
             <Modal show={show} onHide={handleClose} className={styles.modal}>
                 <Modal.Header closeButton>
                     <Modal.Title className={styles.title}>"{place.placeName}"의 맛집메이트 멤버</Modal.Title>
                 </Modal.Header>
+
                 <Modal.Body className={styles.memberInfo}>
                     <span className={styles.text}>함께 식사를 했던 맛집메이트 멤버에게 온도를 부여해주세요!</span>
-                    {mateMemberList.map((member) =>
-                        <MateMember_History
-                            key={member.usersId}
-                            memberId={member.matememberId}
-                            memberUsersId={member.usersId}
-                            updateMemberMateTempList={updateMemberMateTempList}
-                        />
+                    
+                    {/*로그인한 사용자를 제외한 맛집메이트 멤버가 없다면, 문구 출력*/}
+                    {mateMemberList.length === 0 ? (
+                        <div>
+                            <hr />
+                            <span className={styles.text2}>함께한 맛집메이트 멤버가 없습니다.</span>
+                        </div>
+                    ) : (
+                        mateMemberList.map((member) =>
+                            <MateMember_History
+                                key={member.usersId}
+                                memberId={member.matememberId}
+                                memberUsersId={member.usersId}
+                                updateMemberMateTempList={updateMemberMateTempList}
+                            />
+                        )
                     )}
                 </Modal.Body>
+
                 <Modal.Footer>
-                    <button className={styles.setMateTempBtn} onClick={() => handleSetMateTemp(memberMateTempMap)}>온도 주기</button>
+                    {mateMemberList.length === 0 ? (
+                        <button className={styles.closeBtn} onClick={() => handleClose()}>닫기</button>
+                    ) : (
+                        <button className={styles.setMateTempBtn} onClick={() => handleSetMateTemp(memberMateTempMap)}>온도 주기</button>
+                    )}
                 </Modal.Footer>
             </Modal>
         </div>

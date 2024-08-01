@@ -16,14 +16,26 @@ function SendApply() {
     }
 
     //보낸 신청 목록 조회
-    useEffect(() => {
-        axios.get(`${apiUrl}/api/apply/getSendApply`, { withCredentials: true })
+    const getSendApplyList = () => {
+        axios.get(`${apiUrl}/api/apply/send`)
             .then(response => {
-                setSendApplyList(response.data);
-                setLoading(false);
+                if (response.status === 200) {
+                    setSendApplyList(response.data);
+                    setLoading(false);
+                }
             }).catch(error => {
-            throw error;
+                if (error.response) {
+                    console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                    alert("일시적인 오류가 발생했습니다. 다시 접속해주세요.");
+                } else {
+                    console.error("Error getSendApplyList>> ", error.message);
+                    alert("서버 오류가 발생했습니다. 다시 접속해주세요.");
+                }
         });
+    };
+
+    useEffect(() => {
+        getSendApplyList();
     }, []);
 
     return (
