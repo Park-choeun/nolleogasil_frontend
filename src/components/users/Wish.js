@@ -19,7 +19,7 @@ function Wish({ wishId, place, onDelete }) {
 
     //위시에서 제거
     const handleDeleteWish = (wishId) => {
-        axios.delete(`${apiUrl}/api/wish/${wishId}`)
+        axios.delete(`${apiUrl}/api/wish/${wishId}`, { withCredentials: true })
             .then(response => {
                 if (response.status === 204) {
                     setDeleted(true);

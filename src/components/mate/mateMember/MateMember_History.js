@@ -15,7 +15,7 @@ function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList 
 
    //해당 멤버의 사용자 정보 불러오기
     const getMemberUsersInfo = () => {
-        axios.get(`${apiUrl}/api/user/${memberUsersId}/info`)
+        axios.get(`${apiUrl}/api/user/${memberUsersId}/info`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMember(response.data);

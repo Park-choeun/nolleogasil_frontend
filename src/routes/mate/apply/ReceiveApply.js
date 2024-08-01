@@ -17,7 +17,7 @@ function ReceiveApply() {
 
     //받은 신청 목록 조회
     const getReceiveApplyList = () => {
-        axios.get(`${apiUrl}/api/apply/receive`)
+        axios.get(`${apiUrl}/api/apply/receive`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setReceivedApplyList(response.data);

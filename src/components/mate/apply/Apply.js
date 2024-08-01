@@ -39,7 +39,7 @@ function Apply({ apply, applyTmp, onDelete }) {
 
     //해당 mate정보 가져오기
     const getMate = () => {
-        axios.get(`${apiUrl}/api/mate/${apply.mateId}`)
+        axios.get(`${apiUrl}/api/mate/${apply.mateId}`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMate(response.data);
@@ -81,7 +81,7 @@ function Apply({ apply, applyTmp, onDelete }) {
         const result = window.confirm(`해당 신청을 정말 ${text}하시겠습니까?`);
 
         if (result) {
-            axios.delete(`${apiUrl}/api/apply/${applyId}`)
+            axios.delete(`${apiUrl}/api/apply/${applyId}`, { withCredentials: true })
                 .then(response => {
                     if (response.status === 204) {
                         setDeleted(true);
@@ -103,7 +103,7 @@ function Apply({ apply, applyTmp, onDelete }) {
     const handleUpdateIsApply = (applyId, status) => {
         const result = window.confirm(`해당 신청을 ${status}하시겠습니까?`);
         if (result) {
-            axios.patch(`${apiUrl}/api/apply/${applyId}`, { isApply: status })
+            axios.patch(`${apiUrl}/api/apply/${applyId}`, { isApply: status }, { withCredentials: true })
                 .then(response => {
                     if (response.status === 200) {
                         if (status === "수락") {

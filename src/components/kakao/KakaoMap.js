@@ -151,7 +151,7 @@ function KakaoMap({ category }) {
         if (storedAccessToken) {
             try {
                 //세션이 만료되어도 localStorage에 로그인 토큰이 남아있기 때문에 세션체크로 더블 체크
-                const response = await axios.get(`${apiUrl}/api/session/check`);
+                const response = await axios.get(`${apiUrl}/api/session/check`, { withCredentials: true });
                 return response.status === 200;
             } catch (error) {
                 console.log('Error checking session: ', error);
@@ -170,7 +170,7 @@ function KakaoMap({ category }) {
         //로그인 세션이 존재할 때만 조회
         if (sessionValid) {
             try {
-                const response = await axios.get(`${apiUrl}/api/wish/${placeId}/status`);
+                const response = await axios.get(`${apiUrl}/api/wish/${placeId}/status`, { withCredentials: true });
 
                 //위시에 있으면 true, 없으면 false
                 if (response.status === 200) {
@@ -242,7 +242,8 @@ function KakaoMap({ category }) {
                     {
                         headers: {
                             "Content-Type": "application/json" //JSON 형식으로 요청 보냄을 서버에 알림
-                        }
+                        },
+                        withCredentials: true
                     }).then(response => {
                     if (response.status === 201) {
                         wishBtn.src = "/images/map/removeWish.png";
@@ -261,7 +262,8 @@ function KakaoMap({ category }) {
                 axios.delete(`${apiUrl}/api/wish/0`, {
                     params: {
                         placeId: place.id
-                    }
+                    },
+                    withCredentials: true
                 }).then(response => {
                     if (response.status === 204) {
                         wishBtn.src = "/images/map/addWish.png";

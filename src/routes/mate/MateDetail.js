@@ -29,7 +29,7 @@ function MateDetail() {
 
     //현재 해당 mate에 참여한 member 수 조회
     const getMemberCount = () => {
-        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/count`)
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}/count`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMemberCount(response.data);
@@ -45,7 +45,7 @@ function MateDetail() {
 
     //게시자 정보 가져오기
     const getMasterInfo = () => {
-        axios.get(`${apiUrl}/api/api/user/${mate.usersId}/info`)
+        axios.get(`${apiUrl}/api/api/user/${mate.usersId}/info`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMaster(response.data);
@@ -61,7 +61,7 @@ function MateDetail() {
 
     //현재 멤버목록 가져오기(본인 포함)
     const getMateMember = () => {
-        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}`)
+        axios.get(`${apiUrl}/api/mateMember/${mate.mateId}`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setMateMemberList(response.data);

@@ -35,7 +35,8 @@ function Mate_Main() {
                 currentLat: latitude,
                 currentLng: longitude,
                 sorted: selected
-            }
+            },
+            withCredentials: true
         }).then(response => {
             if (response.status === 200) {
                 setMateList(response.data);

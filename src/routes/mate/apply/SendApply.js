@@ -17,7 +17,7 @@ function SendApply() {
 
     //보낸 신청 목록 조회
     const getSendApplyList = () => {
-        axios.get(`${apiUrl}/api/apply/send`)
+        axios.get(`${apiUrl}/api/apply/send`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setSendApplyList(response.data);
