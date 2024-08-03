@@ -35,7 +35,7 @@ import Logout from "./routes/users/Logout";
 import ModifyUser from "./routes/users/ModifyUser";
 import MyPage from "./routes/users/MyPage";
 import SessionChecker from "./components/users/SessionChecker";
-
+import Register from "./routes/users/Register";
 
 function App() {
   function setScreenSize() {
@@ -87,7 +87,8 @@ function App() {
               <Route path="/users/logout" element={<Logout />}/>
               <Route path="/users/update/:usersId" element={<SessionChecker><ModifyUser /></SessionChecker>}/>
               <Route path="/myPage/:usersId" element={<SessionChecker><MyPage /></SessionChecker>}/>
-
+              <Route path="/users/register" element={<Register />} />
+              
           </Routes>
       </Router>
   );

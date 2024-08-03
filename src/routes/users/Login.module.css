@@ -22,6 +22,45 @@
     margin-top: 80px;
 }
 
+.kakaoLogin {
+    width: 100%;
+    max-width: 350px;
+}
+
+.emailLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 350px;
+    margin: 20px auto;
+}
+
+.emailInput {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.emailLoginButton {
+    width: 25%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.customButtonColor {
+    background-color: #8BBDFF;
+    border-color: #8BBDFF;
+    color: white;
+}
+
+.customButtonColor:hover {
+    background-color: #7aa9e0;
+    border-color: #7aa9e0;
+}
+
 @font-face {
     font-family: 'LOTTERIACHAB';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
