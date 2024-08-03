@@ -55,12 +55,12 @@ const ProfilePath = () => {
                 body: JSON.stringify(profileData),
             });
 
-            if (response.ok) {
+            if (response.status === 201) {
                 // 성공적으로 백엔드로 정보 전달됨
                 await getUserInfo(profileData.email); // 가입 완료 후 회원 정보 조회
                 setIsLoading(false);
                 alert('회원 가입이 완료되었습니다.');
-            } else if (response.status === 400) {
+            } else if (response.status === 200) {
                 await getUserInfo(profileData.email);
                 setIsLoading(false);
                 alert('로그인이 완료되었습니다.');
