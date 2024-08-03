@@ -19,8 +19,6 @@ const Register = () => {
         mateTemp: 36.5,
     });
 
-    const [isLoading, setIsLoading] = useState(false);
-
     const handleChange = (e) => {
         const {name, value} = e.target;
         setUserInfo({
@@ -99,30 +97,19 @@ const Register = () => {
                 </Form.Group>
                 <div className={styles.buttonGroup}>
                   <Button
-                    onClick={() => handleRegister(userInfo, setIsLoading, navigate, getUserInfo)}
+                    onClick={() => handleRegister(userInfo, navigate, getUserInfo)}
                     className={`${styles.registerButton} ${styles.customButtonColor}`}
-                    disabled={isLoading}
                   >
                     회원가입
                   </Button>
                   <Button
                     variant="danger"
                     onClick={handleCancel}
-                    disabled={isLoading}
                   >
                     취소
                   </Button>
                 </div>
               </Form>
-              {isLoading && (
-                <div className={styles.loadingBox}>
-                  <img
-                    className={styles.loadingImg}
-                    src={`/images/common/loading.gif`}
-                    alt="loading"
-                  />
-                </div>
-              )}
             </Container>
           </div>
           <div>

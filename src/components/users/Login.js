@@ -2,10 +2,8 @@ import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-export const handleEmailLogin = async (email, navigate, setIsLoading, setErrorMessage) => {
-    setIsLoading(true);
+export const handleEmailLogin = async (email, navigate, setErrorMessage) => {
     setErrorMessage('');
-
     try{
         const response = await axios.post(`${apiUrl}/api/user/login`, null, {
             params: {email},
@@ -25,7 +23,6 @@ export const handleEmailLogin = async (email, navigate, setIsLoading, setErrorMe
         console.error('Login error: ', error);
         setErrorMessage('로그인 중 오류가 발생했습니다.');
     }
-    setIsLoading(false);
 };
 
 export const hadleKakaoLogin = (kakaoURL) => {

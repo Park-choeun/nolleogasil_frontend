@@ -2,8 +2,7 @@ import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-export const handleRegister = async (userInfo, setIsLoading, navigate, getUserInfo) => {
-    setIsLoading(true);
+export const handleRegister = async (userInfo, navigate, getUserInfo) => {
     try{
         const response = await axios.post(`${apiUrl}/api/user/register`, userInfo);
         if(response.status === 201){
@@ -15,7 +14,6 @@ export const handleRegister = async (userInfo, setIsLoading, navigate, getUserIn
     }catch(error){
         console.error('Error during registration: ', error);
     }
-    setIsLoading(false);
 };
 
 export const getUserInfo = async (userEmail) => {

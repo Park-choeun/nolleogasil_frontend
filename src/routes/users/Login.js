@@ -2,7 +2,6 @@ import KakaoLogin from 'react-kakao-login';
 import Top from "../../components/common/Top";
 import UnderBar from "../../components/common/UnderBar";
 import {useState} from "react";
-import axios from "axios";
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import styles from "./Login.module.css";
@@ -10,7 +9,6 @@ import {handleEmailLogin, handleKakaoLogin} from "../../components/Login";
 
 function Login() {
   const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
@@ -54,9 +52,8 @@ function Login() {
                     className={styles.emailInput}
                 />
                 <Button
-                    onClick={() => handleEmailLogin(email, navigate, setIsLoading, setErrorMessage)}
+                    onClick={() => handleEmailLogin(email, navigate, setErrorMessage)}
                     className={`${styles.emailLoginButton} ${styles.customButtonColor}`}
-                    disabled={isLoading}
                 >
                     로그인
                 </Button>
@@ -69,15 +66,6 @@ function Login() {
                         </Alert>
                     </Col>
                 </Row>
-            )}
-            {isLoading && (
-                <div className={styles.loadingBox}>
-                    <img
-                        className={styles.loadingImg}
-                        src={`/images/common/loading.gif`}
-                        alt="loading"
-                    />
-                </div>
             )}
         </div>
         <div>
