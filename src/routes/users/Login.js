@@ -5,7 +5,7 @@ import {useState} from "react";
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import styles from "./Login.module.css";
-import {handleEmailLogin, handleKakaoLogin} from "../../components/Login";
+import {handleEmailLogin, handleKakaoLogin} from "../../components/users/Login";
 
 function Login() {
   const [email, setEmail] = useState('');
