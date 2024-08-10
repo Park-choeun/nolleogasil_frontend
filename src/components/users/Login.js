@@ -25,7 +25,7 @@ export const handleEmailLogin = async (email, navigate, setErrorMessage) => {
     }
 };
 
-export const hadleKakaoLogin = (kakaoURL) => {
+export const handleKakaoLogin = (kakaoURL) => {
     window.location.href = kakaoURL;
 };
 
