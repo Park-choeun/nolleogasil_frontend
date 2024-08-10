@@ -13,7 +13,7 @@ function Login() {
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
 
-  const handleEmailLogin = handleEmailChange = (e) => {
+  const handleEmailLogin = (e) => {
     setEmail(e.target.value);
   }
   
