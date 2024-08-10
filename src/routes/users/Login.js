@@ -1,8 +1,3 @@
-/**
- * 이 파일은 로그인/회원가입을 위한 js 파일입니다.
- * @author 장민정
- * @since 2024-01-05
- */
 import KakaoLogin from 'react-kakao-login';
 import Top from "../../components/common/Top";
 import UnderBar from "../../components/common/UnderBar";
@@ -10,7 +5,7 @@ import {useState} from "react";
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import styles from "./Login.module.css";
-import {handleEmailLogin, handleKakaoLogin} from "../../components/Login";
+import {handleEmailLogin, handleKakaoLogin} from "../../components/users/Login";
 
 function Login() {
   const [email, setEmail] = useState('');

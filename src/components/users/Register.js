@@ -1,8 +1,3 @@
-/**
- * 이 파일은 회원 가입을 위한 js 파일입니다.
- * @author 장민정
- * @since 2024-01-05
- */
 import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url

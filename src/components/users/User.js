@@ -1,8 +1,3 @@
-/**
- * 이 파일은 카카오 서버로부터 access token을 가져오기 위한 js 파일입니다.
- * @author 장민정
- * @since 2024-01-05
- */
 import React, {useEffect} from "react";
 import axios from "axios";
 import qs from "qs";

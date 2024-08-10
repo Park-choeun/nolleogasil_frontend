@@ -1,8 +1,3 @@
-/**
- * 이 파일은 일반(테스트용) 회원 가입을 위한 js 파일입니다.
- * @author 장민정
- * @since 2024-01-05
- */
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Top from "../../components/common/Top";
