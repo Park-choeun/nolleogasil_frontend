@@ -1,3 +1,8 @@
+/**
+ * 이 파일은 회원 탈퇴를 위한 js 파일입니다.
+ * @author 장민정
+ * @since 2024-01-05
+ */
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';

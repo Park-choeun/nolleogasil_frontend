@@ -1,3 +1,8 @@
+/**
+ * 이 파일은 회원 정보 수정을 위한 js 파일입니다.
+ * @author 장민정
+ * @since 2024-01-05
+ */
 import { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";

@@ -1,3 +1,8 @@
+/**
+ * 이 파일은 마이페이지를 위한 js 파일입니다.
+ * @author 장민정
+ * @since 2024-01-05
+ */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';

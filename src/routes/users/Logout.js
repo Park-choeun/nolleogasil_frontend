@@ -1,3 +1,8 @@
+/**
+ * 이 파일은 로그아웃을 위한 js 파일입니다.
+ * @author 장민정
+ * @since 2024-01-05
+ */
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 

@@ -1,3 +1,8 @@
+/**
+ * 이 파일은 카카오 서버로부터 회원 정보를 가져오기 위한 js 파일입니다.
+ * @author 장민정
+ * @since 2024-01-05
+ */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ProfilePath.module.css";
