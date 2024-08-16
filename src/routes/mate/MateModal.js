@@ -70,9 +70,6 @@ function MateModal() {
         setSelectedTime(selectedTime);
     };
 
-    console.log(typeof selectedDate);
-    console.log(selectedDate);
-    console.log(typeof selectedTime);
 
     const handleDateChange = (newValue) => {
         setSelectedDate(newValue); // 선택한 날짜를 상태로 저장
@@ -87,14 +84,8 @@ function MateModal() {
         e.preventDefault();
 
         const date = new Date(selectedDate);
-        console.log(date);
         const eatDate = date.toISOString();
-        console.log(typeof selectedTime);
-        console.log(title);
-        console.log(gender);
-        console.log(comments);
-        console.log(eatDate);
-        console.log(participantCount);
+
 
         if (!title || !selectedTime || !comments || !selectedDate || !participantCount) { // 제목, 시간, 코멘트가 입력되지 않은 경우 경고창 표시
             alert("모두 입력하셔야 합니다.");
@@ -114,10 +105,8 @@ function MateModal() {
             count: participantCount+1,
         };
 
-       console.log("zz" + typeof requestData);
-       console.log(typeof placeInfo);
+
        const mateformData = JSON.stringify(requestData);
-       console.log(typeof mateformData);
 
 
        formData.append("mateFormDto",requestData);
@@ -133,11 +122,9 @@ function MateModal() {
                 'Content-Type': 'application/json'// JSON 형식으로 요청 보냄을 서버에 알림
             },
        }).then((response) => {
-            console.log(response.data);
+
             const chatroom = response.data;
             const chatroomId = response.data.chatroomId;
-            console.log(chatroom);
-            console.log(typeof chatroom);
 
             navigate(`/chat/${chatroomId}`);
        }).catch((error)=>{

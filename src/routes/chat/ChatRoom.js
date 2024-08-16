@@ -147,7 +147,6 @@ function ChatRoom () {
             })
         );
 
-        setMessages((prev) => [...prev, newMsg]);
     }
 
 
