@@ -67,7 +67,7 @@ function Mate({ mate, place }) {
             if (usersId === mate.usersId) {
                 alert("본인이 게시한 맛집메이트 공고 글입니다.");
             } else {
-                axios.post(`${apiUrl}/api/apply/${mateId}`, { withCredentials: true })
+                axios.post(`${apiUrl}/api/apply/${mateId}`, {}, { withCredentials: true })
                     .then(response => {
                         if (response.status === 201) {
                             setIsApply("대기");
