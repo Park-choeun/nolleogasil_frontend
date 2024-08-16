@@ -12,7 +12,7 @@ function MateHistory({ mate, place }) {
         isGiven: -1
     })
     const [mateMemberList, setMateMemberList] = useState([]);
-    const [memberMateTempMap, setMemberMateTempMap] = useState({});
+    const [memberMateTempMap, setMemberMateTempMap] = useState({}); //멤버별 부여할 온도값 저장
     const [timeOver, setTimeOver] = useState(false); //메이트 기간 마감여부 -> timeOver되면 true로 변경
     const [show, setShow] = useState(false);
     const apiUrl = process.env.REACT_APP_BACKEND_URL;  //backend api url
@@ -92,7 +92,7 @@ function MateHistory({ mate, place }) {
     };
 
     //MateMember_History에서 변경되는 온도 값을 가져와 memberMateTempMap의 값 setting
-    const updateMemberMateTempList = (memberId, newMateTemp) => {
+    const updateMemberMateTempMap = (memberId, newMateTemp) => {
         setMemberMateTempMap(prevMap => ({
             ...prevMap,
             [memberId]: newMateTemp
@@ -143,7 +143,7 @@ function MateHistory({ mate, place }) {
                                 key={member.usersId}
                                 memberId={member.matememberId}
                                 memberUsersId={member.usersId}
-                                updateMemberMateTempList={updateMemberMateTempList}
+                                updateMemberMateTempMap={updateMemberMateTempMap}
                             />
                         )
                     )}

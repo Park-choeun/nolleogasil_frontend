@@ -4,7 +4,7 @@ import styles from "./MateMember_History.module.css";
 import axios from "axios";
 import {trimNickName} from "../Mate_Utils";
 
-function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList }) {
+function MateMember_History({ memberId, memberUsersId, updateMemberMateTempMap }) {
     const [member, setMember] = useState({
         nickname: "",
         gender: "",
@@ -20,7 +20,7 @@ function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList 
                 if (response.status === 200) {
                     setMember(response.data);
                     setNewMateTemp(response.data.mateTemp);
-                    updateMemberMateTempList(memberId, response.data.mateTemp);
+                    updateMemberMateTempMap(memberId, response.data.mateTemp);
                 }
             }).catch(error => {
                 if (error.response) {
@@ -38,9 +38,9 @@ function MateMember_History({ memberId, memberUsersId, updateMemberMateTempList 
     const onChangeMateTemp = (input) => {
         setNewMateTemp(parseFloat(input));
         if (input === "") {
-            updateMemberMateTempList(memberId, member.mateTemp);
+            updateMemberMateTempMap(memberId, member.mateTemp);
         } else {
-            updateMemberMateTempList(memberId, parseFloat(input));
+            updateMemberMateTempMap(memberId, parseFloat(input));
         }
     };
 

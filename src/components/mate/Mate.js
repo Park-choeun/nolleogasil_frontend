@@ -75,7 +75,7 @@ function Mate({ mate, place }) {
                         }
                     }).catch(error => {
                     if (error.response) {
-                        console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                        console.error(`Error: ${error.response.status} / ${error.message}`);
                         alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
                     } else {
                         console.error("Error handleInsertApply>> ", error.message);
