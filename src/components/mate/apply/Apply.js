@@ -103,7 +103,7 @@ function Apply({ apply, applyTmp, onDelete }) {
     const handleUpdateIsApply = (applyId, status) => {
         const result = window.confirm(`해당 신청을 ${status}하시겠습니까?`);
         if (result) {
-            axios.patch(`${apiUrl}/api/apply/${applyId}`, { isApply: status }, { withCredentials: true })
+            axios.patch(`${apiUrl}/api/apply/${applyId}?status=${status}`, {}, { withCredentials: true })
                 .then(response => {
                     if (response.status === 200) {
                         if (status === "수락") {
@@ -114,7 +114,7 @@ function Apply({ apply, applyTmp, onDelete }) {
                     }
                 }).catch(error => {
                     if (error.response) {
-                        console.error(`Error: ${error.response.status} / ${error.response.statusText}`);
+                        console.error(`Error: ${error.response.status} / ${error.message}`);
                         alert("일시적인 오류가 발생했습니다. 다시 시도해주세요.");
                     } else {
                         console.error("Error handleUpdateIsApply>> ", error.message);
