@@ -167,15 +167,13 @@ function Apply({ apply, applyTmp, onDelete }) {
                         )
                     )}
 
-                    {/*isApply가 수락이나 거절이라면, 지우기 버튼 출력*/}
+                    {/*isApply가 수락이나 거절이라면, 삭제버튼 활성화*/}
                     {/*마감기한이 지나 timeOver가 됐다면, 삭제버튼 활성화*/}
                     {isApply !== "대기" || timeOver ? (
                         <div className={styles.deleteBtnBox}>
                             <img src="/images/common/trash_grey.png" alt="지우기" className={styles.deleteBtn} onClick={() => handleDeleteApply(apply.applyId, true)}/>
                         </div>
-                    ) : (
-                        ""
-                    )}
+                    ) : ("")}
                 </Card>
             ) : (
 
@@ -209,7 +207,7 @@ function Apply({ apply, applyTmp, onDelete }) {
                         </div>
                     )}
 
-                    {/*isApply가 수락이나 거절이라면, 지우기 버튼 출력*/}
+                    {/*isApply가 수락이나 거절이라면, 삭제버튼 활성화*/}
                     {/*마감기한이 지나 timeOver가 됐다면, 삭제버튼 활성화*/}
                     {isApply !== "대기" || timeOver ? (
                         <div className={styles.deleteBtnBox}>
