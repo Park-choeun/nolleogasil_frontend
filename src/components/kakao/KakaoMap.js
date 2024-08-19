@@ -246,7 +246,7 @@ function KakaoMap({ category }) {
                         withCredentials: true
                     }).then(response => {
                     if (response.status === 201) {
-                        wishBtn.src = "/images/map/removeWish.png";
+                        wishBtn.src = `/images/map/removeWish.png?${new Date().getTime()}`;
                     }
                 }).catch(error => {
                     if (error.response) {
@@ -266,7 +266,7 @@ function KakaoMap({ category }) {
                     withCredentials: true
                 }).then(response => {
                     if (response.status === 204) {
-                        wishBtn.src = "/images/map/addWish.png";
+                        wishBtn.src = `/images/map/addWish.png?${new Date().getTime()}`;
                     }
                 }).catch(error => {
                     if (error.response) {
