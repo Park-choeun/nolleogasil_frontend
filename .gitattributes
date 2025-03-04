@@ -1,2 +1,5 @@
 *.js linguist-detectable=true
 *.jsx linguist-detectable=true
+
+vendor/* linguist-vendored=false
+node_modules/* linguist-vendored=false
