@@ -247,6 +247,6 @@
  <a href="https://www.flaticon.com/kr/free-icons/" title="휴지통 아이콘">휴지통 아이콘 제작자: iconading - Flaticon</a>
  
  
- https://www.freepik.com/free-vector/hand-drawn-colorful-travel-background_16137796.htm 
+ https://www.freepik.com/free-vector/hand-drawn-colorful-travel-background_16137796.html 
 
 </details>
